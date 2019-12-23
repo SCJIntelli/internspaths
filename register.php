@@ -61,7 +61,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     
-    
+    // Validate email
+    if(empty(trim($_POST["email"]))){
+        $email_err = "Please enter a email.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE email = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            
+            // Set parameters
+            $param_email = trim($_POST["email"]);
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $email_err = "This Email is already taken.";
+                } else{
+                    $Email = trim($_POST["email"]);
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
@@ -142,7 +169,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                     <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                         <label>Email</label>
-                        <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px">
+                        <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px">
                         <span class="help-block"><?php echo $email_err; ?></span>
                     </div>    
                     <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">

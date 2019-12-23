@@ -89,22 +89,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
+        mysqli_stmt_close($stmt);
     }
     $userType = trim($_POST["user_type"]);
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($email_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password,usertype) VALUES (?, ?,?)";
+        $sql = "INSERT INTO users (username, password,usertype,email) VALUES (?, ?,?,?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password,$param_userType);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password,$param_userType,$param_email);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             $param_userType = $userType;
+            $param_email = $Email;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -187,7 +189,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <span class="help-block"><?php echo $email_err; ?></span>
                     </div>
                     <div>
-                        <p><b>User type</b></p>
+                        <p><b><span style="color: black;font-size: 11px">User type</span></b></p>
                         <input type="radio" name="user_type" value="Student" > <span  style="color: black ;font-size: 12px">Student</span> <br>
                         <input type="radio" name="user_type" value="Company" ><span  style="color: black ;font-size: 12px" > Company </span>
 

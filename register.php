@@ -168,11 +168,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px">
                         <span class="help-block"><?php echo $username_err; ?></span>
                     </div>
-                    <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                        <label>Email</label>
-                        <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px">
-                        <span class="help-block"><?php echo $email_err; ?></span>
-                    </div>    
+                        
                     <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                         <label>Password</label>
                         <input type="password" name="password" class="form-control" value="<?php echo $password; ?>"style="border-radius: 25px">
@@ -183,15 +179,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>" style="border-radius: 25px">
                         <span class="help-block"><?php echo $confirm_password_err; ?></span>
                     </div>
+                    <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                        <label>Email</label>
+                        <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px">
+                        <span class="help-block"><?php echo $email_err; ?></span>
+                    </div>
                     <div>
                         <p><b>User type</b></p>
-                        <input type="radio" name="user_type1" value="Student" > <span  style="color: black ;font-size: 12px">Student</span> <br>
-                        <input type="radio" name="user_type2" value="Company" ><span  style="color: black ;font-size: 12px" > Company </span>
+                        <input type="radio" name="user_type" value="Student" > <span  style="color: black ;font-size: 12px">Student</span> <br>
+                        <input type="radio" name="user_type" value="Company" ><span  style="color: black ;font-size: 12px" > Company </span>
 
                     </div>
                     <div class="form-group"style="align">
-                        <input type="submit"  class="login100-form-btn-s2"   value="Submit">
-                        <input type="reset" class="btn btn-default" value="Reset">
+                        <br>
+                        <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ;">
+                        <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative; top:-50px;left:170px"  >
                     </div>
                     <p style="text-align:center"><span class="txt1"> Already have an account?</span> <a href="login.php" class="txt2">Login here</a>.</p>
                 </form>

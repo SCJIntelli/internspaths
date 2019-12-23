@@ -160,9 +160,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="limiter">
         <div class="container-login100" style="background-image: url('back2.png');background-size:cover; ">
             <div class="wrapper" style="background-color: white; visibility : 10%;border-radius: 25px; " >
-                <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Sign Up</h2>
+                <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Sign Up</h2><br>
                 <p style="text-align:center">Please fill this form to create an account.</p>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"><br>
                     <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                         <label>Username</label>
                         <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px">

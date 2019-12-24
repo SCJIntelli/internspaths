@@ -43,24 +43,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <!--===============================================================================================-->
     
 </head>
-<body>
-    <div class="limiter">
-        <div class="container-login100" style="background-image: url('back2.png');background-size:cover; ">
-            <div class="page-header">
-                <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
-            </div>
-            <br>
-            <p>
-                <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
-                <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
-            </p>
-            
-            <br>   
-            <div class="wrapper" style="border-radius: 50px;background-color: blue;">
-                <p ><span style="lef"><?php echo $_SESSION["username"]?></span></p>
-            </div>
-            
-        </div>
+<body style="background-image: url('back2.png');background-size:cover; ">
+    <div class="page-header">
+        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
+    </div>
+    <div class="wrapper" style="position: relative;top:-75px;left: 500px;">
+        <p>
+        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
+        <br>
+        <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+    </p>
+    </div>
+    <div class="btn">
+        <button class="login100-form-btn" value="edit" style="position: relative;top:0px;right: 300px">edit your profile</button>
+        <button class="login100-form-btn" value="edit" style="position: relative;top:-50px;left:300px">intern opertunites</button>
+        
+        
     </div>
 </body>
 </html>

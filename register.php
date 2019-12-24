@@ -4,7 +4,7 @@ require_once "config.php";
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $Email= $userType="";
-$username_err = $password_err = $confirm_password_err =$email_err= "";
+$username_err = $password_err = $confirm_password_err =$email_err=$type_err= "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -91,9 +91,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         mysqli_stmt_close($stmt);
     }
-    $userType = trim($_POST["user_type"]);
+    //if(empty(trim($_POST["user_type"]))){
+    //    $type_err = "Please enter the usetype.";
+    //}else{
+        $userType = trim($_POST["user_type"]);
+    //}
+    
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($email_err)&&empty($type_err)){
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password,usertype,email) VALUES (?, ?,?,?)";
@@ -188,9 +193,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px">
                         <span class="help-block"><?php echo $email_err; ?></span>
                     </div>
-                    <div>
+                    <div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
                         <p><b><span style="color: black;font-size: 11px">User type</span></b></p>
-                        <input type="radio" name="user_type" value="Student" > <span  style="color: black ;font-size: 12px">Student</span> <br>
+                        <input type="radio" name="user_type" value="Student" checked="Student" > <span  style="color: black ;font-size: 12px">Student</span> <br>
                         <input type="radio" name="user_type" value="Company" ><span  style="color: black ;font-size: 12px" > Company </span>
 
                     </div>

@@ -58,8 +58,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         require_once "config.php";
 
 // Define variables and initialize with empty values
-        $fullname = $password = $confirm_password = $Email= $userType=$Description="";
-        $fullname_err = $password_err = $confirm_password_err =$email_err=$discri_err= "";
+        $fullname = $password = $confirm_password = $Email= $userType=$Description=$Address=$contact=$University="";
+        $fullname_err = $password_err = $confirm_password_err =$email_err=$Descri_err=$Address_err= "";
 
 // Processing form data when form is submitted
         if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -175,14 +175,72 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <input type="Email" name="email" class="form-control" value="<?php echo htmlspecialchars($_SESSION["email"]); ?>"style="border-radius: 25px;width: 500px;position: relative;left: 85px;top:-35px;">
                     <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
-                <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                <div class="form-group <?php echo (!empty($Descri_err)) ? 'has-error' : ''; ?>">
                     <p style="text-align: left;">
                      &nbsp;&nbsp;&nbsp;Description-
                     </p>
                     <input type="text" name="Description" class="form-control" value="<?php echo $Description; ?>"style="border-radius: 25px;width: 80%;position: relative;left: 85px;top:-35px;size: ">
-                    <span class="help-block"><?php echo $descri_err; ?></span>
+                    <span class="help-block"><?php echo $Descri_err; ?></span>
                 </div>
-                
+
+                <div class="form-group <?php echo (!empty($Address_err)) ? 'has-error' : ''; ?>">
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;Address-
+                    </p>
+                    <input type="text" name="Address" class="form-control" value="<?php echo $Address; ?>"style="border-radius: 25px;width: 80%;position: relative;left: 85px;top:-35px;size: ">
+                    <span class="help-block"><?php echo $Address_err; ?></span>
+                </div>
+                <div >
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;contact number-
+                    </p>
+                    <input type="contact" name="contact" class="form-control" value="<?php echo $contact; ?>"style="border-radius: 25px;width: 80%;position: relative;left: 85px;top:-35px;size: ">
+                </div>
+                <div >
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;University-
+                    </p>
+                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 15px;">
+                        <option value="UOM">University of Moratuwa</option>
+                        <option value="Uop">University of Peradeniya</option>
+                        <option value="UOR">University of Ruhuna</option>
+                        <option value="UOC">University of Colombo</option>
+                    </select>
+                </div>
+                <div >
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;Department-
+                    </p>
+                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 15px;">
+                        <option value="CSE">Computer Science and Engineering</option>
+                        <option value="BME">Biomedical Engineering</option>
+                        <option value="ENTC">Electronic and Telecommunication Engineering</option>
+                        <option value="ME">Mechanical Engineering</option>
+                        <option value="EE">Electrica; Engineering</option>
+                        <option value="MSE">Material Science Engineering</option>
+                        <option value="ERE">Earth Resources Engineering</option>
+                        <option value="TM">Textile Engineering</option>
+
+                    </select>
+                </div>
+                <div>
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;Interested Fields
+                    </p>
+                    <input type="checkbox" name="vehicle1" value="1"> Java programing<br>
+                    <input type="checkbox" name="vehicle1" value="2"> App developping<br>
+                    <input type="checkbox" name="vehicle1" value="3"> Circuit Designing<br>
+                    <input type="checkbox" name="vehicle1" value="4"> Digital Electronics<br>
+                    <input type="checkbox" name="vehicle1" value="5"> Analog<br>
+                </div>
+                <div>
+                    <p style="text-align: left;">
+                     &nbsp;&nbsp;&nbsp;Upload CV
+                    </p>
+                    
+                </div>
+
+
                 <div class="form-group"style="align">
                     <br><br>
                     <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">

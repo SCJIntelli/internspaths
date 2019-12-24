@@ -18,25 +18,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
     </style>
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/util.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="../fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
     <!--===============================================================================================-->  
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
     <!--===============================================================================================-->  
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/daterangepicker/daterangepicker.css">
 </head>
-<body style="background-image: url('back2.png');background-size:cover; ">
+<body style="background-image: url('../images/back2.png');background-size:cover; ">
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
@@ -200,7 +200,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <p style="text-align: left;">
                      &nbsp;&nbsp;&nbsp;University-
                     </p>
-                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 15px;">
+                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 30px;">
                         <option value="UOM">University of Moratuwa</option>
                         <option value="Uop">University of Peradeniya</option>
                         <option value="UOR">University of Ruhuna</option>
@@ -211,8 +211,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <p style="text-align: left;">
                      &nbsp;&nbsp;&nbsp;Department-
                     </p>
-                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 15px;">
-                        <option value="CSE">Computer Science and Engineering</option>
+                    <select name="University" style="position: relative;top:-30px;left:25px;border-radius: 25px;width: 80%;height: 30px;font-size: 13px">
+                        <option value="CSE" >Computer Science and Engineering</option>
                         <option value="BME">Biomedical Engineering</option>
                         <option value="ENTC">Electronic and Telecommunication Engineering</option>
                         <option value="ME">Mechanical Engineering</option>

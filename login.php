@@ -4,8 +4,19 @@ session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
+    if($_SESSION["usertype"]=="Student"){
+    header("location: studentwelcome.php");
     exit;
+    }
+    if($_SESSION["usertype"]=="Company"){
+    header("location: companywelcome.php");
+    exit;
+    }
+    if($_SESSION["usertype"]=="Admin"){
+    header("location: adminwelcome.php");
+    exit;
+    }
+    
 }
  
 // Include config file
@@ -65,7 +76,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["usertype"] = $usertype;                          
                             
                             // Redirect user to welcome page
-                            header("location: welcome.php");
+                                if($_SESSION["usertype"]=="Student"){
+    header("location: studentwelcome.php");
+    exit;
+    }
+    if($_SESSION["usertype"]=="Company"){
+    header("location: companywelcome.php");
+    exit;
+    }
+    if($_SESSION["usertype"]=="Admin"){
+    header("location: adminwelcome.php");
+    exit;}
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";

@@ -74,7 +74,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username; 
                             $_SESSION["usertype"] = $usertype;
-                            $_SESSION["email"] = $email;                         
+                            $_SESSION["email"] = $email;
+                            $_SESSION["name"]="";
+                            $_SESSION["mnumber"] ="";                    
                             
                             // Redirect user to welcome page
                             if($_SESSION["usertype"]=="Student"){

@@ -18,25 +18,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
     </style>
-    <link rel="stylesheet" type="text/css" href="../css/util.css">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
     <!--===============================================================================================-->  
-    <link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <!--===============================================================================================-->  
-    <link rel="stylesheet" type="text/css" href="../vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 </head>
-<body style="background-image: url('../images/back2.png');background-size:cover; ">
+<body style="background-image: url('back2.png');background-size:cover; ">
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
@@ -58,14 +58,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         require_once "config.php";
 
 // Define variables and initialize with empty values
-        $fullname  = $Email= $userType=$Description=$Address=$contact=$University="";
-        $fullname_err = $confirm_password_err =$email_err=$Descri_err=$Address_err= "";
+        $fullname = $password = $confirm_password = $Email= $userType=$Description="";
+        $fullname_err = $password_err = $confirm_password_err =$email_err=$discri_err= "";
 
 // Processing form data when form is submitted
         if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate username
-            if(empty(trim($_POST["fullname"]))){
+            if(empty(trim($_POST["username"]))){
                 $fullname_err = "Please enter your fullname.";
             } else{
         // Prepare a select statement
@@ -97,7 +97,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 mysqli_stmt_close($stmt);
             }
 
+    // Validate password
+            if(empty(trim($_POST["password"]))){
+                $password_err = "Please enter a password.";     
+            } elseif(strlen(trim($_POST["password"])) < 6){
+                $password_err = "Password must have atleast 6 characters.";
+            } else{
+                $password = trim($_POST["password"]);
+            }
 
+    // Validate confirm password
+            if(empty(trim($_POST["confirm_password"]))){
+                $confirm_password_err = "Please confirm password.";     
+            } else{
+                $confirm_password = trim($_POST["confirm_password"]);
+                if(empty($password_err) && ($password != $confirm_password)){
+                    $confirm_password_err = "Password did not match.";
+                }
+            }
 
     // Validate email
             
@@ -106,7 +123,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($email_err)){
 
         // Prepare an insert statement
-                $sql = "INSERT INTO users (username,usertype,email) VALUES (?, ?,?,?)";
+                $sql = "INSERT INTO users (username, password,usertype,email) VALUES (?, ?,?,?)";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -130,7 +147,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         // Close statement
         mysqli_stmt_close($stmt);
     }
-
     
     // Close connection
     mysqli_close($link);
@@ -145,87 +161,28 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"><br>
                 <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                     <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Full name 
+                     &nbsp;&nbsp;&nbsp;Full name -
                     </p>
-                    <input type="text" name="fullname" class="form-control" value="<?php echo $fullname; ?>"style="border-radius: 10px; width: 80% ;position: relative;left: 15px">
+                    <input type="text" name="fullname" class="form-control" value="<?php echo $fullname; ?>"style="border-radius: 25px; width: 80% ;position: relative;right: -85px;top: -35px;">
                     <span class="help-block"><?php echo $fullname_err; ?></span>
                     
                 </div>
 
                 <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                     <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
                     </p>
-                    <input type="Email" name="email" class="form-control" value="<?php echo htmlspecialchars($_SESSION["email"]); ?>"style="border-radius: 10px;width: 500px;position: relative;left: 15px">
+                    <input type="Email" name="email" class="form-control" value="<?php echo htmlspecialchars($_SESSION["email"]); ?>"style="border-radius: 25px;width: 500px;position: relative;left: 85px;top:-35px;">
                     <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
-                <div class="form-group <?php echo (!empty($Descri_err)) ? 'has-error' : ''; ?>">
+                <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                     <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Description
+                     &nbsp;&nbsp;&nbsp;Description-
                     </p>
-                    <input type="text" name="Description" class="form-control" value="<?php echo $Description; ?>"style="border-radius: 10px;width: 80%;position: relative;left: 15px;height: 50px">
-                    <span class="help-block"><?php echo $Descri_err; ?></span>
+                    <input type="text" name="Description" class="form-control" value="<?php echo $Description; ?>"style="border-radius: 25px;width: 80%;position: relative;left: 85px;top:-35px;size: ">
+                    <span class="help-block"><?php echo $descri_err; ?></span>
                 </div>
-
-                <div class="form-group <?php echo (!empty($Address_err)) ? 'has-error' : ''; ?>">
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Address
-                    </p>
-                    <input type="text" name="Address" class="form-control" value="<?php echo $Address; ?>"style="border-radius: 10px;width: 80%;position: relative;left: 15px ">
-                    <span class="help-block"><?php echo $Address_err; ?></span>
-                </div>
-                <div >
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;contact number
-                    </p>
-                    <input type="contact" name="contact" class="form-control" value="<?php echo $contact; ?>"style="border-radius: 10px;width: 80%;position: relative;left: 15px ">
-                </div>
-                <div >
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;University
-                    </p>
-                    <select name="University" style="position: relative;left: -30px;border-radius: 10px;width: 80%;height: 30px;">
-                        <option value="UOM">University of Moratuwa</option>
-                        <option value="Uop">University of Peradeniya</option>
-                        <option value="UOR">University of Ruhuna</option>
-                        <option value="UOC">University of Colombo</option>
-                    </select>
-                </div>
-                <div >
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Department
-                    </p>
-                    <select name="University" style="position: relative;left: -30px;border-radius: 10px;width: 80%;height: 30px;font-size: 13px">
-                        <option value="CSE" >Computer Science and Engineering</option>
-                        <option value="BME">Biomedical Engineering</option>
-                        <option value="ENTC">Electronic and Telecommunication Engineering</option>
-                        <option value="ME">Mechanical Engineering</option>
-                        <option value="EE">Electrica; Engineering</option>
-                        <option value="MSE">Material Science Engineering</option>
-                        <option value="ERE">Earth Resources Engineering</option>
-                        <option value="TM">Textile Engineering</option>
-
-                    </select>
-                </div>
-                <div>
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Interested Fields
-                    </p>
-                    <input type="checkbox" name="vehicle1" value="1"> Java programing<br>
-                    <input type="checkbox" name="vehicle1" value="2"> App developping<br>
-                    <input type="checkbox" name="vehicle1" value="3"> Circuit Designing<br>
-                    <input type="checkbox" name="vehicle1" value="4"> Digital Electronics<br>
-                    <input type="checkbox" name="vehicle1" value="5"> Analog<br>
-                </div>
-                <div>
-                    <p style="text-align: left;">
-                     &nbsp;&nbsp;&nbsp;Upload CV
-                    </p>
-                    <input type="file" name="CV" class="login100-form-btn">
-                    
-                </div>
-
-
+                
                 <div class="form-group"style="align">
                     <br><br>
                     <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">

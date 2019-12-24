@@ -173,6 +173,29 @@ iframe {
   background: #fff;  
 }
 
+.container-addadmin {
+  width: 100%;  
+  min-height: 300px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+}
+
+.input-box{
+  border-radius: 25px;
+  width: 50%;
+  position: relative;
+  left: 150px;
+
+}
+
 .wrap-login100 {
   width: 390px;
   background: #fff;

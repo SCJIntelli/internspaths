@@ -41,6 +41,10 @@ body, html {
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
 }
+#body {
+height: 100%;
+width: 100%;
+}
 
 /*---------------------------------------------*/
 a {
@@ -188,13 +192,7 @@ iframe {
 
 }
 
-.input-box{
-  border-radius: 25px;
-  width: 50%;
-  position: relative;
-  left: 150px;
 
-}
 
 .wrap-login100 {
   width: 390px;

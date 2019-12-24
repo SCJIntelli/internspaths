@@ -40,10 +40,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
+    <p>
+    <a href="reset-password.php"  class="btn btn-warning">Reset Your Password</a>
+    <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+</p>
+    <div style=" position: relative;left: 20%">
     <div class="btn ">
         <button class="login100-form-btn" class="btn btn-primary" onclick="addAdminBtn()">Add Admin</button>
     </div>
-    <div id="addAdminForm" style="display: none;">
+    <div id="addAdminForm"  style="display: none;">
         <?php
 // Include config file
         require_once "config.php";
@@ -157,7 +162,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: login.php");
+                header("location: adminwelcome.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -200,20 +205,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <span class="help-block"><?php echo $email_err; ?></span>
                 </div>
                 <div class="form-group"style="align">
-                    <br>
-                    <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ;">
-                    <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative; top:-50px;left:170px"  >
+                    <br><br>
+                    <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">
+                    <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative; top:-50px;left:50%"  >
                 </div>
-                <p style="text-align:center"><span class="txt1"> Already have an account?</span> <a href="login.php" class="txt2">Login here</a>.</p>
+                
             </form>
         </div>
     </div>
 </div>
 </div>
-<p>
-    <a href="reset-password.php"  class="btn btn-warning">Reset Your Password</a>
-    <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
-</p>
+</div>
+
 </body>
 
 <script >

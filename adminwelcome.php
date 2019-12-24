@@ -246,7 +246,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     
                     <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                         <label>Email</label>
-                        <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;">
+                        <input type="Email" name="email" class="form-control" value="<?php echo $_SESSION["email"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;">
                         <span class="help-block"><?php echo $email_err; ?></span>
                     </div>
                     <div class="form-group"style="align">

@@ -40,7 +40,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
-    <div style="position: relative;top: -8%;left: 80%;width: 20%;">
+    <div style="position: relative;top: -60px;left: 75%;width: 25%;">
          <p>
 
             <a href="reset-password.php"  class="btn btn-warning">Reset Your Password</a>
@@ -220,7 +220,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </div>
 </div>
 </div>
+<div id="viewProfile">
 
+</div>
 </body>
 
 <script >

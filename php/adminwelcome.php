@@ -138,7 +138,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-image: url('../images/back2.png');background-size:cover;">
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
@@ -164,7 +164,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <!--===============================================================================================-->  
     <link rel="stylesheet" type="text/css" href="../vendor/daterangepicker/daterangepicker.css">
 </head>
-<body style="background-image: url('../images/back2.png');background-size:cover; max-height: 2000px ">
+<body style="background-image: url('../images/back2.png');background-size:cover;" >
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
@@ -189,28 +189,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="container-addadmin" >
                 <div class="wrapper" style="background-color: white;border-radius: 25px; width: 80% ;" >
                     <br><br>
-                    <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Adding New Admin</h2><br>
+                    <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Add New Admin</h2><br>
                     <p style="text-align:center">Please fill this form to create an admin account.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"><br>
                         <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                             <label >Username</label>
-                            <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required>
+                            <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter User Name Here')"
+                            oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $username_err; ?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" value="<?php echo $password; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required>
+                            <input type="password" name="password" class="form-control" value="<?php echo $password; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Password Here')"
+                            oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $password_err; ?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                             <label>Confirm Password</label>
-                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>" style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required>
+                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>" style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Password Here Again')"
+                            oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                             <label>Email</label>
-                            <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required>
+                            <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Your Email Here')"
+                            oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $email_err; ?></span>
                         </div>
                         <div class="form-group"style="align">

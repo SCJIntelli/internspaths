@@ -122,7 +122,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: adminwelcome.php");
+                $sql = "SELECT id FROM users WHERE username='$username'";
+               $result = mysqli_query($link, $sql);
+               $row = mysqli_fetch_assoc($result);
+               $id=$row["id"];
+               $param_id=$id;
+               mysqli_close($link);
+                // Redirect to login page
+               $sql = "INSERT INTO admindata (id,username,email) VALUES (?, ?,?)";
+
+               if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "iss", $param_id, $param_username,$param_email);
+
+            // Set parameters
+                $param_username = $username;
+                $param_email = $Email;
+                $param_id=$id;
+                echo "Error: " . $sql . "<br>" . mysqli_error($link);
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -135,4 +152,5 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     // Close connection
     mysqli_close($link);
 }
+
 ?>

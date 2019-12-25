@@ -122,19 +122,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: adminwelcome.php");
-            } else{
-                echo "Something went wrong. Please try again later.";
+             mysqli_stmt_close($stmt);
+             $sql = "SELECT id FROM users WHERE username='$username'";
+             $result = mysqli_query($link, $sql);
+             $row = mysqli_fetch_assoc($result);
+             $id=$row["id"];
+                               //header("location: adminwelcome.php");
+             $sql = "INSERT INTO admindata (id,username,email) VALUES ('$id','$username','$Email')";
+             if($stmt = mysqli_prepare($link, $sql)){
+                mysqli_stmt_execute($stmt);
+                mysqli_close($link);
             }
+        }} else{
+            echo "Something went wrong. Please try again later.";
+            mysqli_close($link);
         }
-        
-        // Close statement
-        mysqli_stmt_close($stmt);
     }
-    
-    // Close connection
-    mysqli_close($link);
+
+        // Close statement
+
 }
+
+    // Close connection
+
+
 ?>
 
 <!DOCTYPE html>
@@ -182,6 +193,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
     <div class="btn " >
         <button class="login100-form-btn" class="btn btn-primary" onclick="adminEditBtn()">Edit Profile Info</button>
+    </div>
+    <div class="btn " >
+        <button class="login100-form-btn" class="btn btn-primary" onclick="manageStudentsBtn()">Manage Students</button>
     </div>
     <div id="addAdminForm"  style="visibility: hidden;">
 
@@ -272,7 +286,52 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </div>
     </div>
+
+
+    <div id="manageStudents" style="visibility: hidden;position: relative;top: -1120px">
+        <div class="limiter" >
+            <div class="container-addadmin" >
+                <div class="wrapper" style="background-color: white;border-radius: 25px; width: 80% ;" >
+                    <br><br>
+                    <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Manage Student Data</h2><br>
+                    <p style="text-align:center">Please Fill This Form to Complete Your Profile.</p>
+                    <form action="editadminHnd.php" method="post" ><br>
+                        <div class="form-group ">
+                            <label >Name</label>
+                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION["name"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;" required oninvalid="this.setCustomValidity('Enter Your Name Here')"
+                            oninput="this.setCustomValidity('')" >
+                        </div>
+                        <div class="form-group">
+                            <label >Username</label>
+                            <input type="text" name="username" class="form-control" value="<?php echo $_SESSION["username"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
+
+                        </div>
+
+                        <div class="form-group ">
+                            <label>Email</label>
+                            <input type="Email" name="email" class="form-control" value="<?php echo $_SESSION["email"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
+
+                        </div>
+                        <div class="form-group ">
+                            <label >Mobile Number</label>
+                            <input type="text" name="mnumber" class="form-control" value="<?php echo $_SESSION["mnumber"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Your Mobile Number Here')"
+                            oninput="this.setCustomValidity('')">
+
+                        </div>
+
+                        <div class="form-group"style="align">
+                            <br><br>
+                            <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">
+                            <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative; top:-50px;left:50%"  >
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div id="viewProfile" style="align-content: center;position: absolute;left: 15%; top:20%">
     <span class="login100-form-avatar">
         <img src="<?php echo $_SESSION["profileurl"]; ?>" alt="AVATAR">
@@ -289,17 +348,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <span class="profiletext">
         Name : <?php echo ($_SESSION["name"]);?><br>
     </span>
-        <span class="profiletext">
+    <span class="profiletext">
         Mobile Number: <?php echo ($_SESSION["mnumber"]);?>
     </span>
 
 </div>
 <div style="position: absolute;top: 300px;left:450px">
-<form action="uploadimageHnd.php" method="post" enctype="multipart/form-data">
-    
-    <input  type="file"  name="fileToUpload" id="fileToUpload" >
-    <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit">
-</form>
+    <form action="uploadimageHnd.php" method="post" enctype="multipart/form-data">
+
+        <input  type="file"  name="fileToUpload" id="fileToUpload" >
+        <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit">
+    </form>
 </div>
 
 </body>
@@ -307,17 +366,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <script >
     function addAdminBtn() {
       var x = document.getElementById("addAdminForm");
+      var y = document.getElementById("editAdminForm");
+      var z = document.getElementById("manageStudents");
       if (x.style.visibility === "hidden") {
         x.style.visibility= "visible";
-        
+        y.style.visibility = "hidden";
+        z.style.visibility = "hidden";
     } else {
         x.style.visibility = "hidden";
     }
 }
 function adminEditBtn() {
   var x = document.getElementById("editAdminForm");
+  var y = document.getElementById("manageStudents");
+  var z = document.getElementById("addAdminForm");
   if (x.style.visibility === "hidden") {
     x.style.visibility= "visible";
+    y.style.visibility = "hidden";
+    z.style.visibility = "hidden";
+
+} else {
+    x.style.visibility = "hidden";
+}
+}
+function manageStudentsBtn() {
+  var x = document.getElementById("manageStudents");
+  var z = document.getElementById("addAdminForm");
+  var y = document.getElementById("editAdminForm");
+  if (x.style.visibility === "hidden") {
+    x.style.visibility= "visible";
+    y.style.visibility = "hidden";
+    z.style.visibility = "hidden";
 
 } else {
     x.style.visibility = "hidden";

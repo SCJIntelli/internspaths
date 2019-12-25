@@ -13,6 +13,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         exit;
     }
     if($_SESSION["usertype"]=="Admin"){
+
         header("location: adminwelcome.php");
         exit;
     }
@@ -28,7 +29,7 @@ $username_err = $password_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-   
+
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
@@ -75,8 +76,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username; 
                             $_SESSION["usertype"] = $usertype;
                             $_SESSION["email"] = $email;
-                            $_SESSION["name"]="";
-                            $_SESSION["mnumber"] ="";                    
+
                             
                             // Redirect user to welcome page
                             if($_SESSION["usertype"]=="Student"){
@@ -88,6 +88,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 exit;
                             }
                             if($_SESSION["usertype"]=="Admin"){
+                                $sql = "SELECT name, mobile, profileurl FROM admindata WHERE username='$username'";
+                                $result = mysqli_query($link, $sql);
+                                $row = mysqli_fetch_assoc($result);
+                                $_SESSION["name"]=$row["name"];
+                                $_SESSION["mnumber"] =$row["mobile"]; 
+                                $_SESSION["profileurl"]=$row["profileurl"]; 
+                                mysqli_close($link);     
                                 header("location: adminwelcome.php");
                                 exit;}
                             } 

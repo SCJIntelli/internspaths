@@ -317,7 +317,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
 
-                <form action="../handlers/viewStudentsHnd.php" method="post">
+                <form action="studata.php" method="post">
                 <div class="btn " >
                     <button class="login100-form-btn" class="btn btn-primary" >View All Students</button>
                 </div>

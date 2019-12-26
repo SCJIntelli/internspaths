@@ -15,7 +15,7 @@ require_once "config.php";
 
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $Email= $userType="";
-$username_err = $password_err = $confirm_password_err =$email_err= "";
+$username_err = $password_err = $confirm_password_err =$email_err=$_SESSION["result"]= "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -122,14 +122,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-             mysqli_stmt_close($stmt);
-             $sql = "SELECT id FROM users WHERE username='$username'";
-             $result = mysqli_query($link, $sql);
-             $row = mysqli_fetch_assoc($result);
-             $id=$row["id"];
+               mysqli_stmt_close($stmt);
+               $sql = "SELECT id FROM users WHERE username='$username'";
+               $result = mysqli_query($link, $sql);
+               $row = mysqli_fetch_assoc($result);
+               $id=$row["id"];
                                //header("location: adminwelcome.php");
-             $sql = "INSERT INTO admindata (id,username,email) VALUES ('$id','$username','$Email')";
-             if($stmt = mysqli_prepare($link, $sql)){
+               $sql = "INSERT INTO admindata (id,username,email) VALUES ('$id','$username','$Email')";
+               if($stmt = mysqli_prepare($link, $sql)){
                 mysqli_stmt_execute($stmt);
                 mysqli_close($link);
             }
@@ -180,7 +180,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Your <b><?php echo htmlspecialchars($_SESSION["usertype"]); ?></b> Control Center.</h1>
     </div>
     <div style="position: relative;top: -60px;left: 75%;width: 25%;">
-       <p>
+     <p>
 
         <a href="reset-password.php"  class="btn btn-warning">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
@@ -294,42 +294,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="wrapper" style="background-color: white;border-radius: 25px; width: 80% ;" >
                     <br><br>
                     <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Manage Student Data</h2><br>
-                    <p style="text-align:center">Please Fill This Form to Complete Your Profile.</p>
-                    <form action="editadminHnd.php" method="post" ><br>
-                        <div class="form-group ">
-                            <label >Name</label>
-                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION["name"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;" required oninvalid="this.setCustomValidity('Enter Your Name Here')"
+                    <p style="text-align:center">Select the Function You Need to Execute</p>
+                    <form action="../handlers/searchStuHnd.php" method="post">
+                        <div>
+                            <select name="stype">
+                              <option value="username">Name</option>
+                              <option value="index">Index</option>
+                              <option value="department">Department</option>
+                              <option value="uni">University</option>
+                          </select>
+                          <div class="form-group ">
+                            <label ></label>
+                            <input type="text" name="stext" class="form-control" value="Enter Data to Search"style="border-radius: 25px;width: 50%;position: relative;left: 150px;" required oninvalid="this.setCustomValidity('Enter Your Name Here')"
                             oninput="this.setCustomValidity('')" >
                         </div>
-                        <div class="form-group">
-                            <label >Username</label>
-                            <input type="text" name="username" class="form-control" value="<?php echo $_SESSION["username"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
 
-                        </div>
+                        <div class="btn">
+                        <input type="submit" class="login100-form-btn" class="btn btn-primary" name="submit" value="Search Student">
+                    </div>
+                    </div>
+                </form>
 
-                        <div class="form-group ">
-                            <label>Email</label>
-                            <input type="Email" name="email" class="form-control" value="<?php echo $_SESSION["email"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
 
-                        </div>
-                        <div class="form-group ">
-                            <label >Mobile Number</label>
-                            <input type="text" name="mnumber" class="form-control" value="<?php echo $_SESSION["mnumber"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Your Mobile Number Here')"
-                            oninput="this.setCustomValidity('')">
 
-                        </div>
-
-                        <div class="form-group"style="align">
-                            <br><br>
-                            <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">
-                            <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative; top:-50px;left:50%"  >
-                        </div>
-
-                    </form>
+                <form action="../handlers/viewStudentsHnd.php" method="post">
+                <div class="btn " >
+                    <button class="login100-form-btn" class="btn btn-primary" >View All Students</button>
                 </div>
+            </form>
+               
+                <br><br>
+
+
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div id="viewProfile" style="align-content: center;position: absolute;left: 15%; top:20%">
@@ -360,6 +360,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit">
     </form>
 </div>
+
+
+
+
 
 </body>
 

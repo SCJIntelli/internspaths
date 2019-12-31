@@ -13,126 +13,104 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 require_once "../php/config.php";
 
 
-$name = $email = $mnumber = "";
-$name_err = $email_err = $mnumber_err = "";
- 
+// Define variables and initialize with empty values
+$username = $email= $name= $mnumber="";
+
+
 // Processing form data when form is submitted
-if(isset($_POST["id"]) && !empty($_POST["id"])){
-    // Get hidden input value
-    $id = $_POST["id"];
-    
-    // Validate name
-    $input_name = trim($_POST["name"]);
-    if(empty($input_name)){
-        $name_err = "Please enter a name.";
-    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $name_err = "Please enter a valid name.";
-    } else{
-        $name = $input_name;
-    }
-    
-    // Validate address address
-    $input_email = trim($_POST["email"]);
-    if(empty($input_email)){
-        $email_err = "Please enter an address.";     
-    } else{
-        $email = $input_email;
-    }
-    
-    // Validate salary
-    $input_mnumber = trim($_POST["mnumber"]);
-    if(empty($input_salary)){
-        $mnumber_err = "Please enter the salary amount.";     
-    } elseif(!ctype_digit($input_mnumber)){
-        $mnumber_err = "Please enter a positive integer value.";
-    } else{
-        $mnumber = $input_mnumber;
-    }
-    
-    // Check input errors before inserting in database
-    if(empty($name_err) && empty($email_err) && empty($smnumber_err)){
-        // Prepare an update statement
-        $sql = "UPDATE admindata SET name=?, email=?, mobile=? WHERE id=?";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $id = trim($_SESSION["id"]);
+    $username = trim($_POST["username"]);
+    $email = trim($_POST["email"]);
+    $name = trim($_POST["name"]);
+    $mnumber = trim($_POST["mnumber"]);
+
+
+    ///////search for user name
+    $sql = "SELECT id FROM admindata WHERE username = ?";
+
+    if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssi", $param_name, $param_email, $param_mnumber, $param_id);
-            
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
+
             // Set parameters
-            $param_name = $name;
-            $param_email = $email;
-            $param_mnumber = $mnumber;
-            $param_id = $id;
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Records updated successfully. Redirect to landing page
-                header("location: index.php");
-                exit();
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
-        }
-         
-        // Close statement
-        
-    }
-    
-    // Close connection
-    
-} else{
-    // Check existence of id parameter before processing further
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        // Get URL parameter
-        $id =  trim($_GET["id"]);
-        
-        // Prepare a select statement
-        $sql = "SELECT * FROM admindata WHERE id = ?";
-        if($stmt = mysqli_prepare($link, $sql)){
+        $param_username = $username;
+        if(mysqli_stmt_execute($stmt)){
+            /* store result */
+            mysqli_stmt_store_result($stmt);
+
+            if(mysqli_stmt_num_rows($stmt) == 1){
+                $sql = "UPDATE admindata SET name =?, mobile=? WHERE username=?";
+                if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "i", $param_id);
-            
+                    mysqli_stmt_bind_param($stmt, "sss", $param_name,$param_mnumber,$param_username);
+
             // Set parameters
-            $param_id = $id;
-            
+                    $param_username = $username;
+                    $param_email = $email;
+                    $param_name = $name;
+                    $param_mnumber=$mnumber;
+                    $param_id=$id;
+
+
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                $result = mysqli_stmt_get_result($stmt);
-    
-                if(mysqli_num_rows($result) == 1){
-                    /* Fetch result row as an associative array. Since the result set
-                    contains only one row, we don't need to use while loop */
-                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                    
-                    // Retrieve individual field value
-                    $name = $row["name"];
-                    $email = $row["email"];
-                    $mnumber = $row["mobile"];
-                    $_SESSION["name"]=$name;
-                    $_SESSION["mnumber"]=$mnumber;
-                } else{
-                    // URL doesn't contain valid id. Redirect to error page
-                    // header("location: error.php");
-                    exit();
+                    if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                        $_SESSION["name"]=$name;
+                        $_SESSION["mnumber"]=$mnumber;
+                        header("location: editmyprofile.php");
+
+                    } else{
+                        echo "Error: " . $sql . "<br>" . mysqli_error($link);
+                    }
                 }
-                
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-        }
-        
+
         // Close statement
-        
-        
-        // Close connection
-        
-    }  else{
-        // URL doesn't contain id parameter. Redirect to error page
-        // header("location: error.php");
-        exit();
+                mysqli_stmt_close($stmt);
+
+
+    // Close connection
+                mysqli_close($link);
+
+            }
+            else{
+                $sql = "INSERT INTO admindata (id,username,email,name,mobile) VALUES (?, ?,?,?,?)";
+
+                if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+                    mysqli_stmt_bind_param($stmt, "issss", $param_id, $param_username,$param_email,$param_name,$param_mnumber);
+
+            // Set parameters
+                    $param_username = $username;
+                    $param_email = $email;
+                    $param_name = $name;
+                    $param_mnumber=$mnumber;
+                    $param_id=$id;
+
+
+            // Attempt to execute the prepared statement
+                    if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                        $_SESSION["name"]=$name;
+                        $_SESSION["mnumber"]=$mnumber;
+                        header("location: editmyprofile.php");
+
+                    } else{
+                        echo "Error: " . $sql . "<br>" . mysqli_error($link);
+                    }
+                }
+
+        // Close statement
+                mysqli_stmt_close($stmt);
+            }
+
+    // Close connection
+            mysqli_close($link);
+
+        }
+
     }
 }
-mysqli_close($link);
 ?>
 
 
@@ -262,30 +240,49 @@ mysqli_close($link);
           <!-- top tiles -->
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
          
- <div class="page-header">
-                        <h2>Update Record</h2>
-                    </div>
-                    <p>Please edit the input values and submit to update the record.</p>
-                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                            <label>Name</label>
-                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['name']; ?>">
-                            <span class="help-block"><?php echo $name_err;?></span>
+<div id="editAdminForm" style="">
+        <div class="limiter" >
+            <div class="container-addadmin" >
+                <div class="wrapper" style="background-color: white;border-radius: 25px; width: 80% ;" >
+                    <br><br>
+                    <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Edit Profile Data</h2><br>
+                    <p style="text-align:center">Please Fill This Form to Complete Your Profile.</p>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-label-left input_mask"><br>
+                        <div class="form-group ">
+                            <label >Name</label>
+                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION["name"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;" required oninvalid="this.setCustomValidity('Enter Your Name Here')"
+                            oninput="this.setCustomValidity('')" >
+
                         </div>
-                        <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group">
+                            <label >Username</label>
+                            <input type="text" name="username" class="form-control" value="<?php echo $_SESSION["username"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
+
+                        </div>
+
+                        <div class="form-group ">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" value="<?php echo $_SESSION['email']; ?>">
-                            <span class="help-block"><?php echo $email_err;?></span>
+                            <input type="Email" name="email" class="form-control" value="<?php echo $_SESSION["email"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"readonly required>
+
                         </div>
-                        <div class="form-group <?php echo (!empty($salary_err)) ? 'has-error' : ''; ?>">
-                            <label>Mobile Number</label>
-                            <input type="text" name="mnumber" class="form-control" value="<?php echo $_SESSION['mnumber']; ?>">
-                            <span class="help-block"><?php echo $mnumber_err;?></span>
+                        <div class="form-group ">
+                            <label >Mobile Number</label>
+                            <input type="text" name="mnumber" class="form-control" value="<?php echo $_SESSION["mnumber"]; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Your Mobile Number Here')"
+                            oninput="this.setCustomValidity('')">
+
                         </div>
-                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="index.php" class="btn btn-default">Cancel</a>
+
+                        <div class="form-group"style="align">
+                            <br><br>
+                            <input type="submit"  class="login100-form-btn"   value="Submit" style="width: 45% ; position: relative;left: 5%">
+                            <input type="reset" class="login100-form-btn" value="Reset" style="width: 45%;position:relative;"  >
+                        </div>
+
                     </form>
+                            </div>
+        </div>
+    </div>
+  </div>
           </div>
         </div>
           <!-- /top tiles -->

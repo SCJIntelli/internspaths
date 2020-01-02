@@ -63,7 +63,7 @@ require_once "../php/config.php";
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><?php echo ($_SESSION["name"]);?></h2>
+                <a href="viewadmin.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo ($_SESSION["name"]);?></h2></a>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -78,7 +78,7 @@ require_once "../php/config.php";
                   <li><a><i class="fa fa-home"></i> Administrators <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Home</a></li>
-                      <li><a href="editmyprofile?id='. $_SESSION['id'] .'">Edit My Profile</a></li>
+                      <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
                       <li><a href="addadmin.php">Add Administrators</a></li>
                       <li><a href="manageadmin.php">Manage Administrators</a></li>
 
@@ -171,8 +171,8 @@ require_once "../php/config.php";
                                 echo "<td>" . $row['name'] . "</td>";
                                 echo "<td>" . $row['mobile'] . "</td>";
                                 echo "<td>";
-                                echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
                                 echo "<a href='../handlers/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                 echo "</td>";
                                 echo "</tr>";

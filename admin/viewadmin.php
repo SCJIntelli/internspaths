@@ -119,7 +119,7 @@ require_once "../php/config.php";
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><?php echo ($_SESSION["name"]);?></h2>
+                <a href="viewadmin.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo ($_SESSION["name"]);?></h2></a>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -134,7 +134,7 @@ require_once "../php/config.php";
                   <li><a><i class="fa fa-home"></i> Administrators <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Home</a></li>
-                      <li><a href="editmyprofile.php">Edit My Profile</a></li>
+                      <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
                       <li><a href="addadmin.php">Add Administrators</a></li>
                       <li><a href="manageadmin.php">Manage Administrators</a></li>
 
@@ -200,10 +200,7 @@ require_once "../php/config.php";
                     <div class="col-md-4">
                         <div class="profile-img">
                             <img src="<?php echo $profileurl; ?>" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
-                            </div>
+                         
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -224,7 +221,7 @@ require_once "../php/config.php";
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <a href="editmyprofile.php?id=<?php echo $id?>" class="btn btn-success pull-right">Edit Profile</a>
                     </div>
                 </div>
                 <div class="row">

@@ -5,6 +5,7 @@ $target_dir = "../uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$id = $_POST["id"];
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -39,11 +40,11 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        $sql = "UPDATE admindata SET profileurl =? WHERE username=?";
+        $sql = "UPDATE admindata SET profileurl =? WHERE id=?";
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ss", $param_profileurl,$param_username);
-                    $param_username = $_SESSION["username"];
+                    mysqli_stmt_bind_param($stmt, "si", $param_profileurl,$param_id);
+                    $param_id = $id;
                     $param_profileurl=$target_file;
                     if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
@@ -58,8 +59,7 @@ if ($uploadOk == 0) {
 
     // Close connection
                 mysqli_close($link);
-                header("location: adminwelcome.php");
-                $_SESSION["profileurl"]=$target_file;
+                header("location: editmyprofile.php?id=$id");
 
         // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
     } else {

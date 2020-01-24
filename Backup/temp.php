@@ -27,3 +27,15 @@
 </div>
 
 </div>
+
+
+header("location: companywelcome.php");
+        $id=$_SESSION["id"];
+        $sql = "SELECT name, mobile, profileurl FROM admindata WHERE id='$id'";
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION["name"]=$row["name"];
+        $_SESSION["mnumber"] =$row["mobile"]; 
+        $_SESSION["profileurl"]=$row["profileurl"]; 
+        header("location: ../admin");
+        exit;

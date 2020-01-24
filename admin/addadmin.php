@@ -187,7 +187,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
+              <a href="../index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -223,14 +223,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
-                      <li><a href="form_advanced.html">Manage Students</a></li>
+                      <li><a href="managestudent.php">Manage Students</a></li>
                       <li><a href="form_validation.html">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
-                      <li><a href="media_gallery.html">Manage Companies</a></li>
+                      <li><a href="managecompany.php">Manage Companies</a></li>
                       <li><a href="typography.html">Add a New Company</a></li>
                     </ul>
                   </li>
@@ -274,52 +274,68 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="right_col" role="main">
           <!-- top tiles -->
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
-         
-<div id="addAdminForm">
 
-        <div class="limiter" >
-            <div class="container-addadmin" >
-                <div class="wrapper" style="background-color: white;border-radius: 25px; width: 80% ;" >
-                    <br><br>
-                    <h2 style="text-align:center;font-family: Poppins-Bold;font-size:39px ;">Add New Admin</h2><br>
-                    <p style="text-align:center">Please fill this form to create an admin account.</p>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"><br>
-                        <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                            <label >Username</label>
-                            <input type="text" name="username" class="form-control" value="<?php echo $username; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter User Name Here')"
+<div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Add Administrator</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">User Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input type="text" name="username" class="form-control" value="<?php echo $username; ?>" required oninvalid="this.setCustomValidity('Enter User Name Here')"
                             oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $username_err; ?></span>
                         </div>
-
-                        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" value="<?php echo $password; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Password Here')"
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input type="password" name="password" class="form-control" value="<?php echo $password; ?>" required oninvalid="this.setCustomValidity('Enter Password Here')"
                             oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $password_err; ?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                            <label>Confirm Password</label>
-                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>" style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Password Here Again')"
+                      </div>
+                      <div class="item form-group">
+                        <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"> Confirm Password </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>" required oninvalid="this.setCustomValidity('Enter Password Here Again')"
                             oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                            <label>Email</label>
-                            <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"style="border-radius: 25px;width: 50%;position: relative;left: 150px;"required oninvalid="this.setCustomValidity('Enter Your Email Here')"
+                      </div>
+                      <div class="item form-group">
+                        <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"> Email </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input type="Email" name="email" class="form-control" value="<?php echo $Email; ?>"required oninvalid="this.setCustomValidity('Enter Your Email Here')"
                             oninput="this.setCustomValidity('')">
                             <span class="help-block"><?php echo $email_err; ?></span>
                         </div>
-                        <div class="form-group"style="align">
-                            <br><br>
-                            <input type="submit"  class="btn btn-primary btn-round"   value="Submit" style="width: 30% ; position: relative;left: 5%">
-                            <input type="reset" class="btn btn-secondary btn-round" value="Reset" style="width: 30%;position: relative;left: 10%"  >
+                      </div>
+                      <div class="ln_solid"></div>
+                      <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                          <button class="btn btn-primary" type="button">Cancel</button>
+                          <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-success">Submit</button>
                         </div>
+                      </div>
 
                     </form>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
+         
           </div>
         </div>
           <!-- /top tiles -->

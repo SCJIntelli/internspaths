@@ -107,7 +107,7 @@ require_once "../php/config.php";
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
+              <a href="../index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -143,14 +143,14 @@ require_once "../php/config.php";
                   <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
-                      <li><a href="form_advanced.html">Manage Students</a></li>
+                      <li><a href="managestudent.php">Manage Students</a></li>
                       <li><a href="form_validation.html">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
-                      <li><a href="media_gallery.html">Manage Companies</a></li>
+                      <li><a href="managecompany.php">Manage Companies</a></li>
                       <li><a href="typography.html">Add a New Company</a></li>
                     </ul>
                   </li>

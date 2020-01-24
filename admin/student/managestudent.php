@@ -87,14 +87,14 @@ require_once "../php/config.php";
                   <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
-                      <li><a href="managestudent.php">Manage Students</a></li>
+                      <li><a href="../student/managestudent.php">Manage Students</a></li>
                       <li><a href="form_validation.html">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
-                      <li><a href="managecompany.php">Manage Companies</a></li>
+                      <li><a href="media_gallery.html">Manage Companies</a></li>
                       <li><a href="typography.html">Add a New Company</a></li>
                     </ul>
                   </li>
@@ -140,7 +140,7 @@ require_once "../php/config.php";
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
          
 <div class="page-header clearfix">
-                        <h2 class="pull-left">Administrators</h2>
+                        <h2 class="pull-left">Students</h2>
                         <a href="addadmin.php" class="btn btn-success pull-right">Add New Administrator</a>
                     </div>
                     <?php
@@ -148,7 +148,7 @@ require_once "../php/config.php";
                     require_once "../php/config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM admindata";
+                    $sql = "SELECT * FROM studetails";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table id='datatable' class='table table-bordered table-striped'>";

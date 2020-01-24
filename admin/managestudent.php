@@ -140,15 +140,15 @@ require_once "../php/config.php";
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
          
 <div class="page-header clearfix">
-                        <h2 class="pull-left">Administrators</h2>
-                        <a href="addadmin.php" class="btn btn-success pull-right">Add New Administrator</a>
+                        <h2 class="pull-left">Students</h2>
+                        <a href="addadmin.php" class="btn btn-success pull-right">Add New Students</a>
                     </div>
                     <?php
                     // Include config file
                     require_once "../php/config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM admindata";
+                    $sql = "SELECT * FROM studetails";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table id='datatable' class='table table-bordered table-striped'>";
@@ -169,7 +169,7 @@ require_once "../php/config.php";
                                 echo "<td>" . $row['username'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
                                 echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['mobile'] . "</td>";
+                                echo "<td>" . $row['mnumber'] . "</td>";
                                 echo "<td>";
                                 echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";

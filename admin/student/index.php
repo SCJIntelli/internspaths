@@ -87,14 +87,14 @@ require_once "../php/config.php";
                   <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
-                      <li><a href="managestudent.php">Manage Students</a></li>
+                      <li><a href="../student/managestudent.php">Manage Students</a></li>
                       <li><a href="form_validation.html">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
-                      <li><a href="managecompany.php">Manage Companies</a></li>
+                      <li><a href="media_gallery.html">Manage Companies</a></li>
                       <li><a href="typography.html">Add a New Company</a></li>
                     </ul>
                   </li>
@@ -137,68 +137,43 @@ require_once "../php/config.php";
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
-          <div class="col-md-12 col-sm-12" style="display: inline-block;" >
-         
-<div class="page-header clearfix">
-                        <h2 class="pull-left">Administrators</h2>
-                        <a href="addadmin.php" class="btn btn-success pull-right">Add New Administrator</a>
-                    </div>
-                    <?php
-                    // Include config file
-                    require_once "../php/config.php";
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM admindata";
-                    if($result = mysqli_query($link, $sql)){
-                        if(mysqli_num_rows($result) > 0){
-                            echo "<table id='datatable' class='table table-bordered table-striped'>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>#</th>";
-                            echo "<th>Userame</th>";
-                            echo "<th>Email Address</th>";
-                            echo "<th>Name</th>";
-                            echo "<th>Contact Number</th>";
-                            echo "<th>Action</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-                            while($row = mysqli_fetch_array($result)){
-                                echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['username'] . "</td>";
-                                echo "<td>" . $row['email'] . "</td>";
-                                echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['mobile'] . "</td>";
-                                echo "<td>";
-                                echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
-                                echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                            echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                    }
-
-                    // Close connection
-                    mysqli_close($link);
-                    ?>
+          <div class="row" style="display: inline-block;" >
+          <div class="tile_count">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+              <div class="count">2500</div>
+              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
+              <div class="count">123.50</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
+              <div class="count green">2,500</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
+              <div class="count">4,567</div>
+              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
+              <div class="count">2,315</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
+              <div class="count">7,325</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+            </div>
           </div>
         </div>
           <!-- /top tiles -->
 
-          <!-- /////////////contend///////// -->
-
-          <!-- /////////////contend///////// -->
-
+          
 
 
       </div>

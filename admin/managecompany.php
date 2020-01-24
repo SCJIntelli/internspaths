@@ -140,15 +140,15 @@ require_once "../php/config.php";
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
          
 <div class="page-header clearfix">
-                        <h2 class="pull-left">Administrators</h2>
-                        <a href="addadmin.php" class="btn btn-success pull-right">Add New Administrator</a>
+                        <h2 class="pull-left">Users</h2>
+                        <a href="../php/register.php" class="btn btn-success pull-right">Add New User</a>
                     </div>
                     <?php
                     // Include config file
                     require_once "../php/config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM admindata";
+                    $sql = "SELECT * FROM users";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table id='datatable' class='table table-bordered table-striped'>";
@@ -157,8 +157,8 @@ require_once "../php/config.php";
                             echo "<th>#</th>";
                             echo "<th>Userame</th>";
                             echo "<th>Email Address</th>";
-                            echo "<th>Name</th>";
-                            echo "<th>Contact Number</th>";
+                            echo "<th>User Type</th>";
+                            echo "<th>Created Date</th>";
                             echo "<th>Action</th>";
                             echo "</tr>";
                             echo "</thead>";
@@ -168,8 +168,8 @@ require_once "../php/config.php";
                                 echo "<td>" . $row['id'] . "</td>";
                                 echo "<td>" . $row['username'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
-                                echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['mobile'] . "</td>";
+                                echo "<td>" . $row['usertype'] . "</td>";
+                                echo "<td>" . $row['created_at'] . "</td>";
                                 echo "<td>";
                                 echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";

@@ -16,7 +16,7 @@ require_once "../php/config.php";
 $name = $email = $mnumber = "";
 $name_err = $email_err = $mnumber_err = "";
 
-$sql = "SELECT * FROM admindata WHERE id = ?";
+$sql = "SELECT * FROM company WHERE id = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters

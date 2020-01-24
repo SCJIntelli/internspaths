@@ -116,7 +116,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
+                mysqli_stmt_close($stmt);
+
+               $sql = "SELECT id FROM users WHERE username='$username'";
+               $result = mysqli_query($link, $sql);
+               $row = mysqli_fetch_assoc($result);
+               $id=$row["id"];
+            //header("location: adminwelcome.php");
+               if($userType == "Company"){
+               $sql = "INSERT INTO company (id,username,email) VALUES ('$id','$username','$Email')";
+               if($stmt = mysqli_prepare($link, $sql)){
+                mysqli_stmt_execute($stmt);
+            }
+            }
+                else if($userType == "Student"){
+                $sql = "INSERT INTO student (id,username,email) VALUES ('$id','$username','$Email')";
+               if($stmt = mysqli_prepare($link, $sql)){
+                mysqli_stmt_execute($stmt);
+            }
+            }
                 header("location: login.php");
+                mysqli_close($link);
             } else{
                 echo "Something went wrong. Please try again later.";
             }

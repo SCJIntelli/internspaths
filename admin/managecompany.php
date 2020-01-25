@@ -88,14 +88,14 @@ require_once "../php/config.php";
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
                       <li><a href="managestudent.php">Manage Students</a></li>
-                      <li><a href="form_validation.html">Add a New Student</a></li>
+                      <li><a href="addstudent.php">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
                       <li><a href="managecompany.php">Manage Companies</a></li>
-                      <li><a href="typography.html">Add a New Company</a></li>
+                      <li><a href="addcompany.php">Add a New Company</a></li>
                     </ul>
                   </li>
                   
@@ -140,8 +140,8 @@ require_once "../php/config.php";
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
          
 <div class="page-header clearfix">
-                        <h2 class="pull-left">Users</h2>
-                        <a href="../php/register.php" class="btn btn-success pull-right">Add New User</a>
+                        <h2 class="pull-left">Companies</h2>
+                        <a href="addcompany.php" class="btn btn-success pull-right">Add Company</a>
                     </div>
                     <?php
                     // Include config file
@@ -157,8 +157,6 @@ require_once "../php/config.php";
                             echo "<th>#</th>";
                             echo "<th>Userame</th>";
                             echo "<th>Email Address</th>";
-                            echo "<th>User Type</th>";
-                            echo "<th>Created Date</th>";
                             echo "<th>Action</th>";
                             echo "</tr>";
                             echo "</thead>";
@@ -168,12 +166,10 @@ require_once "../php/config.php";
                                 echo "<td>" . $row['id'] . "</td>";
                                 echo "<td>" . $row['username'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
-                                echo "<td>" . $row['usertype'] . "</td>";
-                                echo "<td>" . $row['created_at'] . "</td>";
                                 echo "<td>";
-                                echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
-                                echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                echo "<a href='viewcompany.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
+                                echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

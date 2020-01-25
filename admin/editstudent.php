@@ -16,7 +16,7 @@ require_once "../php/config.php";
 $name = $email = $mnumber = "";
 $name_err = $email_err = $mnumber_err = "";
 
-$sql = "SELECT * FROM company WHERE id = ?";
+$sql = "SELECT * FROM student WHERE id = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -110,7 +110,7 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE admindata SET name=?, email=?, mobile=? WHERE id=?";
+                $sql = "UPDATE student SET name=?, email=?, mobile=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -125,7 +125,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
                 // Records updated successfully. Redirect to landing page
-                        header("location: manageadmin.php");
+                        header("location: managestudent.php");
                         exit();
                     } else{
                         echo "Something went wrong. Please try again later.";
@@ -188,6 +188,7 @@ if($stmt = mysqli_prepare($link, $sql)){
         exit();
     }
 }
+
 mysqli_close($link);
 }
 ?>
@@ -336,7 +337,7 @@ mysqli_close($link);
                             <?php echo $name; ?>
                         </h5>
                         <h6>
-                            Administrator
+                            Student
                         </h6>
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -348,7 +349,7 @@ mysqli_close($link);
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <a href="viewadmin.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                    <a href="viewstudent.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
                 </div>
             </div>
             <div class="row">
@@ -416,7 +417,7 @@ mysqli_close($link);
         </div>
 
     </form>    
-    <form action="image.php" method="post" enctype="multipart/form-data" style="position: relative;top:-250px; left: 10px">
+    <form action="imagestu.php" method="post" enctype="multipart/form-data" style="position: relative;top:-250px; left: 10px">
          <div class="col-md-4" >
                     <div class="profile-img">
                         <div class="file btn btn-lg btn-primary" >

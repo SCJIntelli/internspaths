@@ -189,14 +189,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
                       <li><a href="form_advanced.html">Manage Students</a></li>
-                      <li><a href="form_validation.html">Add a New Student</a></li>
+                      <li><a href="addstudent.php">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
                       <li><a href="media_gallery.html">Manage Companies</a></li>
-                      <li><a href="typography.html">Add a New Company</a></li>
+                      <li><a href="addcompany.php">Add a New Company</a></li>
                     </ul>
                   </li>
                   

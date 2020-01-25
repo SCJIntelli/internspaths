@@ -18,7 +18,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         if(mysqli_stmt_execute($stmt)){
             // Records deleted successfully. Redirect to landing page
             mysqli_stmt_close($stmt);
-            $sql2 = "DELETE FROM admindata WHERE id = ?";
+            $sql2 = "DELETE FROM company WHERE id = ?";
             if($stmt = mysqli_prepare($link, $sql2)){
                 mysqli_stmt_bind_param($stmt, "i", $param_id);
                 if(mysqli_stmt_execute($stmt)){
@@ -46,7 +46,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check existence of id parameter
     if(empty(trim($_GET["id"]))){
         // URL doesn't contain id parameter. Redirect to error page
-        header("location: manageadmin.php");
+        header("location: managecompany.php");
         exit();
     }
 }
@@ -78,7 +78,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <p>Are you sure you want to delete this record?</p><br>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
-                                <a href="manageadmin.php" class="btn btn-default">No</a>
+                                <a href="managecompany.php" class="btn btn-default">No</a>
                             </p>
                         </div>
                     </form>

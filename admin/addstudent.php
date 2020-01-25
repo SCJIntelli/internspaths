@@ -102,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         mysqli_stmt_close($stmt);
     }
-    $userType = "Admin";
+    $userType = "Student";
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($email_err)){
 
@@ -128,11 +128,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                $row = mysqli_fetch_assoc($result);
                $id=$row["id"];
                                //header("location: adminwelcome.php");
-               $sql = "INSERT INTO admindata (id,username,email) VALUES ('$id','$username','$Email')";
+               $sql = "INSERT INTO student (id,username,email) VALUES ('$id','$username','$Email')";
                if($stmt = mysqli_prepare($link, $sql)){
                 mysqli_stmt_execute($stmt);
                 mysqli_close($link);
-                header("location: manageadmin.php");
+                header("location: managestudent.php");
             }
         }} else{
             echo "Something went wrong. Please try again later.";
@@ -281,7 +281,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add Administrator</h2>
+                    <h2>Add Student</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -325,7 +325,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       <div class="ln_solid"></div>
                       <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                          <a href="index.php">
+                          <a href="managestudent.php">
                           <button class="btn btn-primary" type="button">Back</button>
                           </a>
                           <button class="btn btn-primary" type="reset">Reset</button>

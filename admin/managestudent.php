@@ -88,14 +88,14 @@ require_once "../php/config.php";
                     <ul class="nav child_menu">
                       <li><a href="form.html">Search For a Student</a></li>
                       <li><a href="managestudent.php">Manage Students</a></li>
-                      <li><a href="form_validation.html">Add a New Student</a></li>
+                      <li><a href="addstudent.php">Add a New Student</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Search For a Company</a></li>
                       <li><a href="managecompany.php">Manage Companies</a></li>
-                      <li><a href="typography.html">Add a New Company</a></li>
+                      <li><a href="addcompany.php">Add a New Company</a></li>
                     </ul>
                   </li>
                   
@@ -141,7 +141,7 @@ require_once "../php/config.php";
          
 <div class="page-header clearfix">
                         <h2 class="pull-left">Students</h2>
-                        <a href="addadmin.php" class="btn btn-success pull-right">Add New Students</a>
+                        <a href="addstudent.php" class="btn btn-success pull-right">Add New Students</a>
                     </div>
                     <?php
                     // Include config file
@@ -169,11 +169,11 @@ require_once "../php/config.php";
                                 echo "<td>" . $row['username'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
                                 echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['mnumber'] . "</td>";
+                                echo "<td>" . $row['mobile'] . "</td>";
                                 echo "<td>";
-                                echo "<a href='viewadmin.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
-                                echo "<a href='editmyprofile?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                echo "<a href='viewstudent.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                echo "<a href='editstudent.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
+                                echo "<a href='deletestu.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

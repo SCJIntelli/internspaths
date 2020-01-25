@@ -148,7 +148,7 @@ require_once "../php/config.php";
                     require_once "../php/config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM studetails";
+                    $sql = "SELECT * FROM student";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table id='datatable' class='table table-bordered table-striped'>";

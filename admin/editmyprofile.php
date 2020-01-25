@@ -188,6 +188,7 @@ if($stmt = mysqli_prepare($link, $sql)){
         exit();
     }
 }
+
 mysqli_close($link);
 }
 ?>

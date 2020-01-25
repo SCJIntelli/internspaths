@@ -1,11 +1,15 @@
 <?php
 session_start();
 require_once "../php/config.php";
-$target_dir = "../uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 $id = $_POST["id"];
+$target_dir = "../uploads/";
+$extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
+$name = $id;
+$target_file = $target_dir . $name.".".$extension;
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
+
+
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -18,11 +22,11 @@ if(isset($_POST["submit"])) {
     }
 }
 // Check if file already exists
-if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
+// if (file_exists($target_file)) {
+//     echo "Sorry, file already exists.";
 
-    $uploadOk = 0;
-}
+//     $uploadOk = 0;
+// }
 // Check file size
 if ($_FILES["fileToUpload"]["size"] > 500000) {
     echo "Sorry, your file is too large.";

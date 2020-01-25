@@ -45,6 +45,7 @@ require_once "../php/config.php";
                 $name=$row["name"];
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
+                $occupation=$row["occupation"];
 
 
 
@@ -280,7 +281,7 @@ require_once "../php/config.php";
                                                 <label>Profession</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
+                                                <p><?php echo $occupation; ?></p>
                                             </div>
                                         </div>
                             </div>

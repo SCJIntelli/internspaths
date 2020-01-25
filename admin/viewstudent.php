@@ -39,7 +39,14 @@ require_once "../php/config.php";
                 $name=$row["name"];
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
-
+                $address=$row["address"];
+                $gender = $row["gender"];
+                $linkin = $row["linkedin"];
+                $perweb = $row["personalweb"];
+                $gpa = $row["gpa"];
+                $cvurl = $row["cvurl"];
+                $descrip = $row["descrip"];
+                $department =$row["department"];
 
 
             } else{
@@ -273,10 +280,66 @@ require_once "../php/config.php";
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Profession</label>
+                                                <label>Address</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
+                                                <p><?php echo $address; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Gender</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $gender; ?></p>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <label>LinkedIn Url</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><a href="<?php echo $linkin; ?>"><?php echo $linkin; ?></a></p>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Personal Website</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><a href="<?php echo $perweb; ?>"><?php echo $perweb; ?></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>GPA</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $gpa; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>View CV</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><a href="<?php echo $cvurl; ?>"><?php echo $cvurl; ?></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Description</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $descrip; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Field Of Study</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $department; ?></p>
                                             </div>
                                         </div>
                             </div>

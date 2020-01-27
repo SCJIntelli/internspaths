@@ -90,6 +90,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             $perweb = trim($_POST["perweb"]);
             $descrip =trim($_POST["descrip"]);
             $field = trim($_POST["field"]);
+            $gpa = trim($_POST["gpa"]);
 
     // Validate name
             $input_name = trim($_POST["name"]);
@@ -177,11 +178,11 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
         // Prepare an update statement
-                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=? WHERE id=?";
+                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssssssssi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssdi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -194,6 +195,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_linkin=$linkin;
                     $param_perweb=$perweb;
                     $param_field = $field;
+                    $param_gpa=$gpa;
                     
 
             // Attempt to execute the prepared statement
@@ -371,6 +373,8 @@ if($stmt = mysqli_prepare($link, $sql)){
                     </div>
                 </div>
             </div>
+           
+
             <input type="hidden" name="id" value="<?php echo $id; ?>"/>
             <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
         </form>
@@ -462,7 +466,7 @@ if($stmt = mysqli_prepare($link, $sql)){
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Current GPA <span class="required">*</span>
     </label>
     <div class="col-md-8 col-sm-8 ">
-      <input type="text" id="address" name="gpa" required="required" class="form-control " value="<?php echo $gpa ?>" >
+      <input type="Number" step="0.0001" min="0" max="4.2000" id="address" name="gpa" required="required" class="form-control " value="<?php echo $gpa ?>" >
   </div>
 </div>
 <div class="item form-group">
@@ -494,6 +498,8 @@ if($stmt = mysqli_prepare($link, $sql)){
        <input type="file" name="cvToUpload" id="cvToUpload" >
    </div>
 </div>
+<div>
+
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 <input type="submit" class="btn btn-primary col-md-12 col-sm-12 pull-right " value="Submit">
 
@@ -529,6 +535,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 </div>
 </div>
+
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

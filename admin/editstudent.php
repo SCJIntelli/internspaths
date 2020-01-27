@@ -342,98 +342,98 @@ if($stmt = mysqli_prepare($link, $sql)){
 <!-- page content -->
 <div class="right_col" role="main" style="height: 1200px">
   <!-- top tiles -->
-  <div class="col-md-10 col-sm-10" style="display: inline-block;" >
+  <div class="col-md-12 col-sm-12" style="display: inline-block;" >
+
     <div class="container emp-profile">
-        <div class="row" >
-            <div class="col-md-4">
-                <div class="col-md-8">
-                <div class="profile-head" style="position: relative; left: 195%">
-                    <h5>
-                        <?php echo $name; ?>
-                    </h5>
-                    <h6>
-                        Student
-                    </h6>
+      <div class="row">
+        <div class="col-md-4">
+            <div class="profile-head" >
 
-                </div>
+                <h5>
+                    <?php echo $name; ?>
+                </h5>
+                <h6>
+                    Student
+                </h6>
+
             </div>
+            <div class="profile-img">
+                <img src="<?php echo $profileurl; ?>" alt=""/>
+            </div>  
+            <br><br><br>
+            <div class="col-md-12 ">
+            <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
+               <div class="" >
                 <div class="profile-img">
-                    <img src="<?php echo $profileurl; ?>" alt=""/>
-
-                </div>
-                <form class="col-md-12" action="imagestu.php" method="post" enctype="multipart/form-data" style="position: absolute;top: 120%; left: 15%" >
-                 <div class="" >
-                    <div class="profile-img">
-                        <div class="file btn-primary" >
-                            Select Image
-                            <input  type="file" style="position: absolute;" name="fileToUpload" id="fileToUpload" >                          
-                        </div>
+                    <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
+                        Select Image
+                        <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
                     </div>
                 </div>
-                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit"style="position: relative;left: 14%">
-            </form>
-            
-        </div>
-        <div class="col-md-2" style="position: relative; right:-50%">
+            </div>
+            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+            <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
+        </form>
+    </div>
+    </div>
+    <div class="col-md-8">
+
+        <div class="col-md-12" >
             <a href="viewstudent.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
         </div>
+        <br><br><br>
+        <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype='multipart/form-data' >
 
-        <div class="row">
 
-            <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype='multipart/form-data' >
-            </div>
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active " id="home" role="tabpanel" aria-labelledby="home-tab">
 
-            <div class="col-md-9 " style="position: relative;left: 25%;top: -170px">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active " id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                              <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
-                          </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 ">
-                          <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
+                        <div class="col-md-8 col-sm-8 ">
+                          <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
                       </div>
                   </div>
-                  <br>
                   <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
                     </label>
-                    <div class="col-md-6 col-sm-6 ">
-                      <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
+                    <div class="col-md-8 col-sm-8 ">
+                      <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
                   </div>
               </div>
+              <br>
               <div class="item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
                 </label>
-                <div class="col-md-6 col-sm-6 ">
-                  <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+                <div class="col-md-8 col-sm-8 ">
+                  <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
               </div>
           </div>
           <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+            <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
             </label>
-            <div class="col-md-6 col-sm-6 ">
-              <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+            <div class="col-md-8 col-sm-8 ">
+              <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
           </div>
       </div>
       <div class="item form-group">
-        <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required">*</span>
+        <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
         </label>
-        <div class="col-md-6 col-sm-6 ">
-          <input type="text" id="address" name="address" required="required" class="form-control " value="<?php echo $address ?>" >
+        <div class="col-md-8 col-sm-8 ">
+          <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
       </div>
   </div>
   <div class="item form-group">
+    <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required">*</span>
+    </label>
+    <div class="col-md-8 col-sm-8 ">
+      <input type="text" id="address" name="address" required="required" class="form-control " value="<?php echo $address ?>" >
+  </div>
+</div>
+<div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align">Gender *:</label>
-    <div class="col-md-6 col-sm-6 " style="position: relative;top: 8px">
+    <div class="col-md-8 col-sm-8 " style="position: relative;top: 8px">
       <p>
         Male:
         <input type="radio" class="flat" name="gender" id="genderM" value="Male" <?php echo($gender == "Male" ? 'checked' : '') ?> required /> Female:
@@ -441,10 +441,10 @@ if($stmt = mysqli_prepare($link, $sql)){
     </p>
 </div>
 </div>
-<div class="item form-group" >
+<div class="item form-group " >
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Field Of Study <span class="required">*</span>
     </label>
-    <div class="col-md-6 col-sm-6 ">
+    <div class="col-md-8 col-sm-8 ">
       <select name = "field" style="height: 100%">
         <option value = "Electronic & Telecommunication Engineering" <?php echo($field == "Electronic & Telecommunication Engineering" ? 'selected' : '') ?>>Electronic & Telecommunication Engineering</option>
         <option value = "Computer Science & Engineering" <?php echo($field == "Computer Science & Engineering" ? 'selected' : '') ?> >Computer Science & Engineering</option>
@@ -461,21 +461,21 @@ if($stmt = mysqli_prepare($link, $sql)){
 <div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Current GPA <span class="required">*</span>
     </label>
-    <div class="col-md-6 col-sm-6 ">
+    <div class="col-md-8 col-sm-8 ">
       <input type="text" id="address" name="gpa" required="required" class="form-control " value="<?php echo $gpa ?>" >
   </div>
 </div>
 <div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >LinkedIn URL <span class="required">*</span>
     </label>
-    <div class="col-md-6 col-sm-6 ">
+    <div class="col-md-8 col-sm-8 ">
       <input type="text" id="address" name="linkin" required="required" class="form-control " value="<?php echo $linkin ?>" >
   </div>
 </div>
 <div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Personal Website URL <span class="required">*</span>
     </label>
-    <div class="col-md-6 col-sm-6 ">
+    <div class="col-md-8 col-sm-8 ">
       <input type="text" id="perweb" name="perweb" required="required" class="form-control " value="<?php echo $perweb ?>" >
   </div>
 </div>
@@ -483,19 +483,19 @@ if($stmt = mysqli_prepare($link, $sql)){
 <div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Short Description <span class="required">*</span>
     </label>
-    <div   class="col-md-6 col-sm-6 ">
+    <div   class="col-md-8 col-sm-8 ">
       <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
   </div>
 </div>
 <div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Upload CV <span class="required">*</span>
     </label>
-    <div class="col-md-6 col-sm-6 ">
-     <input type="file" name="cvToUpload" id="cvToUpload" >
- </div>
+    <div class="col-md-8 col-sm-8 ">
+       <input type="file" name="cvToUpload" id="cvToUpload" >
+   </div>
 </div>
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-<input type="submit" class="btn btn-primary" value="Submit">
+<input type="submit" class="btn btn-primary col-md-12 col-sm-12 pull-right " value="Submit">
 
 
 </div>
@@ -505,7 +505,11 @@ if($stmt = mysqli_prepare($link, $sql)){
 </div>
 </div>
 
-</form>    
+</form>
+
+</div>
+
+</div>
 
 </div>
 </div>

@@ -128,7 +128,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                $row = mysqli_fetch_assoc($result);
                $id=$row["id"];
                                //header("location: adminwelcome.php");
-               $sql = "INSERT INTO company(id,username,email) VALUES ('$id','$username','$Email')";
+               $sql = "INSERT INTO student(id,username,email) VALUES ('$id','$username','$Email')";
                if($stmt = mysqli_prepare($link, $sql)){
                 mysqli_stmt_execute($stmt);
                 mysqli_close($link);

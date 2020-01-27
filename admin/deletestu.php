@@ -22,7 +22,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             if($stmt = mysqli_prepare($link, $sql2)){
                 mysqli_stmt_bind_param($stmt, "i", $param_id);
                 if(mysqli_stmt_execute($stmt)){
-                                header("location: ../index.html");
+                                header("location: managestudent.php");
             exit();
                 }
                 else{

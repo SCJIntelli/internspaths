@@ -132,7 +132,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                if($stmt = mysqli_prepare($link, $sql)){
                 mysqli_stmt_execute($stmt);
                 mysqli_close($link);
-                header("location: managestudent.php");
+                header("location: managecompany.php");
+
             }
         }} else{
             echo "Something went wrong. Please try again later.";

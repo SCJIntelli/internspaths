@@ -182,7 +182,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <div class="container-login100" style="background-image: url('../images/bg-01.jpg')" >
        <!-- <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"> -->
         <div class="wrapper" style="background-color: white;border-radius: 25px;">
-            <span class="login100-form-title p-b-70">
+            <span class="login100-form-title ">
               Welcome to InternsPaths
           </span>
 

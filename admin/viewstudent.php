@@ -47,6 +47,7 @@ require_once "../php/config.php";
                 $cvurl = $row["cvurl"];
                 $descrip = $row["descrip"];
                 $department =$row["field"];
+                $lname = $row["lastname"];
 
 
             } else{
@@ -256,10 +257,18 @@ require_once "../php/config.php";
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Name</label>
+                                                <label>First Name</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><?php echo $name; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Last Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $lname; ?></p>
                                             </div>
                                         </div>
                                         <div class="row">

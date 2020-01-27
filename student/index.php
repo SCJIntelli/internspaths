@@ -159,7 +159,7 @@ require_once "../php/config.php";
       <div class="right_col" role="main">
         <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
-<section id="about" class="about-section section-padding">
+<section id="about" class="about-section ">
       <div class="container">
         <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
 

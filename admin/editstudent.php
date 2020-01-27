@@ -39,6 +39,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $username = $row["username"];
                 $email = $row["email"];
                 $name=$row["name"];
+                $lname=$row["lastname"];
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
                 $address=$row["address"];
@@ -102,6 +103,19 @@ if($stmt = mysqli_prepare($link, $sql)){
                 echo "Detected";
             } else{
                 $name = $input_name;
+
+            }
+
+
+            $input_lname = trim($_POST["lname"]);
+            if(empty($input_name)){
+                $name_err = "Please enter a name.";
+                echo "Detected";
+            } elseif(!filter_var($input_lname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                $name_err = "Please enter a valid name.";
+                echo "Detected";
+            } else{
+                $lname = $input_lname;
 
             }
 
@@ -178,11 +192,11 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
         // Prepare an update statement
-                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=? WHERE id=?";
+                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssssssssdi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssdsi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -196,6 +210,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_perweb=$perweb;
                     $param_field = $field;
                     $param_gpa=$gpa;
+                    $param_lname=$lname;
                     
 
             // Attempt to execute the prepared statement
@@ -352,7 +367,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <div class="profile-head" >
 
                 <h5>
-                    <?php echo $name; ?>
+                    <?php echo $name; ?> <?php echo $lname; ?>
                 </h5>
                 <h6>
                     Student
@@ -408,10 +423,17 @@ if($stmt = mysqli_prepare($link, $sql)){
               </div>
               <br>
               <div class="item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" >First Name <span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 ">
                   <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
+              </div>
+          </div>
+              <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" >Last Name <span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 ">
+                  <input type="text" id="lname" name="lname"  required="required" class="form-control " value="<?php echo $lname ?>" >
               </div>
           </div>
           <div class="item form-group">

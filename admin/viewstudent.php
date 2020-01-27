@@ -46,7 +46,7 @@ require_once "../php/config.php";
                 $gpa = $row["gpa"];
                 $cvurl = $row["cvurl"];
                 $descrip = $row["descrip"];
-                $department =$row["department"];
+                $department =$row["field"];
 
 
             } else{

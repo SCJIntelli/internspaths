@@ -58,7 +58,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name ?></title>
+  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -100,12 +100,12 @@ if($stmt = mysqli_prepare($link,$sql)){
 </head>
 
 <body class="nav-md">
-  <div class="container body">
+  <div class="container body" style="height:1000px;">
     <div class="main_container">
-      <div class="col-md-3 left_col">
+      <div class="col-md-3 left_col" style="height:1000px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -117,7 +117,7 @@ if($stmt = mysqli_prepare($link,$sql)){
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
-              <a href="viewadmin.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name;?></h2></a>
+              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2 style = "font-size: 14px; color: #ECF0F1; margin: 0;font-weight: 300; font-family: Arial; text-transform: unset;"><?php echo $name?></h2></a>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -129,12 +129,15 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li class="active"><a><i class="fa fa-beer active"></i> Console <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
+                <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
+                <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
+                <li><a href="searchcompany.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                    <li><a href="addadmin.php">Search Companies</a></li>
-                    <!-- <li><a href="manageadmin.php">Manage Administrators</a></li> -->
+                    <li><a href="searchcompany.php">Search Companies</a></li>
+                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
                   </ul>
                 </li>
@@ -174,7 +177,7 @@ if($stmt = mysqli_prepare($link,$sql)){
             <ul class=" navbar-right">
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                  <img src="<?php echo $profileurl ?>" alt=""><?php echo $name;?>
+                  <img src="<?php echo $profileurl ?>" alt=""><?php echo $name?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -194,7 +197,7 @@ if($stmt = mysqli_prepare($link,$sql)){
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
       <div class="container  ">
-        <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; ">About Us</h2>
+        <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
 
         <div class="row">
 

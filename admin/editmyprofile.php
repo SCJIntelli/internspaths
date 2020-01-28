@@ -14,7 +14,7 @@ require_once "../php/config.php";
 
 
 $name = $email = $mnumber = "";
-$name_err = $email_err = $mnumber_err = "";
+$name_err = $email_err = $mnumber_err= $error = "";
 
 $sql = "SELECT * FROM admindata WHERE id = ?";
 
@@ -82,31 +82,62 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $input_name = trim($_POST["name"]);
         if(empty($input_name)){
             $name_err = "Please enter a name.";
-            echo "Detected";
+            
         } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
             $name_err = "Please enter a valid name.";
-            echo "Detected";
+            
         } else{
             $name = $input_name;
 
         }
 
-// Validate address address
-        $input_email = trim($_POST["email"]);
-        if(empty($input_email)){
-            $email_err = "Please enter an address.";     
+        if(empty(trim($_POST["email"]))){
+            $email_err = "Please enter a email.";
         } else{
-            $email = $input_email;
-        }
+        // Prepare a select statement
+            $sql = "SELECT id FROM users WHERE email = ?";
 
-// Validate salary
+            if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "s", $param_email);
+
+            // Set parameters
+                $param_email = trim($_POST["email"]);
+
+            // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    /* store result */
+                    mysqli_stmt_store_result($stmt);
+
+                    if(mysqli_stmt_num_rows($stmt) == 1){
+                        $email_err = "This Email is already taken.";
+                    } else{
+                        $email = trim($_POST["email"]);
+                        mysqli_stmt_close($stmt);
+
+
+                        $sql = "INSERT INTO users (email) VALUES ('$email')";
+                        if($stmt = mysqli_prepare($link, $sql)){
+                            mysqli_stmt_execute($stmt);
+                        }
+                        else{
+                            $email_err= "Oops! Something went wrong. Please try again later.";
+                        }
+                    }
+                    mysqli_stmt_close($stmt);
+                }
+            }
+        }
         $input_mnumber = trim($_POST["mnumber"]);
         if(empty($input_mnumber)){
-            $mnumber_err = "Please enter the salary amount.";     
-        } elseif(!ctype_digit($input_mnumber)){
-            $mnumber_err = "Please enter a positive integer value.";
-        } else{
+            $mnumber_err = "Please enter the Mobile Number.";     
+        } 
+        elseif(preg_match('/^\d{10}$/',$input_mnumber)){
             $mnumber = $input_mnumber;
+        } else{
+            $mnumber_err = "Please enter a valid mobile number.(0123456789)";
+
+
         }
 
 // Check input errors before inserting in database
@@ -138,62 +169,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Close statement
 
         }
+        else{
+           $error.=$name_err.=$mnumber_err.=$email_err;
+           header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
+       }
 
 // Close connection
 
-    } else{
-// Check existence of id parameter before processing further
-        if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-    // Get URL parameter
-            $id =  trim($_GET["id"]);
+   }
+}
 
-    // Prepare a select statement
-            $sql = "SELECT * FROM admindata WHERE id = ?";
-            if($stmt = mysqli_prepare($link, $sql)){
-        // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "i", $param_id);
-
-        // Set parameters
-                $param_id = $id;
-
-        // Attempt to execute the prepared statement
-                if(mysqli_stmt_execute($stmt)){
-                    $result = mysqli_stmt_get_result($stmt);
-
-                    if(mysqli_num_rows($result) == 1){
-                /* Fetch result row as an associative array. Since the result set
-                contains only one row, we don't need to use while loop */
-                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                
-                // Retrieve individual field value
-                $name = $row["name"];
-                $email = $row["email"];
-                $mnumber = $row["mobile"];
-            } else{
-                // URL doesn't contain valid id. Redirect to error page
-                echo "Detected form last";
-                exit();
-            }
-            
-        } else{
-            echo "Oops! Something went wrong. Please try again later.";
-        }
-    }
-    
     // Close statement
-    
-    
+
+
     // Close connection
-    
-}  else{
-    // URL doesn't contain id parameter. Redirect to error page
-    // header("location: error.php");
-    exit();
-}
-}
 
 mysqli_close($link);
-}
+
 ?>
 
 
@@ -325,7 +317,7 @@ mysqli_close($link);
         <div class="container emp-profile">
             <div class="row">
                 <div class="col-md-4">
-                   <div class="profile-head" >
+                 <div class="profile-head" >
 
                     <h5>
                         <?php echo $name; ?> 
@@ -341,7 +333,7 @@ mysqli_close($link);
                 <br><br><br>
                 <div class="col-md-12 ">
                     <form  action="image.php" method="post" enctype="multipart/form-data"  >
-                     <div class="" >
+                       <div class="" >
                         <div class="profile-img">
                             <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
                                 Select Image
@@ -353,82 +345,82 @@ mysqli_close($link);
                     <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
                 </form>
             </div>
-    </div>
+        </div>
         <div class="col-md-8">
             <div class="col-md-12" >
-                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                <a href="viewadmin.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
             </div>
             <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                             <div class="item form-group">
+                               <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
                                 </label>
                                 <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
                               </div>
                           </div>
-                            <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
-                                </label>
-                                <div class="col-md-8 col-sm-8 ">
-                                  <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
-                              </div>
-                          </div>
                           <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
-                                </label>
-                                <div class="col-md-8 col-sm-8 ">
-                                  <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
-                              </div>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 ">
+                              <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
                           </div>
-                          <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
-                                </label>
-                                <div class="col-md-8 col-sm-8 ">
-                                  <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
-                              </div>
-                          </div>
-                        <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
-                                </label>
-                                <div class="col-md-8 col-sm-8 ">
-                                  <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
-                              </div>
-                          </div>
-                        <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Proffession <span class="required">*</span>
-                                </label>
-                                <div class="col-md-8 col-sm-8 ">
-                                  <input type="text" id="occupation" name="occupation" required="required" class="form-control " value="<?php echo $occupation ?>" >
-                              </div>
-                          </div>
-                            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                            <input type="submit" class="btn btn-primary pull-right col-md-15" value="Submit">
-                       
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-8 col-sm-8 ">
+                          <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
+                      </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
+                    </label>
+                    <div class="col-md-8 col-sm-8 ">
+                      <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+                  </div>
+              </div>
+              <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 ">
+                  <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+              </div>
+          </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" >Proffession <span class="required">*</span>
+            </label>
+            <div class="col-md-8 col-sm-8 ">
+              <input type="text" id="occupation" name="occupation" required="required" class="form-control " value="<?php echo $occupation ?>" >
+          </div>
+      </div>
+      <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+      <input type="submit" class="btn btn-primary pull-right col-md-15" value="Submit">
 
 
+  </div>
+
+</div>
+</div>
+</div>
+</div>
 
 
- </form>    
-        </div>
-        <br><br><br>
-        
 
-         </div>
-    </div>
+
+
+
+</form>    
+</div>
+<br><br><br>
+
+
+</div>
+</div>
 
 </div>
 </div>

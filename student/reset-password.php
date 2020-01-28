@@ -2,16 +2,15 @@
 // Initialize the session
 session_start();
 // Include config file
-require_once "config.php";
+require_once "../php/config.php";
 $id=trim($_GET["id"]); 
-$error="";
+$return=trim($_GET["return"]);
  
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $id=trim($_POST["id"]);
  
     // Validate new password
     if(empty(trim($_POST["new_password"]))){
@@ -47,7 +46,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
-                header("location: login.php");
+                $return = trim($_POST["return"]);
+                header("location: $return");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -56,10 +56,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         // Close statement
         mysqli_stmt_close($stmt);
-    }
-    else{
-        $error.=$new_password_err.=$confirm_password_err;
-        header("location: error.php?id=$id & return=reset-password.php?id=$id & error=$error ");
     }
     
     // Close connection
@@ -123,10 +119,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="hidden" name="id" value="<?php echo $id; ?>" >
+                <input type="hidden" name="return" value="<?php echo $return; ?>" >
                 <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
                 <p style="text-align: center;"><span class="txt1">
                 Don’t want to continue?
-            </span> <a href="login.php" class="txt2"><br>Back to Login</a>.</p>
+            </span> <a href="<?php echo $return; ?>" class="txt2"><br>Back</a>.</p>
             </div>
         </form>
         <!--     </div> -->    

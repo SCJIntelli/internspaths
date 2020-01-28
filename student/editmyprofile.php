@@ -307,7 +307,7 @@ if($stmt = mysqli_prepare($link, $sql)){
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -315,11 +315,11 @@ if($stmt = mysqli_prepare($link, $sql)){
         <!-- menu profile quick info -->
         <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $_SESSION["profileurl"]; ?>" alt="..." class="img-circle profile_img">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
           </div>
           <div class="profile_info">
               <span>Welcome,</span>
-              <a href="viewadmin.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo ($_SESSION["name"]);?></h2></a>
+              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name;?></h2></a>
           </div>
       </div>
       <!-- /menu profile quick info -->
@@ -376,7 +376,7 @@ if($stmt = mysqli_prepare($link, $sql)){
         <ul class=" navbar-right">
           <li class="nav-item dropdown open" style="padding-left: 15px;">
             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo $_SESSION["profileurl"]; ?>" alt=""><?php echo ($_SESSION["name"]);?>
+              <img src="<?php echo $profileurl ?>" alt=""><?php echo $name ?>
           </a>
           <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>

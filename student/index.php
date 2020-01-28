@@ -101,9 +101,9 @@ if($stmt = mysqli_prepare($link,$sql)){
 </head>
 
 <body class="nav-md">
-  <div class="container body">
+  <div class="container body" style="height:1000px;">
     <div class="main_container">
-      <div class="col-md-3 left_col">
+      <div class="col-md-3 left_col" style="height:1000px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
             <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
@@ -130,12 +130,15 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li><a><i class="fa fa-beer active"></i> Console <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
+                <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
+                <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
+                <li><a href="searchcompany.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                  <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                    <li><a href="addadmin.php">Search Companies</a></li>
-                    <!-- <li><a href="manageadmin.php">Manage Administrators</a></li> -->
+                    <li><a href="searchcompany.php">Search Companies</a></li>
+                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
                   </ul>
                 </li>

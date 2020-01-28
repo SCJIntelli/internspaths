@@ -214,18 +214,18 @@ if($stmt = mysqli_prepare($link, $sql)){
         // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                     } else {
         // $uploadOk=0;
-                     $pdf_error;
+                       $pdf_error;
 
-                 }
-             }
-         }
+                   }
+               }
+           }
 ///////////////////////////////////////////////////////////////////
 
 
 
 
     // Check input errors before inserting in database
-         if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
+           if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
         // Prepare an update statement
             $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=? WHERE id=?";
 
@@ -281,30 +281,30 @@ if($stmt = mysqli_prepare($link, $sql)){
 
   <title>InternsPaths | <?php echo $name." ".$lname ?></title>
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
-        <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <!-- NProgress -->
-        <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-        <!-- iCheck -->
-        <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-        <!-- bootstrap-progressbar -->
-        <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-        <!-- JQVMap -->
-        <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-        <!-- bootstrap-daterangepicker -->
-        <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- bootstrap-progressbar -->
+  <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+  <!-- bootstrap-daterangepicker -->
+  <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-        <!-- Custom Theme Style -->
-        <link href="../build/css/custom.min.css" rel="stylesheet">
-        <link href="css/viewprof.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="../build/css/custom.min.css" rel="stylesheet">
+  <link href="css/viewprof.css" rel="stylesheet">
 
 </head>
 
 <body class="nav-md">
-  <div class="container body">
+    <div class="container body" style="height:1200px;">
     <div class="main_container">
-      <div class="col-md-3 left_col">
+      <div class="col-md-3 left_col" style="height:1200px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
             <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
@@ -331,14 +331,17 @@ if($stmt = mysqli_prepare($link, $sql)){
         <div class="menu_section">
           <h3>General</h3>
           <ul class="nav side-menu">
-            <li><a><i class="fa fa-beer active"></i> Console <span class="fa fa-chevron-down"></span></a>
-              <ul class="nav child_menu">
+            <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
+            <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+            <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
+            <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Companies</a></li>
+              <!-- <ul class="nav child_menu">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
                 <li><a href="addadmin.php">Search Companies</a></li>
-                <!-- <li><a href="manageadmin.php">Manage Administrators</a></li> -->
+                <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
-            </ul>
+            <!-- </ul> --> 
         </li>
                 <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
@@ -414,7 +417,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <br><br><br>
             <div class="col-md-12 ">
                 <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
-                 <div class="" >
+                   <div class="" >
                     <div class="profile-img">
                         <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
                             Select Image
@@ -551,8 +554,8 @@ if($stmt = mysqli_prepare($link, $sql)){
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Upload CV <span class="required">*</span>
     </label>
     <div class="col-md-8 col-sm-8 ">
-     <input type="file" name="cvToUpload" id="cvToUpload" >
- </div>
+       <input type="file" name="cvToUpload" id="cvToUpload" >
+   </div>
 </div>
 <div>
 

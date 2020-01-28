@@ -4,12 +4,14 @@ session_start();
 // Include config file
 require_once "config.php";
 $id=trim($_GET["id"]); 
+$error="";
  
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $id=trim($_POST["id"]);
  
     // Validate new password
     if(empty(trim($_POST["new_password"]))){
@@ -54,6 +56,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         // Close statement
         mysqli_stmt_close($stmt);
+    }
+    else{
+        $error.=$new_password_err.=$confirm_password_err;
+        header("location: error.php?id=$id & return=reset-password.php?id=$id & error=$error ");
     }
     
     // Close connection

@@ -4,6 +4,7 @@ session_start();
 // Include config file
 require_once "../php/config.php";
 $id=trim($_GET["id"]); 
+$return=trim($_GET["return"]);
  
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
@@ -45,7 +46,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
-                header("location: login.php");
+                $return = trim($_POST["return"]);
+                header("location: $return");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -117,6 +119,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="hidden" name="id" value="<?php echo $id; ?>" >
+                <input type="hidden" name="return" value="<?php echo $return; ?>" >
                 <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
                 <p style="text-align: center;"><span class="txt1">
                 Don’t want to continue?

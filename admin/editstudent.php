@@ -174,7 +174,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 elseif(preg_match('/^\d{10}$/',$input_mnumber)){
                     $mnumber = $input_mnumber;
                 } else{
-                    $mnumber_err = "Please enter a valid mobile number.";
+                    $mnumber_err = "Please enter a valid mobile number.(0123456789)";
 
                     
                 }

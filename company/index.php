@@ -35,6 +35,9 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $id=$row["id"];
                 $descrip=$row["description"];
                 $location=$row["location"];
+                $facebook=$row["facebook"];
+                $linkedin=$row["linkedin"];
+                $twitter=$row["twiiter"];
 
                 
 
@@ -208,6 +211,9 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
                 <li><strong>Email:</strong> <?php echo $email?></li>
                 <li><strong>Find Us:<a href=<?php echo $location?>><i class="fa fa-map-marker"></i></a></strong></li>
+                <li><strong><a href=<?php echo $facebook?>><i class="fa fa-facebook-square"></i></a></strong></li>
+                <li><strong><a href=<?php echo $linkedin?>><i class="fa fa-linkedin-square"></i></a></strong></li>
+                <li><strong><a href=<?php echo $twitter?>><i class="fa fa-twitter-square"></i></a></strong></li>
       
 
               </ul>

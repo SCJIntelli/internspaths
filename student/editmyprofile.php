@@ -319,7 +319,7 @@ if($stmt = mysqli_prepare($link, $sql)){
           </div>
           <div class="profile_info">
               <span>Welcome,</span>
-              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name;?></h2></a>
+              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name." ".$lname?></h2></a>
           </div>
       </div>
       <!-- /menu profile quick info -->
@@ -379,7 +379,7 @@ if($stmt = mysqli_prepare($link, $sql)){
         <ul class=" navbar-right">
           <li class="nav-item dropdown open" style="padding-left: 15px;">
             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo $profileurl ?>" alt=""><?php echo $name ?>
+              <img src="<?php echo $profileurl ?>" alt=""><?php echo $name." ".$lname ?>
           </a>
           <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>

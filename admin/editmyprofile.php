@@ -325,7 +325,7 @@ mysqli_close($link);
         <div class="container emp-profile">
             <div class="row">
                 <div class="col-md-4">
-                     <div class="profile-head" >
+                   <div class="profile-head" >
 
                     <h5>
                         <?php echo $name; ?> 
@@ -334,12 +334,104 @@ mysqli_close($link);
                         Administrator
                     </h6>
                 </div>
-                </div>
-                
-            </div>
+                <div class="profile-img">
+                    <img src="<?php echo $profileurl; ?>" alt=""/>
 
-        </div>
+                </div>
+                <br><br><br>
+                <div class="col-md-12 ">
+                    <form  action="image.php" method="post" enctype="multipart/form-data"  >
+                     <div class="" >
+                        <div class="profile-img">
+                            <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
+                                Select Image
+                                <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                    <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
+                </form>
+            </div>
     </div>
+        <div class="col-md-8">
+            <div class="col-md-12" >
+                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+            </div>
+            <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                             <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
+                              </div>
+                          </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+                              </div>
+                          </div>
+                        <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+                              </div>
+                          </div>
+                        <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Proffession <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 ">
+                                  <input type="text" id="occupation" name="occupation" required="required" class="form-control " value="<?php echo $occupation ?>" >
+                              </div>
+                          </div>
+                            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                            <input type="submit" class="btn btn-primary pull-right col-md-15" value="Submit">
+                       
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+ </form>    
+        </div>
+        <br><br><br>
+        
+
+         </div>
+    </div>
+
+</div>
+</div>
 
 </div>
 

@@ -47,11 +47,75 @@ if($stmt = mysqli_prepare($link,$sql)){
         }
     }
 }
+
+
+$new_password = $confirm_password = "";
+$new_password_err = $confirm_password_err = "";
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Validate new password
+    if(empty(trim($_POST["new_password"]))){
+        $new_password_err = "Please enter the new password.";     
+    } elseif(strlen(trim($_POST["new_password"])) < 6){
+        $new_password_err = "Password must have atleast 6 characters.";
+    } else{
+        $new_password = trim($_POST["new_password"]);
+    }
+    
+    // Validate confirm password
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm the password.";
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
+        if(empty($new_password_err) && ($new_password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
+        }
+    }
+    // Check input errors before updating the database
+    if(empty($new_password_err) && empty($confirm_password_err)){
+        // Prepare an update statement
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
+            
+            // Set parameters
+            $param_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $param_id = $id;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Password updated successfully. Destroy the session, and redirect to login page
+                $return = trim($_POST["return"]);
+                header("location: index.php");
+                exit();
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+        
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
+    
+    // Close connection
+    mysqli_close($link);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+        <title>InternsPaths</title>
+
+        <style type="text/css">
+            body{ font: 14px sans-serif; }
+            .wrapper{ width: 350px; padding: 20px; }
+        </style>
+        
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
@@ -196,70 +260,41 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <!-- top tiles -->
-        <div class="row" style="display: inline-block;" >
-<section id="about" class="about-section ">
-      <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
+        <div class="row" style="display: inline-block; " >
+      <div class="col-md-12 pull-right" style="margin-left: auto; margin-right: auto;">
+      <!-- <div class="container-login100" style="background-image: url('../images/bg-01.jpg')" > -->
+       <!-- <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"> -->
+        <div class="wrapper" style="background-color: white;border-radius: 25px;">
+            <span class="login100-form-title ">
+              Reset Password
+          </span>
 
-        <div class="row">
-
-          <div class="col-md-4 col-md-push-8">
-            <div class="biography">
-              <div class="">
-                <img src=<?php echo $profileurl ?> >
-              </div>
-              <ul>
-                <li><strong>Name:</strong> <?php echo $name." ".$lname ?></li>
-                <li><strong>Date of birth:</strong> 2000.1.1 </li>
-                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
-                <li><strong>Gender:</strong> <?php echo $gender?></li>
-                <li><strong>Phone:</strong> <?php echo $mnumber?></li>
-                <li><strong>Email:</strong> <?php echo $email?></li>
-                <li><strong>Field:</strong> <?php echo $field?></li>
-                <li><strong>Personal Website:</strong><a href="<?php echo $perweb?>">   <?php echo $perweb?></a></li>
-                <li><strong>LinkedIn Address:</strong> <a href="<?php echo $linkin?>"><?php echo $linkin?></a></li>
-                <li><strong>GPA:</strong> <?php echo $gpa?></li>
-
-              </ul>
+          <p>Enter New Password.</p>
+          
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+            <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
+                <label>New Password </label>
+                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>" style="border-radius: 25px">
+                <span class="help-block"><?php echo $new_password_err; ?></span>
             </div>
-          </div> <!-- col-md-4 -->
-
-          <div class="col-md-8 col-md-pull-4">
-            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>Description</h3>
-              <p>
-                <?php echo $descrip?>
-              </p>
+            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control" style="border-radius: 25px">
+                <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-
-            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>What I Do ?</h3>
-              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
-
-              <ul class="list-check">
-                <li>User Experience Design</li>
-                <li>Interface Design</li>
-                <li>Product Design</li>
-                <li>Branding Design</li>
-                <li>Digital Painting</li>
-                <li>Video Editing</li>
-              </ul>
+            <div class="form-group">
+                <input type="hidden" name="id" value="<?php echo $id; ?>" >
+<!--                 <input type="hidden" name="return" value="<?php echo $return; ?>" > -->
+                <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
+                <p style="text-align: center;"><span class="txt1">
+                Don’t want to continue?
+            </span> <a href="index.php" class="txt2"><br>Back</a>.</p>
             </div>
-
-            <div class="my-signature">
-              <img src="../assets/images/sign.png" alt="">
-            </div>
-
-            <div class="download-button">
-              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>
-            </div>
-          </div>
-
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-        </div>
+        </form>
+        <!--     </div> -->    
+    </div>
+<!-- </div> -->
+</div>
       </div>
       <!-- /top tiles -->
 
@@ -268,6 +303,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 
     </div>
   </div>
+</div>
 
   <!-- jQuery -->
   <script src="../vendors/jquery/dist/jquery.min.js"></script>

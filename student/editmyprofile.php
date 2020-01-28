@@ -1,372 +1,375 @@
-<?php
+    <?php
 
-// Initialize the session
-session_start();
+    // Initialize the session
+    session_start();
 
-// Check if the user is logged in, if not then redirect him to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
-
-// Include config file
-require_once "../php/config.php";
-
-
-$name = $email = $mnumber = "";
-$name_err = $email_err = $mnumber_err =$error= "";
-
-$sql = "SELECT * FROM student WHERE id = ?";
-
-if($stmt = mysqli_prepare($link, $sql)){
-        // Bind variables to the prepared statement as parameters
-    mysqli_stmt_bind_param($stmt, "i", $param_id);
-
-        // Set parameters
-    $param_id = $_SESSION["id"];
-
-        // Attempt to execute the prepared statement
-    if(mysqli_stmt_execute($stmt)){
-        $result = mysqli_stmt_get_result($stmt);
-
-        if(mysqli_num_rows($result) == 1){
-                /* Fetch result row as an associative array. Since the result set
-                contains only one row, we don't need to use while loop */
-                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                
-                // Retrieve individual field value
-                $id=$row["id"];
-                $username = $row["username"];
-                $email = $row["email"];
-                $name=$row["name"];
-                $lname=$row["lastname"];
-                $mnumber=$row["mobile"];
-                $profileurl=$row["profileurl"];
-                $address=$row["address"];
-                $gender=$row["gender"];
-                $linkin = $row["linkedin"];
-                $perweb = $row["personalweb"];
-                $descrip = $row["descrip"];
-                $field =$row["field"];
-                $gpa = $row["gpa"];
-                $cvurl = $row["cvurl"];
-
-
-            } else{
-                // URL doesn't contain valid id parameter. Redirect to error page
-                exit();
-            }
-            
-        }
-        else{
-            $error= "Oops! Something went wrong. Please try again later.";
-            header("location: error.php?id=$id & return=editstudent.php & error=$error ");
-        }
-
-
-    // Close statement
-        mysqli_stmt_close($stmt);
-
-    // Close connection
-
-    } else{
-    // URL doesn't contain id parameter. Redirect to error page
-        header("location: error.php?return=editstudent.php & error=$error");
-        exit();
+    // Check if the user is logged in, if not then redirect him to login page
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: login.php");
+        exit;
     }
 
+    // Include config file
+    require_once "../php/config.php";
 
 
+    $name = $email = $mnumber = "";
+    $name_err = $email_err = $mnumber_err =$error= "";
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $sql = "SELECT * FROM student WHERE id = ?";
 
-
-
-// Processing form data when form is submitted
-        if(isset($_POST["id"]) && !empty($_POST["id"])){
-    // Get hidden input value
-            $id = $_POST["id"];
-            $gender=trim($_POST["gender"]);
-            $address=trim($_POST["address"]);
-            $linkin = trim($_POST["linkin"]);
-            $perweb = trim($_POST["perweb"]);
-            $descrip =trim($_POST["descrip"]);
-            $field = trim($_POST["field"]);
-            $gpa = trim($_POST["gpa"]);
-
-    // Validate name
-            $input_name = trim($_POST["name"]);
-            if(empty($input_name)){
-                $name_err = "Please enter a name.";
-                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
-            } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-                $name_err = "Please enter a valid name.";
-                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
-            } else{
-                $name = $input_name;
-
-            }
-
-
-            $input_lname = trim($_POST["lname"]);
-            if(empty($input_name)){
-                $name_err = "Please enter a name.";
-                echo "Detected";
-            } elseif(!filter_var($input_lname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-                $name_err = "Please enter a valid name.";
-                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
-            } else{
-                $lname = $input_lname;
-
-            }
-
-
-
-
-
-
-
-
-    // Validate address address
-            if(empty(trim($_POST["email"]))){
-                $email_err = "Please enter a email.";
-            } else{
-        // Prepare a select statement
-                $sql = "SELECT id FROM users WHERE email = ?";
-
-                if($stmt = mysqli_prepare($link, $sql)){
+    if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "s", $param_email);
+        mysqli_stmt_bind_param($stmt, "i", $param_id);
 
             // Set parameters
-                    $param_email = trim($_POST["email"]);
+        $param_id = $_SESSION["id"];
 
             // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                        /* store result */
-                        mysqli_stmt_store_result($stmt);
+        if(mysqli_stmt_execute($stmt)){
+            $result = mysqli_stmt_get_result($stmt);
 
-                        if(mysqli_stmt_num_rows($stmt) == 1){
-                            $email_err = "This Email is already taken.";
-                        } else{
-                            $email = trim($_POST["email"]);
-                            mysqli_stmt_close($stmt);
+            if(mysqli_num_rows($result) == 1){
+                    /* Fetch result row as an associative array. Since the result set
+                    contains only one row, we don't need to use while loop */
+                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    
+                    // Retrieve individual field value
+                    $id=$row["id"];
+                    $username = $row["username"];
+                    $email = $row["email"];
+                    $name=$row["name"];
+                    $lname=$row["lastname"];
+                    $mnumber=$row["mobile"];
+                    $profileurl=$row["profileurl"];
+                    $address=$row["address"];
+                    $gender=$row["gender"];
+                    $linkin = $row["linkedin"];
+                    $perweb = $row["personalweb"];
+                    $descrip = $row["descrip"];
+                    $field =$row["field"];
+                    $gpa = $row["gpa"];
+                    $cvurl = $row["cvurl"];
+                    $bday = $row["dateofbirth"];
 
 
-                            $sql = "INSERT INTO users (email) VALUES ('$email')";
-                            if($stmt = mysqli_prepare($link, $sql)){
-                                mysqli_stmt_execute($stmt);
-                            }
-                            else{
-                                $email_err= "Oops! Something went wrong. Please try again later.";
-                            }
-                        }
-                        mysqli_stmt_close($stmt);
-                    }
+                } else{
+                    // URL doesn't contain valid id parameter. Redirect to error page
+                    exit();
                 }
-            }
-
-    // Validate mobile
-            $input_mnumber = trim($_POST["mnumber"]);
-            if(empty($input_mnumber)){
-                $mnumber_err = "Please enter the Mobile Number.";     
-            } 
-            elseif(preg_match('/^\d{10}$/',$input_mnumber)){
-                $mnumber = $input_mnumber;
-            } else{
-                $mnumber_err = "Please enter a valid mobile number.(0123456789)";
-
-
-            }
-//////////////////////////////////validate PDF ////////////////////
-            $param_cvurl= $cvurl;
-            $uploadOk = 1;
-            $target_dir = "../cvuploads/";
-            if(!isset($_FILES['cvToUpload']) || $_FILES['cvToUpload']['error'] == UPLOAD_ERR_NO_FILE) {
-                $param_cvurl=$cvurl;
+                
             }
             else{
-                $extension = pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION);
-                $fname = $id;
-                $target_file = $target_dir . $fname.".".$extension;
-
-                $pdf_error="";
-                $pdfFileType = strtolower(pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION));
-
-
-                if ($_FILES["cvToUpload"]["size"] > 15000000) {
-                    $pdf_error.=  "Sorry, your file is too large.";
-                    $uploadOk = 0;
-                }
-
-                if($pdfFileType != "pdf" && $pdfFileType != "docx" ) {
-                    $pdf_error.= "Sorry, only PDF & Docx files are allowed.";
-                    $uploadOk = 0;
-                }
-
-//////////////////////////////upload PDF //////////////////////////
-                if ($uploadOk == 0) {
-                    echo $pdf_error;
-// if everything is ok, try to upload file
-                } else {
-                    if (move_uploaded_file($_FILES["cvToUpload"]["tmp_name"], $target_file)) {
-                        $param_cvurl=$target_file;
-        // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-                    } else {
-        // $uploadOk=0;
-                       $pdf_error;
-
-                   }
-               }
-           }
-///////////////////////////////////////////////////////////////////
-
-
-
-
-    // Check input errors before inserting in database
-           if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
-        // Prepare an update statement
-            $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=? WHERE id=?";
-
-            if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "ssssssssssdsi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname, $param_id);
-
-            // Set parameters
-                $param_name = $name;
-                $param_email = $email;
-                $param_mnumber = $mnumber;
-                $param_id = $id;
-                $param_address=$address;
-                $param_gender=$gender;
-                $param_descrip=$descrip;
-                $param_linkin=$linkin;
-                $param_perweb=$perweb;
-                $param_field = $field;
-                $param_gpa=$gpa;
-                $param_lname=$lname;
-
-
-            // Attempt to execute the prepared statement
-                if(mysqli_stmt_execute($stmt)){
-                // Records updated successfully. Redirect to landing page
-                    header("location: index.php");
-                    exit();
-                } else{
-                    $error= "Something went wrong. Please try again later.";
-                }
+                $error= "Oops! Something went wrong. Please try again later.";
+                header("location: error.php?id=$id & return=editstudent.php & error=$error ");
             }
 
+
         // Close statement
+            mysqli_stmt_close($stmt);
+
+        // Close connection
+
+        } else{
+        // URL doesn't contain id parameter. Redirect to error page
+            header("location: error.php?return=editstudent.php & error=$error");
+            exit();
         }
-        $error.=$name_err.=$mnumber_err.=$pdf_error.=$email_err;
-        header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
+
+
+
+
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+
+
+    // Processing form data when form is submitted
+            if(isset($_POST["id"]) && !empty($_POST["id"])){
+        // Get hidden input value
+                $id = $_POST["id"];
+                $gender=trim($_POST["gender"]);
+                $address=trim($_POST["address"]);
+                $linkin = trim($_POST["linkin"]);
+                $perweb = trim($_POST["perweb"]);
+                $descrip =trim($_POST["descrip"]);
+                $field = trim($_POST["field"]);
+                $gpa = trim($_POST["gpa"]);
+                $bday = trim($_POST["bday"]);
+
+        // Validate name
+                $input_name = trim($_POST["name"]);
+                if(empty($input_name)){
+                    $name_err = "Please enter a name.";
+                    header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
+                } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                    $name_err = "Please enter a valid name.";
+                    header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
+                } else{
+                    $name = $input_name;
+
+                }
+
+
+                $input_lname = trim($_POST["lname"]);
+                if(empty($input_name)){
+                    $name_err = "Please enter a name.";
+                    echo "Detected";
+                } elseif(!filter_var($input_lname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                    $name_err = "Please enter a valid name.";
+                    header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
+                } else{
+                    $lname = $input_lname;
+
+                }
+
+
+
+
+
+
+
+
+        // Validate address address
+                if(empty(trim($_POST["email"]))){
+                    $email_err = "Please enter a email.";
+                } else{
+            // Prepare a select statement
+                    $sql = "SELECT id FROM users WHERE email = ?";
+
+                    if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                        mysqli_stmt_bind_param($stmt, "s", $param_email);
+
+                // Set parameters
+                        $param_email = trim($_POST["email"]);
+
+                // Attempt to execute the prepared statement
+                        if(mysqli_stmt_execute($stmt)){
+                            /* store result */
+                            mysqli_stmt_store_result($stmt);
+
+                            if(mysqli_stmt_num_rows($stmt) == 1){
+                                $email_err = "This Email is already taken.";
+                            } else{
+                                $email = trim($_POST["email"]);
+                                mysqli_stmt_close($stmt);
+
+
+                                $sql = "INSERT INTO users (email) VALUES ('$email')";
+                                if($stmt = mysqli_prepare($link, $sql)){
+                                    mysqli_stmt_execute($stmt);
+                                }
+                                else{
+                                    $email_err= "Oops! Something went wrong. Please try again later.";
+                                }
+                            }
+                            mysqli_stmt_close($stmt);
+                        }
+                    }
+                }
+
+        // Validate mobile
+                $input_mnumber = trim($_POST["mnumber"]);
+                if(empty($input_mnumber)){
+                    $mnumber_err = "Please enter the Mobile Number.";     
+                } 
+                elseif(preg_match('/^\d{10}$/',$input_mnumber)){
+                    $mnumber = $input_mnumber;
+                } else{
+                    $mnumber_err = "Please enter a valid mobile number.(0123456789)";
+
+
+                }
+    //////////////////////////////////validate PDF ////////////////////
+                $param_cvurl= $cvurl;
+                $uploadOk = 1;
+                $target_dir = "../cvuploads/";
+                if(!isset($_FILES['cvToUpload']) || $_FILES['cvToUpload']['error'] == UPLOAD_ERR_NO_FILE) {
+                    $param_cvurl=$cvurl;
+                }
+                else{
+                    $extension = pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION);
+                    $fname = $id;
+                    $target_file = $target_dir . $fname.".".$extension;
+
+                    $pdf_error="";
+                    $pdfFileType = strtolower(pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION));
+
+
+                    if ($_FILES["cvToUpload"]["size"] > 15000000) {
+                        $pdf_error.=  "Sorry, your file is too large.";
+                        $uploadOk = 0;
+                    }
+
+                    if($pdfFileType != "pdf" && $pdfFileType != "docx" ) {
+                        $pdf_error.= "Sorry, only PDF & Docx files are allowed.";
+                        $uploadOk = 0;
+                    }
+
+    //////////////////////////////upload PDF //////////////////////////
+                    if ($uploadOk == 0) {
+                        echo $pdf_error;
+    // if everything is ok, try to upload file
+                    } else {
+                        if (move_uploaded_file($_FILES["cvToUpload"]["tmp_name"], $target_file)) {
+                            $param_cvurl=$target_file;
+            // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                        } else {
+            // $uploadOk=0;
+                         $pdf_error;
+
+                     }
+                 }
+             }
+    ///////////////////////////////////////////////////////////////////
+
+
+
+
+        // Check input errors before inserting in database
+             if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
+            // Prepare an update statement
+                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=?, dateofbirth=? WHERE id=?";
+
+                if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                    mysqli_stmt_bind_param($stmt, "ssssssssssdssi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname,$param_bday, $param_id);
+
+                // Set parameters
+                    $param_name = $name;
+                    $param_email = $email;
+                    $param_mnumber = $mnumber;
+                    $param_id = $id;
+                    $param_address=$address;
+                    $param_gender=$gender;
+                    $param_descrip=$descrip;
+                    $param_linkin=$linkin;
+                    $param_perweb=$perweb;
+                    $param_field = $field;
+                    $param_gpa=$gpa;
+                    $param_lname=$lname;
+                    $param_bday=$bday;
+
+
+                // Attempt to execute the prepared statement
+                    if(mysqli_stmt_execute($stmt)){
+                    // Records updated successfully. Redirect to landing page
+                        header("location: index.php");
+                        exit();
+                    } else{
+                        $error= "Something went wrong. Please try again later.";
+                    }
+                }
+
+            // Close statement
+            }
+            $error.=$name_err.=$mnumber_err.=$pdf_error.=$email_err;
+            header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
+        }
+        mysqli_close($link);
+
     }
-    mysqli_close($link);
 
-}
+    ?>
 
-?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <!-- Meta, title, CSS, favicons, etc. -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <!-- Meta, title, CSS, favicons, etc. -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="images/favicon.ico" type="image/ico" />
+      <title>InternsPaths | <?php echo $name." ".$lname ?></title>
+      <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <!-- NProgress -->
+      <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+      <!-- iCheck -->
+      <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
-  <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <!-- NProgress -->
-  <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-  <!-- iCheck -->
-  <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+      <!-- bootstrap-progressbar -->
+      <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+      <!-- JQVMap -->
+      <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+      <!-- bootstrap-daterangepicker -->
+      <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-  <!-- bootstrap-progressbar -->
-  <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-  <!-- JQVMap -->
-  <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-  <!-- bootstrap-daterangepicker -->
-  <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="../build/css/custom.min.css" rel="stylesheet">
+      <link href="css/viewprof.css" rel="stylesheet">
 
-  <!-- Custom Theme Style -->
-  <link href="../build/css/custom.min.css" rel="stylesheet">
-  <link href="css/viewprof.css" rel="stylesheet">
+  </head>
 
-</head>
-
-<body class="nav-md">
+  <body class="nav-md">
     <div class="container body" style="height:1200px;">
-    <div class="main_container">
-      <div class="col-md-3 left_col" style="height:1200px;">
-        <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
-        </div>
+        <div class="main_container">
+          <div class="col-md-3 left_col" style="height:1200px;">
+            <div class="left_col scroll-view">
+              <div class="navbar nav_title" style="border: 0;">
+                <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
+            </div>
 
-        <div class="clearfix"></div>
+            <div class="clearfix"></div>
 
-        <!-- menu profile quick info -->
-        <div class="profile clearfix">
-            <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+                <div class="profile_pic">
+                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                  <span>Welcome,</span>
+                  <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name." ".$lname?></h2></a>
+              </div>
           </div>
-          <div class="profile_info">
-              <span>Welcome,</span>
-              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name." ".$lname?></h2></a>
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <h3>General</h3>
+              <ul class="nav side-menu">
+                <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
+                    <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                    <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
+                    <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                  <!-- <ul class="nav child_menu">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
+                    <li><a href="addadmin.php">Search Companies</a></li>
+                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
+
+                    <!-- </ul> --> 
+                </li>
+                    <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="form.html">Search For a Student</a></li>
+                        <li><a href="form_advanced.html">Manage Students</a></li>
+                        <li><a href="addstudent.php">Add a New Student</a></li>
+                      </ul>
+                  </li> -->
+                    <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="general_elements.html">Search For a Company</a></li>
+                        <li><a href="managecompany.php">Manage Companies</a></li>
+                        <li><a href="addcompany.php">Add a New Company</a></li>
+                      </ul>
+                  </li> -->
+
+              </ul>
           </div>
+
+
       </div>
-      <!-- /menu profile quick info -->
-
-      <br />
-
-      <!-- sidebar menu -->
-      <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-        <div class="menu_section">
-          <h3>General</h3>
-          <ul class="nav side-menu">
-            <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
-            <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
-            <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-            <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Companies</a></li>
-              <!-- <ul class="nav child_menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                <li><a href="addadmin.php">Search Companies</a></li>
-                <li><a href="manageadmin.php">Manage Administrators</a></li> -->
-
-            <!-- </ul> --> 
-        </li>
-                <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="form.html">Search For a Student</a></li>
-                    <li><a href="form_advanced.html">Manage Students</a></li>
-                    <li><a href="addstudent.php">Add a New Student</a></li>
-                  </ul>
-              </li> -->
-                <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="general_elements.html">Search For a Company</a></li>
-                    <li><a href="managecompany.php">Manage Companies</a></li>
-                    <li><a href="addcompany.php">Add a New Company</a></li>
-                  </ul>
-              </li> -->
-
-          </ul>
-      </div>
+      <!-- /sidebar menu -->
 
 
   </div>
-  <!-- /sidebar menu -->
-
-
-</div>
 </div>
 
 <!-- top navigation -->
@@ -417,7 +420,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <br><br><br>
             <div class="col-md-12 ">
                 <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
-                   <div class="" >
+                 <div class="" >
                     <div class="profile-img">
                         <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
                             Select Image
@@ -471,6 +474,14 @@ if($stmt = mysqli_prepare($link, $sql)){
             </label>
             <div class="col-md-8 col-sm-8 ">
               <input type="text" id="lname" name="lname"  required="required" class="form-control " value="<?php echo $lname ?>" >
+          </div>
+        </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" >Date Of Birth <span class="required">*</span>
+            </label>
+            <div class="col-md-8 col-sm-8">
+                <input type="date" name="bday" required="required" class="form-control" value="<?php echo $bday ?>" max = "2020-01-31">
+            </div>
           </div>
       </div>
       <div class="item form-group">
@@ -554,8 +565,8 @@ if($stmt = mysqli_prepare($link, $sql)){
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Upload CV <span class="required">*</span>
     </label>
     <div class="col-md-8 col-sm-8 ">
-       <input type="file" name="cvToUpload" id="cvToUpload" >
-   </div>
+     <input type="file" name="cvToUpload" id="cvToUpload" >
+ </div>
 </div>
 <div>
 
@@ -621,6 +632,6 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
-
+<script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 </body>
 </html>

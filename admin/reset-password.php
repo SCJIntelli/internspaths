@@ -5,13 +5,18 @@ session_start();
 require_once "../php/config.php";
 $id=trim($_GET["id"]); 
 $return=trim($_GET["return"]);
+$_SESSION["return"]=$return;
+
+
+$error="";
  
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+ $id=trim($_POST["id"]);
+ $return = trim($_POST["return"]);
     // Validate new password
     if(empty(trim($_POST["new_password"]))){
         $new_password_err = "Please enter the new password.";     
@@ -46,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
-                $return = trim($_POST["return"]);
+                $return=$_SESSION["return"];
                 header("location: $return");
                 exit();
             } else{
@@ -56,6 +61,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         // Close statement
         mysqli_stmt_close($stmt);
+    }
+    else{
+        header("location: reset-password.php?id=$id &return=$return");
     }
     
     // Close connection

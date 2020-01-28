@@ -19,177 +19,177 @@ $name_err = $email_err = $mnumber_err = "";
 $sql = "SELECT * FROM admindata WHERE id = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
-        // Bind variables to the prepared statement as parameters
+    // Bind variables to the prepared statement as parameters
     mysqli_stmt_bind_param($stmt, "i", $param_id);
 
-        // Set parameters
+    // Set parameters
     $param_id = trim($_GET["id"]);
 
-        // Attempt to execute the prepared statement
+    // Attempt to execute the prepared statement
     if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
 
         if(mysqli_num_rows($result) == 1){
+            /* Fetch result row as an associative array. Since the result set
+            contains only one row, we don't need to use while loop */
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            
+            // Retrieve individual field value
+            $id=$row["id"];
+            $username = $row["username"];
+            $email = $row["email"];
+            $name=$row["name"];
+            $mnumber=$row["mobile"];
+            $profileurl=$row["profileurl"];
+            $occupation=$row["occupation"];
+
+
+
+        } else{
+            // URL doesn't contain valid id parameter. Redirect to error page
+            exit();
+        }
+        
+    } else{
+        echo "Oops! Something went wrong. Please try again later.";
+    }
+
+
+// Close statement
+    mysqli_stmt_close($stmt);
+
+// Close connection
+
+} else{
+// URL doesn't contain id parameter. Redirect to error page
+    header("location: error.php");
+    exit();
+}
+
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+
+
+// Processing form data when form is submitted
+    if(isset($_POST["id"]) && !empty($_POST["id"])){
+// Get hidden input value
+        $id = $_POST["id"];
+        $occupation=$_POST["occupation"];
+
+// Validate name
+        $input_name = trim($_POST["name"]);
+        if(empty($input_name)){
+            $name_err = "Please enter a name.";
+            echo "Detected";
+        } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+            $name_err = "Please enter a valid name.";
+            echo "Detected";
+        } else{
+            $name = $input_name;
+
+        }
+
+// Validate address address
+        $input_email = trim($_POST["email"]);
+        if(empty($input_email)){
+            $email_err = "Please enter an address.";     
+        } else{
+            $email = $input_email;
+        }
+
+// Validate salary
+        $input_mnumber = trim($_POST["mnumber"]);
+        if(empty($input_mnumber)){
+            $mnumber_err = "Please enter the salary amount.";     
+        } elseif(!ctype_digit($input_mnumber)){
+            $mnumber_err = "Please enter a positive integer value.";
+        } else{
+            $mnumber = $input_mnumber;
+        }
+
+// Check input errors before inserting in database
+        if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
+    // Prepare an update statement
+            $sql = "UPDATE admindata SET name=?, email=?, mobile=?, occupation=? WHERE id=?";
+
+            if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "ssssi", $param_name, $param_email, $param_mnumber,$param_occupation ,$param_id);
+
+        // Set parameters
+                $param_name = $name;
+                $param_email = $email;
+                $param_mnumber = $mnumber;
+                $param_id = $id;
+                $param_occupation=$occupation;
+
+        // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+            // Records updated successfully. Redirect to landing page
+                    header("location: manageadmin.php");
+                    exit();
+                } else{
+                    echo "Something went wrong. Please try again later.";
+                }
+            }
+
+    // Close statement
+
+        }
+
+// Close connection
+
+    } else{
+// Check existence of id parameter before processing further
+        if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+    // Get URL parameter
+            $id =  trim($_GET["id"]);
+
+    // Prepare a select statement
+            $sql = "SELECT * FROM admindata WHERE id = ?";
+            if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "i", $param_id);
+
+        // Set parameters
+                $param_id = $id;
+
+        // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    $result = mysqli_stmt_get_result($stmt);
+
+                    if(mysqli_num_rows($result) == 1){
                 /* Fetch result row as an associative array. Since the result set
                 contains only one row, we don't need to use while loop */
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $id=$row["id"];
-                $username = $row["username"];
+                $name = $row["name"];
                 $email = $row["email"];
-                $name=$row["name"];
-                $mnumber=$row["mobile"];
-                $profileurl=$row["profileurl"];
-                $occupation=$row["occupation"];
-
-
-
+                $mnumber = $row["mobile"];
             } else{
-                // URL doesn't contain valid id parameter. Redirect to error page
+                // URL doesn't contain valid id. Redirect to error page
+                echo "Detected form last";
                 exit();
             }
             
         } else{
             echo "Oops! Something went wrong. Please try again later.";
         }
-
-
+    }
+    
     // Close statement
-        mysqli_stmt_close($stmt);
-
+    
+    
     // Close connection
-
-    } else{
+    
+}  else{
     // URL doesn't contain id parameter. Redirect to error page
-        header("location: error.php");
-        exit();
-    }
-
-
-
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-
-
-// Processing form data when form is submitted
-        if(isset($_POST["id"]) && !empty($_POST["id"])){
-    // Get hidden input value
-            $id = $_POST["id"];
-            $occupation=$_POST["occupation"];
-
-    // Validate name
-            $input_name = trim($_POST["name"]);
-            if(empty($input_name)){
-                $name_err = "Please enter a name.";
-                echo "Detected";
-            } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-                $name_err = "Please enter a valid name.";
-                echo "Detected";
-            } else{
-                $name = $input_name;
-
-            }
-
-    // Validate address address
-            $input_email = trim($_POST["email"]);
-            if(empty($input_email)){
-                $email_err = "Please enter an address.";     
-            } else{
-                $email = $input_email;
-            }
-
-    // Validate salary
-            $input_mnumber = trim($_POST["mnumber"]);
-            if(empty($input_mnumber)){
-                $mnumber_err = "Please enter the salary amount.";     
-            } elseif(!ctype_digit($input_mnumber)){
-                $mnumber_err = "Please enter a positive integer value.";
-            } else{
-                $mnumber = $input_mnumber;
-            }
-
-    // Check input errors before inserting in database
-            if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
-        // Prepare an update statement
-                $sql = "UPDATE admindata SET name=?, email=?, mobile=?, occupation=? WHERE id=?";
-
-                if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssi", $param_name, $param_email, $param_mnumber,$param_occupation ,$param_id);
-
-            // Set parameters
-                    $param_name = $name;
-                    $param_email = $email;
-                    $param_mnumber = $mnumber;
-                    $param_id = $id;
-                    $param_occupation=$occupation;
-
-            // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                // Records updated successfully. Redirect to landing page
-                        header("location: manageadmin.php");
-                        exit();
-                    } else{
-                        echo "Something went wrong. Please try again later.";
-                    }
-                }
-
-        // Close statement
-
-            }
-
-    // Close connection
-
-        } else{
-    // Check existence of id parameter before processing further
-            if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        // Get URL parameter
-                $id =  trim($_GET["id"]);
-
-        // Prepare a select statement
-                $sql = "SELECT * FROM admindata WHERE id = ?";
-                if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "i", $param_id);
-
-            // Set parameters
-                    $param_id = $id;
-
-            // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                        $result = mysqli_stmt_get_result($stmt);
-
-                        if(mysqli_num_rows($result) == 1){
-                    /* Fetch result row as an associative array. Since the result set
-                    contains only one row, we don't need to use while loop */
-                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                    
-                    // Retrieve individual field value
-                    $name = $row["name"];
-                    $email = $row["email"];
-                    $mnumber = $row["mobile"];
-                } else{
-                    // URL doesn't contain valid id. Redirect to error page
-                    echo "Detected form last";
-                    exit();
-                }
-                
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-        }
-        
-        // Close statement
-        
-        
-        // Close connection
-        
-    }  else{
-        // URL doesn't contain id parameter. Redirect to error page
-        // header("location: error.php");
-        exit();
-    }
+    // header("location: error.php");
+    exit();
+}
 }
 
 mysqli_close($link);
@@ -297,7 +297,7 @@ mysqli_close($link);
 
 <!-- top navigation -->
 <div class="top_nav">
-  <div class="nav_menu">
+    <div class="nav_menu">
       <div class="nav toggle">
         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
     </div>
@@ -320,47 +320,46 @@ mysqli_close($link);
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main">
-  <!-- top tiles -->
-  <div class="col-md-8 col-sm-8" style="display: inline-block;" >
-    <div class="container emp-profile">
-        
-        <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
+<div class="right_col" role="main" style="height: 790px">
+    <div class="col-md-12 col-sm-12" style="display: inline-block;">
+        <div class="container emp-profile">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="profile-img">
-                        <img src="<?php echo $profileurl; ?>" alt=""/>
+                   <div class="profile-head" >
 
+                    <h5>
+                        <?php echo $name; ?> 
+                    </h5>
+                    <h6>
+                        Administrator
+                    </h6>
+                </div>
+                <div class="profile-img">
+                    <img src="<?php echo $profileurl; ?>" alt=""/>
+
+                </div>
+                <br><br><br>
+                <div class="col-md-12 ">
+                    <form  action="image.php" method="post" enctype="multipart/form-data"  >
+                     <div class="" >
+                        <div class="profile-img">
+                            <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
+                                Select Image
+                                <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <h5>
-                            <?php echo $name; ?>
-                        </h5>
-                        <h6>
-                            Administrator
-                        </h6>
-
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <a href="viewadmin.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
-                </div>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                    <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
+                </form>
             </div>
+    </div>
+        <div class="col-md-8">
+            <div class="col-md-12" >
+                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+            </div>
+            <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
             <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-
-                    </div>
-                </div>
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -368,47 +367,47 @@ mysqli_close($link);
                              <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
                               </div>
                           </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
                               </div>
                           </div>
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
                               </div>
                           </div>
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
                               </div>
                           </div>
                         <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
                               </div>
                           </div>
                         <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >Proffession <span class="required">*</span>
                                 </label>
-                                <div class="col-md-6 col-sm-6 ">
+                                <div class="col-md-8 col-sm-8 ">
                                   <input type="text" id="occupation" name="occupation" required="required" class="form-control " value="<?php echo $occupation ?>" >
                               </div>
                           </div>
                             <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <input type="submit" class="btn btn-primary pull-right col-md-15" value="Submit">
                        
 
                         </div>
@@ -418,24 +417,23 @@ mysqli_close($link);
             </div>
         </div>
 
-    </form>    
-    <form action="image.php" method="post" enctype="multipart/form-data" style="position: relative;top:-350px; left: 10px">
-         <div class="col-md-4" >
-                    <div class="profile-img">
-                        <div class="file btn btn-lg btn-primary" >
-                            Select Image
-                            <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit"style="position: relative;top:20px; left: -210px">
-        </form>       
-</div>
+
+
+
+
+
+ </form>    
+        </div>
+        <br><br><br>
+        
+
+         </div>
+    </div>
+
 </div>
 </div>
 
-
+</div>
 
 
 

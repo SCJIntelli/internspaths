@@ -10,10 +10,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 // Include config file
-require_once "../php/config.php";
+require_once "../php/config.php" ;
 
 
-$name = $email = $mnumber = "";
+$name = $email = $mnumber =$error= "";
 $name_err = $email_err = $mnumber_err = "";
 
 $sql = "SELECT * FROM company WHERE id = ?";
@@ -41,6 +41,13 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $name=$row["name"];
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
+                $address=$row["address"];
+                $descrip=$row["description"];
+                $location=$row["location"];
+                $facebook=$row["facebook"];
+                $linkedin=$row["linkedin"];
+                $twitter=$row["twitter"];
+
 
 
 
@@ -50,7 +57,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             }
             
         } else{
-            echo "Oops! Something went wrong. Please try again later.";
+            header("location: error.php?id=$id & return=editcompany.php & error=Please Try Again ");
         }
 
 
@@ -61,7 +68,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 
     } else{
     // URL doesn't contain id parameter. Redirect to error page
-        header("location: error.php");
+        header("location: error.php?id=$id & return=editcompany.php & error=Please Try Again ");
         exit();
     }
 
@@ -75,360 +82,397 @@ if($stmt = mysqli_prepare($link, $sql)){
         if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
             $id = $_POST["id"];
+            $address=$_POST["address"];
 
     // Validate name
             $input_name = trim($_POST["name"]);
             if(empty($input_name)){
                 $name_err = "Please enter a name.";
-                echo "Detected";
             } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
                 $name_err = "Please enter a valid name.";
-                echo "Detected";
             } else{
                 $name = $input_name;
 
             }
 
     // Validate address address
-            $input_email = trim($_POST["email"]);
-            if(empty($input_email)){
-                $email_err = "Please enter an address.";     
+            if(empty(trim($_POST["email"]))){
+                $email_err = "Please enter a email.";
             } else{
-                $email = $input_email;
-            }
+        // Prepare a select statement
+                $sql = "SELECT id FROM users WHERE email = ?";
 
-    // Validate salary
-            $input_mnumber = trim($_POST["mnumber"]);
-            if(empty($input_mnumber)){
-                $mnumber_err = "Please enter the salary amount.";     
-            } elseif(!ctype_digit($input_mnumber)){
-                $mnumber_err = "Please enter a positive integer value.";
-            } else{
-                $mnumber = $input_mnumber;
+                if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+                    mysqli_stmt_bind_param($stmt, "s", $param_email);
+
+            // Set parameters
+                    $param_email = trim($_POST["email"]);
+
+            // Attempt to execute the prepared statement
+                    if(mysqli_stmt_execute($stmt)){
+                        /* store result */
+                        mysqli_stmt_store_result($stmt);
+
+                        if(mysqli_stmt_num_rows($stmt) == 1){
+                            $email_err = "This Email is already taken.";
+                        } else{
+                            $email = trim($_POST["email"]);
+                            mysqli_stmt_close($stmt);
+
+
+                            $sql = "INSERT INTO users (email) VALUES ('$email')";
+                            if($stmt = mysqli_prepare($link, $sql)){
+                                mysqli_stmt_execute($stmt);
+                            }
+                         else{
+                            $email_err= "Oops! Something went wrong. Please try again later.";
+                        }
+                    }
+                    mysqli_stmt_close($stmt);
+                }
             }
+        }
+
+    $input_mnumber = trim($_POST["mnumber"]);
+                if(empty($input_mnumber)){
+                    $mnumber_err = "Please enter the Mobile Number.";     
+                } 
+                elseif(preg_match('/^\d{10}$/',$input_mnumber)){
+                    $mnumber = $input_mnumber;
+                } else{
+                    $mnumber_err = "Please enter a valid mobile number.(0123456789)";
+
+                    
+                }
 
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE admindata SET name=?, email=?, mobile=? WHERE id=?";
+                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "sssi", $param_name, $param_email, $param_mnumber, $param_id);
+                    mysqli_stmt_bind_param($stmt, "sssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter, $param_id);
 
             // Set parameters
                     $param_name = $name;
                     $param_email = $email;
                     $param_mnumber = $mnumber;
                     $param_id = $id;
+                    $param_address=$address;
+                    $param_description=$description;
+                    $param_location=$location;
+                    $param_facebook=$facebook;
+                    $param_linkedin=$linkedin;
+                    $param_twitter=$twitter;
+
+
 
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
                 // Records updated successfully. Redirect to landing page
-                        header("location: manageadmin.php");
+                        header("location: managecompany.php");
                         exit();
                     } else{
-                        echo "Something went wrong. Please try again later.";
+                      $error.= "Something went wrong. Please try again later.";
                     }
                 }
-
-        // Close statement
-
-            }
-
-    // Close connection
-
-        } else{
-    // Check existence of id parameter before processing further
-            if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        // Get URL parameter
-                $id =  trim($_GET["id"]);
-
-        // Prepare a select statement
-                $sql = "SELECT * FROM admindata WHERE id = ?";
-                if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "i", $param_id);
-
-            // Set parameters
-                    $param_id = $id;
-
-            // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                        $result = mysqli_stmt_get_result($stmt);
-
-                        if(mysqli_num_rows($result) == 1){
-                    /* Fetch result row as an associative array. Since the result set
-                    contains only one row, we don't need to use while loop */
-                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                    
-                    // Retrieve individual field value
-                    $name = $row["name"];
-                    $email = $row["email"];
-                    $mnumber = $row["mobile"];
-                } else{
-                    // URL doesn't contain valid id. Redirect to error page
-                    echo "Detected form last";
-                    exit();
+                else{
+                    $error.="Connection Error";
                 }
-                
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
+            }
+            else{
+                $error.=$name_err.=$mnumber_err.=$email_err;
+                header("location: error.php?id=$id & return=editcompany.php & error=$error ");
             }
         }
-        
-        // Close statement
-        
-        
-        // Close connection
-        
-    }  else{
-        // URL doesn't contain id parameter. Redirect to error page
-        // header("location: error.php");
-        exit();
-    }
-}
+
+
 mysqli_close($link);
 }
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>InternsPaths | Admin Console</title>
 
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <!-- Meta, title, CSS, favicons, etc. -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <!-- bootstrap-progressbar -->
-    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+      <title>InternsPaths | <?php echo $name ?></title>
+      <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <!-- NProgress -->
+      <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+      <!-- iCheck -->
+      <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-    <link href="css/viewprof.css" rel="stylesheet">
-</head>
+      <!-- bootstrap-progressbar -->
+      <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+      <!-- JQVMap -->
+      <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+      <!-- bootstrap-daterangepicker -->
+      <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-<body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="../index.html" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths Administrator Console</span></a>
+      <!-- Custom Theme Style -->
+      <link href="../build/css/custom.min.css" rel="stylesheet">
+      <link href="css/viewprof.css" rel="stylesheet">
+
+  </head>
+
+  <body class="nav-md">
+    <div class="container body" style="height:1200px;">
+        <div class="main_container">
+          <div class="col-md-3 left_col" style="height:1200px;">
+            <div class="left_col scroll-view">
+              <div class="navbar nav_title" style="border: 0;">
+                <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+                <div class="profile_pic">
+                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                  <span>Welcome,</span>
+                  <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo $name?></h2></a>
+              </div>
           </div>
+          <!-- /menu profile quick info -->
 
-          <div class="clearfix"></div>
+          <br />
 
-          <!-- menu profile quick info -->
-          <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="<?php echo $_SESSION["profileurl"]; ?>" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-                <span>Welcome,</span>
-                <a href="viewadmin.php?id=<?php echo $_SESSION["id"]?>"><h2><?php echo ($_SESSION["name"]);?></h2></a>
-            </div>
-        </div>
-        <!-- /menu profile quick info -->
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <h3>General</h3>
+              <ul class="nav side-menu">
+                <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
+                    <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                    <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
+                    <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                  <!-- <ul class="nav child_menu">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
+                    <li><a href="addadmin.php">Search Companies</a></li>
+                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
-        <br />
-
-        <!-- sidebar menu -->
-        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-          <div class="menu_section">
-            <h3>General</h3>
-            <ul class="nav side-menu">
-              <li><a><i class="fa fa-home"></i> Administrators <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                  <li><a href="index.php">Home</a></li>
-                  <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                  <li><a href="addadmin.php">Add Administrators</a></li>
-                  <li><a href="manageadmin.php">Manage Administrators</a></li>
+                    <!-- </ul> --> 
+                </li>
+                    <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="form.html">Search For a Student</a></li>
+                        <li><a href="form_advanced.html">Manage Students</a></li>
+                        <li><a href="addstudent.php">Add a New Student</a></li>
+                      </ul>
+                  </li> -->
+                    <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="general_elements.html">Search For a Company</a></li>
+                        <li><a href="managecompany.php">Manage Companies</a></li>
+                        <li><a href="addcompany.php">Add a New Company</a></li>
+                      </ul>
+                  </li> -->
 
               </ul>
-          </li>
-          <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li><a href="form.html">Search For a Student</a></li>
-              <li><a href="managestudent.php">Manage Students</a></li>
-              <li><a href="addstudent.php">Add a New Student</a></li>
-          </ul>
-      </li>
-      <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
-        <ul class="nav child_menu">
-          <li><a href="general_elements.html">Search For a Company</a></li>
-          <li><a href="managecompany.php">Manage Companies</a></li>
-          <li><a href="addcompany.php">Add a New Company</a></li>
-      </ul>
-  </li>
-
-</ul>
-</div>
+          </div>
 
 
-</div>
-<!-- /sidebar menu -->
+      </div>
+      <!-- /sidebar menu -->
 
 
-</div>
+  </div>
 </div>
 
 <!-- top navigation -->
 <div class="top_nav">
-  <div class="nav_menu">
+    <div class="nav_menu">
       <div class="nav toggle">
         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
     </div>
     <nav class="nav navbar-nav">
-      <ul class=" navbar-right">
-        <li class="nav-item dropdown open" style="padding-left: 15px;">
-          <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-            <img src="<?php echo $_SESSION["profileurl"]; ?>" alt=""><?php echo ($_SESSION["name"]);?>
-        </a>
-        <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-        </div>
-    </li>
+        <ul class=" navbar-right">
+          <li class="nav-item dropdown open" style="padding-left: 15px;">
+            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+              <img src="<?php echo $profileurl ?>" alt=""><?php echo $name ?>
+          </a>
+          <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+          </div>
+      </li>
 
 
-</ul>
+  </ul>
 </nav>
 </div>
 </div>
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main">
-  <!-- top tiles -->
-  <div class="col-md-8 col-sm-8" style="display: inline-block;" >
+<div class="right_col" role="main" style="height: 790px">
+  <div class="col-md-12 col-sm-12" style="display: inline-block;">
     <div class="container emp-profile">
-        
-        <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-head" >
+
+                    <h5>
+                        <?php echo $name; ?> 
+                    </h5>
+                    <!-- <h6>
+                        Company
+                    </h6>
+ -->
+                </div>
+                <div class="circular--portrait ">
+                    <img src="<?php echo $profileurl; ?>" class="col-md-12" alt="" style="border-radius: 50%; max-width: 500px;max-height: 500px;width: 350px;height: 350px;"/>
+                </div>  
+                <br><br><br>
+                <div class="col-md-12 ">
+                    <form  action="imagecom.php" method="post" enctype="multipart/form-data"  >
+                       <div class="" >
+                        <div class="profile-img">
+                            <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
+                                Add Logo
+                                <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                    <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Logo" name="submit" >
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+
+            <div class="col-md-12" >
+                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+            </div>
+            <br><br><br>
+            <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
             <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img">
-                        <img src="<?php echo $profileurl; ?>" alt=""/>
+                
 
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <h5>
-                            <?php echo $name; ?>
-                        </h5>
-                        <h6>
-                            Administrator
-                        </h6>
-
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <a href="viewadmin.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
-                </div>
+                
+                
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-
-                    </div>
-                </div>
+                
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>User Id</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><?php echo $id; ?></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Name</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
-                                    <span class="help-block"><?php echo $name_err;?></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Email</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
-                                    <span class="help-block"><?php echo $email_err;?></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Phone</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" name="mnumber" class="form-control" value="<?php echo $mnumber; ?>">
-                                    <span class="help-block"><?php echo $mnumber_err;?></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Profession</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>Web Developer and Designer</p>
-                                </div>
-                            </div>
-                            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                            <input type="submit" class="btn btn-primary" value="Submit">
-                       
+                            <!-- <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
+                              </div>
+                          </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
+                              </div>
+                          </div> -->
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="email" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+                              </div>
+                          </div>
+                        <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+                              </div>
+                          </div>
+                        <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="address" name="address" required="required" class="form-control " value="<?php echo $address ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >description <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-map-marker"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="location" name="location" required="required" placeholder="enetr company location" class="form-control " value="<?php echo $location ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-facebook-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="facebook" name="facebook"  class="form-control " value="<?php echo $facebook ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-linkedin-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="linkedin" name="linkedin" class="form-control " value="<?php echo $linkedin ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-twitter-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="twitter" name="twitter"  class="form-control " value="<?php echo $twitter ?>" >
+                              </div>
+                          </div>
+                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                        <input type="submit" class="btn btn-primary" value="Submit">
 
-                        </div>
 
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
-    </form>    
-    <form action="image.php" method="post" enctype="multipart/form-data" style="position: relative;top:-250px; left: 10px">
-         <div class="col-md-4" >
-                    <div class="profile-img">
-                        <div class="file btn btn-lg btn-primary" >
-                            Select Image
-                            <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                <input type="submit" class="login100-form-btn" value="Click to Change Image" name="submit"style="position: relative;top:20px; left: -210px">
-        </form>       
+</form>
+        </div>
+
+    </div>
+
 </div>
+
+
+</div> 
 </div>
 </div>
 

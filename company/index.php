@@ -37,7 +37,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $location=$row["location"];
                 $facebook=$row["facebook"];
                 $linkedin=$row["linkedin"];
-                $twitter=$row["twiiter"];
+                $twitter=$row["twitter"];
 
                 
 
@@ -210,10 +210,10 @@ if($stmt = mysqli_prepare($link,$sql)){
 
                 <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
                 <li><strong>Email:</strong> <?php echo $email?></li>
-                <li><strong>Find Us:<a href=<?php echo $location?>><i class="fa fa-map-marker"></i></a></strong></li>
-                <li><strong><a href=<?php echo $facebook?>><i class="fa fa-facebook-square"></i></a></strong></li>
-                <li><strong><a href=<?php echo $linkedin?>><i class="fa fa-linkedin-square"></i></a></strong></li>
-                <li><strong><a href=<?php echo $twitter?>><i class="fa fa-twitter-square"></i></a></strong></li>
+                <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
+                <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
+                <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
+                <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
       
 
               </ul>
@@ -227,6 +227,14 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <?php echo $descrip?>
               </p>
             </div>
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>what we looking for..</h3>
+              <p>
+                <?php echo $descrip?>
+              </p>
+            </div>
+
+
 
             <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>

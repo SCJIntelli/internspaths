@@ -128,70 +128,101 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 
     // Validate address address
-            $input_email = trim($_POST["email"]);
-            if(empty($input_email)){
-                $email_err = "Please enter an address.";     
+            if(empty(trim($_POST["email"]))){
+                $email_err = "Please enter a email.";
             } else{
-                $email = $input_email;
+        // Prepare a select statement
+                $sql = "SELECT id FROM users WHERE email = ?";
+
+                if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+                    mysqli_stmt_bind_param($stmt, "s", $param_email);
+
+            // Set parameters
+                    $param_email = trim($_POST["email"]);
+
+            // Attempt to execute the prepared statement
+                    if(mysqli_stmt_execute($stmt)){
+                        /* store result */
+                        mysqli_stmt_store_result($stmt);
+
+                        if(mysqli_stmt_num_rows($stmt) == 1){
+                            $email_err = "This Email is already taken.";
+                        } else{
+                            $email = trim($_POST["email"]);
+                            mysqli_stmt_close($stmt);
+
+
+                            $sql = "INSERT INTO users (email) VALUES ('$email')";
+                            if($stmt = mysqli_prepare($link, $sql)){
+                                mysqli_stmt_execute($stmt);
+                            }
+                         else{
+                            $email_err= "Oops! Something went wrong. Please try again later.";
+                        }
+                    }
+                    mysqli_stmt_close($stmt);
+                }
             }
+        }
 
     // Validate salary
-            $input_mnumber = trim($_POST["mnumber"]);
-            if(empty($input_mnumber)){
-                $mnumber_err = "Please enter the salary amount.";     
-            } elseif(!ctype_digit($input_mnumber)){
-                $mnumber_err = "Please enter a positive integer value.";
-            } else{
-                $mnumber = $input_mnumber;
-            }
+                $input_mnumber = trim($_POST["mnumber"]);
+                if(empty($input_mnumber)){
+                    $mnumber_err = "Please enter the salary amount.";     
+                } elseif(!ctype_digit($input_mnumber)){
+                    $mnumber_err = "Please enter a positive integer value.";
+                } else{
+                    $mnumber = $input_mnumber;
+                }
 //////////////////////////////////validate PDF ////////////////////
-            $param_cvurl= $cvurl;
-            $uploadOk = 1;
-            $target_dir = "../cvuploads/";
-            if(!isset($_FILES['cvToUpload']) || $_FILES['cvToUpload']['error'] == UPLOAD_ERR_NO_FILE) {
-                $param_cvurl=$cvurl;
-            }
-            else{
-                $extension = pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION);
-                $fname = $id;
-                $target_file = $target_dir . $fname.".".$extension;
-
-                $pdf_error="";
-                $pdfFileType = strtolower(pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION));
-
-
-                if ($_FILES["cvToUpload"]["size"] > 15000000) {
-                    $pdf_error.=  "Sorry, your file is too large.";
-                    $uploadOk = 0;
+                $param_cvurl= $cvurl;
+                $uploadOk = 1;
+                $target_dir = "../cvuploads/";
+                if(!isset($_FILES['cvToUpload']) || $_FILES['cvToUpload']['error'] == UPLOAD_ERR_NO_FILE) {
+                    $param_cvurl=$cvurl;
                 }
+                else{
+                    $extension = pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION);
+                    $fname = $id;
+                    $target_file = $target_dir . $fname.".".$extension;
 
-                if($pdfFileType != "pdf" && $pdfFileType != "docx" ) {
-                    $pdf_error.= "Sorry, only PDF & Docx files are allowed.";
-                    $uploadOk = 0;
-                }
+                    $pdf_error="";
+                    $pdfFileType = strtolower(pathinfo($_FILES["cvToUpload"]["name"], PATHINFO_EXTENSION));
+
+
+                    if ($_FILES["cvToUpload"]["size"] > 15000000) {
+                        $pdf_error.=  "Sorry, your file is too large.";
+                        $uploadOk = 0;
+                    }
+
+                    if($pdfFileType != "pdf" && $pdfFileType != "docx" ) {
+                        $pdf_error.= "Sorry, only PDF & Docx files are allowed.";
+                        $uploadOk = 0;
+                    }
 
 //////////////////////////////upload PDF //////////////////////////
-                if ($uploadOk == 0) {
-                    echo $pdf_error;
+                    if ($uploadOk == 0) {
+                        echo $pdf_error;
 // if everything is ok, try to upload file
-                } else {
-                    if (move_uploaded_file($_FILES["cvToUpload"]["tmp_name"], $target_file)) {
-                        $param_cvurl=$target_file;
-        // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                     } else {
+                        if (move_uploaded_file($_FILES["cvToUpload"]["tmp_name"], $target_file)) {
+                            $param_cvurl=$target_file;
+        // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                        } else {
         // $uploadOk=0;
-                       $pdf_error;
+                           $pdf_error;
 
-                    }
-                }
-            }
+                       }
+                   }
+               }
 ///////////////////////////////////////////////////////////////////
 
 
 
 
     // Check input errors before inserting in database
-            if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
+               if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
         // Prepare an update statement
                 $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=? WHERE id=?";
 
@@ -212,7 +243,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_field = $field;
                     $param_gpa=$gpa;
                     $param_lname=$lname;
-                    
+
 
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
@@ -381,21 +412,21 @@ if($stmt = mysqli_prepare($link, $sql)){
             </div>  
             <br><br><br>
             <div class="col-md-12 ">
-            <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
-               <div class="" >
-                <div class="profile-img">
-                    <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
-                        Select Image
-                        <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
+                <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
+                   <div class="" >
+                    <div class="profile-img">
+                        <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
+                            Select Image
+                            <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
+                        </div>
                     </div>
                 </div>
-            </div>
-           
 
-            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-            <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
-        </form>
-    </div>
+
+                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
+            </form>
+        </div>
     </div>
     <div class="col-md-8">
 
@@ -431,28 +462,28 @@ if($stmt = mysqli_prepare($link, $sql)){
                   <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
               </div>
           </div>
-              <div class="item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" >Last Name <span class="required">*</span>
-                </label>
-                <div class="col-md-8 col-sm-8 ">
-                  <input type="text" id="lname" name="lname"  required="required" class="form-control " value="<?php echo $lname ?>" >
-              </div>
-          </div>
           <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
+            <label class="col-form-label col-md-3 col-sm-3 label-align" >Last Name <span class="required">*</span>
             </label>
             <div class="col-md-8 col-sm-8 ">
-              <input type="email" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+              <input type="text" id="lname" name="lname"  required="required" class="form-control " value="<?php echo $lname ?>" >
           </div>
       </div>
       <div class="item form-group">
-        <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+        <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
         </label>
         <div class="col-md-8 col-sm-8 ">
-          <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+          <input type="email" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
       </div>
   </div>
   <div class="item form-group">
+    <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+    </label>
+    <div class="col-md-8 col-sm-8 ">
+      <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
+  </div>
+</div>
+<div class="item form-group">
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required">*</span>
     </label>
     <div class="col-md-8 col-sm-8 ">
@@ -524,8 +555,8 @@ if($stmt = mysqli_prepare($link, $sql)){
 </div>
 <div>
 
-<input type="hidden" name="id" value="<?php echo $id; ?>"/>
-<input type="submit" class="btn btn-primary col-md-12 col-sm-12 pull-right " value="Submit">
+    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+    <input type="submit" class="btn btn-primary col-md-12 col-sm-12 pull-right " value="Submit">
 
 
 </div>

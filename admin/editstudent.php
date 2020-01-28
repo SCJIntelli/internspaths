@@ -14,7 +14,7 @@ require_once "../php/config.php";
 
 
 $name = $email = $mnumber = "";
-$name_err = $email_err = $mnumber_err = "";
+$name_err = $email_err = $mnumber_err =$error= "";
 
 $sql = "SELECT * FROM student WHERE id = ?";
 
@@ -59,7 +59,8 @@ if($stmt = mysqli_prepare($link, $sql)){
             
         }
         else{
-            echo "Oops! Something went wrong. Please try again later.";
+            $error= "Oops! Something went wrong. Please try again later.";
+            header("location: error.php?id=$id & return=editstudent.php & error=$error ");
         }
 
 

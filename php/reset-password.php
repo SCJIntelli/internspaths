@@ -87,15 +87,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
+   
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Reset Password</h2>
-        <p>Please fill out this form to reset your password.</p>
+    <div class="limiter">
+      <div class="container-login100" style="background-image: url('../images/bg-01.jpg')" >
+       <!-- <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"> -->
+        <div class="wrapper" style="background-color: white;border-radius: 25px;">
+            <span class="login100-form-title ">
+              Reset Password
+          </span>
+
+          <p>Fill to reset your password.</p>
+          
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password <?php echo $id; ?></label>
@@ -113,6 +117,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <a class="btn btn-link" href="welcome.php">Cancel</a>
             </div>
         </form>
-    </div>    
+        <!--     </div> -->    
+    </div>
+</div>
+</div>
 </body>
 </html>

@@ -13,6 +13,35 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 // Include config file
 require_once "../php/config.php";
+$id = $_SESSION["id"];
+$sql = "SELECT * FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$param_id);
+  $param_id = $id;
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $username = $row["username"];
+                $email = $row["email"];
+                $name=$row["name"];
+                $lname=$row["lastname"];
+                $mnumber=$row["mobile"];
+                $profileurl=$row["profileurl"];
+                $address=$row["address"];
+                $gender=$row["gender"];
+                $linkin = $row["linkedin"];
+                $perweb = $row["personalweb"];
+                $descrip = $row["descrip"];
+                $field =$row["field"];
+                $gpa = $row["gpa"];
+                $cvurl = $row["cvurl"];
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +54,7 @@ require_once "../php/config.php";
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | Admin Console</title>
+  <title>InternsPaths | <?php echo $mnumber ?></title>
  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -96,29 +125,29 @@ require_once "../php/config.php";
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li><a><i class="fa fa-home"></i> Administrators <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-beer active"></i> Console <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                    <li><a href="addadmin.php">Add Administrators</a></li>
-                    <li><a href="manageadmin.php">Manage Administrators</a></li>
+                    <li><a href="addadmin.php">Search Companies</a></li>
+                    <!-- <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
                   </ul>
                 </li>
-                <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
+                <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="form.html">Search For a Student</a></li>
                     <li><a href="form_advanced.html">Manage Students</a></li>
                     <li><a href="addstudent.php">Add a New Student</a></li>
                   </ul>
-                </li>
-                <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
+                </li> -->
+                <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="general_elements.html">Search For a Company</a></li>
                     <li><a href="managecompany.php">Manage Companies</a></li>
                     <li><a href="addcompany.php">Add a New Company</a></li>
                   </ul>
-                </li>
+                </li> -->
 
               </ul>
             </div>

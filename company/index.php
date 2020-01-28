@@ -33,6 +33,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $address=$row["address"];
                 $mnumber=$row["mobile"];
                 $id=$row["id"];
+                $descrip=$row["description"];
+                $location=$row["location"];
 
                 
 
@@ -53,7 +55,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
+  <title>InternsPaths | <?php echo $name ?></title>
  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -187,9 +189,9 @@ if($stmt = mysqli_prepare($link,$sql)){
       <div class="right_col" role="main">
         <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
-<section id="about" class="about-section ">
-      <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
+<section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
+      <div class="container  ">
+        <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; ">About Us</h2>
 
         <div class="row">
 
@@ -199,24 +201,26 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <img src=<?php echo $profileurl ?> >
               </div>
               <ul>
-                <li><strong>Name:</strong> <?php echo $name." ".$lname ?></li>
+                <li><strong>Name:</strong> <?php echo $name?></li>
+
                 <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
 
-                <li><strong>Phone:</strong> <?php echo $mnumber?></li>
+                <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
                 <li><strong>Email:</strong> <?php echo $email?></li>
-                
+                <li><strong>Find Us:<a href=<?php echo $location?>><i class="fa fa-map-marker"></i></a></strong></li>
+      
 
               </ul>
             </div>
           </div> <!-- col-md-4 -->
 
-          <!-- <div class="col-md-8 col-md-pull-4">
+          <div class="col-md-8 col-md-pull-4">
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>Description</h3>
               <p>
                 <?php echo $descrip?>
               </p>
-            </div> -->
+            </div>
 
             <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
@@ -232,15 +236,43 @@ if($stmt = mysqli_prepare($link,$sql)){
               </ul>
             </div> -->
 
-          <!--   <div class="my-signature">
+           
+
+            <!-- <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href= ><i class="fa fa-download"></i>view my cv</a>
+            </div> -->
+          </div>
+
+
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>          
+        </div>
+      </div>
+
+            <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div> -->
+
+            <!-- <div class="my-signature">
               <img src="../assets/images/sign.png" alt="">
             </div>
 
             <div class="download-button">
               <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>
-            </div>
+            </div> -->
           </div>
- -->
+
 
         </div> <!-- /.row -->
       </div> <!-- /.container -->

@@ -26,8 +26,8 @@ else{
             $uploadOk = 0;
         }
     }
-    if ($_FILES["fileToUpload"]["size"] > 500000) {
-        $img_err.=" your file is too large.";
+    if ($_FILES["fileToUpload"]["size"] > 5000000) {
+        $img_err.=" your file is too large.It must be less than 5MB";
         $uploadOk = 0;
     }
 // Allow certain file formats

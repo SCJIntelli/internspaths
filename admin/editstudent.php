@@ -166,14 +166,17 @@ if($stmt = mysqli_prepare($link, $sql)){
             }
         }
 
-    // Validate salary
+    // Validate mobile
                 $input_mnumber = trim($_POST["mnumber"]);
                 if(empty($input_mnumber)){
-                    $mnumber_err = "Please enter the salary amount.";     
-                } elseif(!ctype_digit($input_mnumber)){
-                    $mnumber_err = "Please enter a positive integer value.";
-                } else{
+                    $mnumber_err = "Please enter the Mobile Number.";     
+                } 
+                elseif(preg_match('/^\d{10}$/',$input_mnumber)){
                     $mnumber = $input_mnumber;
+                } else{
+                    $mnumber_err = "Please enter a valid mobile number.";
+
+                    
                 }
 //////////////////////////////////validate PDF ////////////////////
                 $param_cvurl= $cvurl;

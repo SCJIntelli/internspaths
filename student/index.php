@@ -39,6 +39,11 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $field =$row["field"];
                 $gpa = $row["gpa"];
                 $cvurl = $row["cvurl"];
+
+                
+
+
+
         }
     }
 }
@@ -54,7 +59,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $mnumber ?></title>
+  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -197,23 +202,30 @@ if($stmt = mysqli_prepare($link,$sql)){
           <div class="col-md-4 col-md-push-8">
             <div class="biography">
               <div class="">
-                <img src="../assets/images/myphoto.jpg" alt="">
+                <img src=<?php echo $profileurl ?> >
               </div>
               <ul>
-                <li><strong>Name:</strong> John Doe</li>
-                <li><strong>Date of birth:</strong> 05 Dec 1993</li>
-                <li><strong>Address:</strong> 239/2 Awesome Street, USA</li>
-                <li><strong>Nationality:</strong> American</li>
-                <li><strong>Phone:</strong> (000) 1234 56789</li>
-                <li><strong>Email:</strong> yourmail@iamx.com</li>
+                <li><strong>Name:</strong> <?php echo $name." ".$lname ?></li>
+                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
+                <li><strong>Gender:</strong> <?php echo $gender?></li>
+                <li><strong>Phone:</strong> <?php echo $mnumber?></li>
+                <li><strong>Email:</strong> <?php echo $email?></li>
+                <li><strong>Field:</strong> <?php echo $field?></li>
+                <li><strong>Personal Website:</strong><a href="<?php echo $perweb?>">   <?php echo $perweb?></a></li>
+                <li><strong>LinkedIn Address:</strong> <a href="<?php echo $linkin?>"><?php echo $linkin?></a></li>
+                <li><strong>GPA:</strong> <?php echo $gpa?></li>
+
               </ul>
             </div>
           </div> <!-- col-md-4 -->
 
           <div class="col-md-8 col-md-pull-4">
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>Objective</h3>
-              <p>An opportunity to work and upgrade oneself, as well as being involved in an organization that believes in gaining a competitive edge and giving back to the community. I'm presently expanding my solid experience in UI / UX design. I focus on using my interpersonal skills to build good user experience and create a strong interest in my employers. I hope to develop skills in motion design and my knowledge of the Web, and become an honest asset to the business. As an individual, I'm self-confident you’ll find me creative, funny and naturally passionate. I’m a forward thinker, which others may find inspiring when working as a team.</p>
+              <h3>Description</h3>
+              <p>
+                <?php echo $descrip?>
+              </p>
             </div>
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
@@ -236,7 +248,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 
             <div class="download-button">
               <a class="btn btn-info btn-lg" href="#contact"><i class="fa fa-paper-plane"></i>Send me message</a>
-              <a class="btn btn-primary btn-lg" href="#"><i class="fa fa-download"></i>download my cv</a>
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>download my cv</a>
             </div>
           </div>
 

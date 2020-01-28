@@ -228,7 +228,7 @@ if($stmt = mysqli_prepare($link,$sql)){
               </p>
             </div>
 
-            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+            <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
               <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
 
@@ -240,15 +240,14 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <li>Digital Painting</li>
                 <li>Video Editing</li>
               </ul>
-            </div>
+            </div> -->
 
             <div class="my-signature">
               <img src="../assets/images/sign.png" alt="">
             </div>
 
             <div class="download-button">
-              <a class="btn btn-info btn-lg" href="#contact"><i class="fa fa-paper-plane"></i>Send me message</a>
-              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>download my cv</a>
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>
             </div>
           </div>
 

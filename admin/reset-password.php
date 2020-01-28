@@ -123,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
                 <p style="text-align: center;"><span class="txt1">
                 Don’t want to continue?
-            </span> <a href="login.php" class="txt2"><br>Back to Login</a>.</p>
+            </span> <a href="<?php echo $return; ?>" class="txt2"><br>Back</a>.</p>
             </div>
         </form>
         <!--     </div> -->    

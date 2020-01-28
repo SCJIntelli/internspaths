@@ -204,6 +204,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <p style="text-align: center;"><span class="txt1">
                 Don’t have an account?
             </span> <a href="register.php" class="txt2">Sign up now</a>.</p>
+             <p style="text-align: center;"><span class="txt1">
+                Fogot Your Password?
+            </span> <a href="resetpassword.php" class="txt2">Reset Password</a>.</p>
         </form>
         <!--     </div> -->    
     </div>

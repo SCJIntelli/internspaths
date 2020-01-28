@@ -254,7 +254,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                         header("location: managestudent.php");
                         exit();
                     } else{
-                        echo "Something went wrong. Please try again later.";
+                        $error= "Something went wrong. Please try again later.";
                     }
                 }
 

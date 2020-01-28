@@ -71,7 +71,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 
     } else{
     // URL doesn't contain id parameter. Redirect to error page
-        header("location: error.php");
+        header("location: error.php?return=editstudent.php & error=$error");
         exit();
     }
 
@@ -98,10 +98,10 @@ if($stmt = mysqli_prepare($link, $sql)){
             $input_name = trim($_POST["name"]);
             if(empty($input_name)){
                 $name_err = "Please enter a name.";
-                echo "Detected";
+                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
             } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
                 $name_err = "Please enter a valid name.";
-                echo "Detected";
+                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
             } else{
                 $name = $input_name;
 
@@ -114,7 +114,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 echo "Detected";
             } elseif(!filter_var($input_lname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
                 $name_err = "Please enter a valid name.";
-                echo "Detected";
+                header("location: error.php?id=$id & return=editstudent.php & error=$name_err ");
             } else{
                 $lname = $input_lname;
 
@@ -180,7 +180,7 @@ if($stmt = mysqli_prepare($link, $sql)){
         // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                     } else {
         // $uploadOk=0;
-                        echo $pdf_error;
+                       $pdf_error;
 
                     }
                 }
@@ -226,7 +226,8 @@ if($stmt = mysqli_prepare($link, $sql)){
 
         // Close statement
             }
-            echo "error";
+            $error.=$name_err.=$mnumber_err.=$pdf_error.=$email_err;
+            header("location: error.php?id=$id & return=editstudent.php & error=$error ");
         }
         mysqli_close($link);
 
@@ -441,7 +442,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
             </label>
             <div class="col-md-8 col-sm-8 ">
-              <input type="text" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
+              <input type="email" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
           </div>
       </div>
       <div class="item form-group">

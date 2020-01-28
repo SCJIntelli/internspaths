@@ -122,7 +122,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                $result = mysqli_query($link, $sql);
                $row = mysqli_fetch_assoc($result);
                $id=$row["id"];
-            //header("location: adminwelcome.php");
                if($userType == "Company"){
                $sql = "INSERT INTO company (id,username,email) VALUES ('$id','$username','$Email')";
                if($stmt = mysqli_prepare($link, $sql)){

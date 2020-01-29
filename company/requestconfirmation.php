@@ -2,7 +2,7 @@
 
 // Initialize the session
 session_start();
-$cid= trim($_GET["id"]);
+$sid= trim($_GET["id"]);
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -50,10 +50,10 @@ if($stmt = mysqli_prepare($link,$sql)){
  }
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-  $cid=trim($_POST["cid"]);
+  $sid=trim($_POST["sid"]);
   
 
-  $sql = "SELECT requests FROM company WHERE id = ?";
+  $sql = "SELECT requests FROM student WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"i",$id);
 
@@ -74,10 +74,10 @@ if($stmt = mysqli_prepare($link,$sql)){
     }
 }
 $requests.=$id.",";
-$sql = "UPDATE company SET requests=? WHERE id=?";
+$sql = "UPDATE student SET requests=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"si",$requests,$cid);
+  mysqli_stmt_bind_param($stmt,"si",$requests,$sid);
 
    if(mysqli_stmt_execute($stmt)){
         
@@ -91,7 +91,7 @@ if($stmt = mysqli_prepare($link,$sql)){
     }
 
   }
-$sql2 = "SELECT applied FROM student WHERE id = ?";
+$sql2 = "SELECT applied FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql2)){
   mysqli_stmt_bind_param($stmt,"i",$id);
 
@@ -111,8 +111,8 @@ if($stmt = mysqli_prepare($link,$sql2)){
         }
     }
 }
-$applied.=$cid.",";
-$sql = "UPDATE student SET applied=? WHERE id=?";
+$applied.=$scid.",";
+$sql = "UPDATE company SET applied=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"si",$applied,$id);
@@ -120,7 +120,7 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewcompany.php?id=$cid");
+                header("location: viewstudent.php?id=$sid");
                         exit();       
 
                 
@@ -219,7 +219,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
-                  
+                  <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
 
               </ul>
             </div>
@@ -272,8 +272,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                             <p>Warning!!! You can not undone this action later.....</p><br>
                             <p>
                                 
-                                <a href="viewcompany.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
-                                <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
+                                <a href="viewcompany.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
+                                <input type="hidden" name="sid" value="<?php echo $sid; ?>"/>
                                 <input type="submit" class="btn btn-danger" value="Apply">
                                 
                             </p>

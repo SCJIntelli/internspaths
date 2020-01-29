@@ -47,6 +47,65 @@ if($stmt = mysqli_prepare($link,$sql)){
         }
     }
 }
+$sql = "SELECT * FROM company WHERE id = ?";
+    
+    if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "i", $param_id);
+        
+        // Set parameters
+        $param_id = trim($_GET["id"]);
+        
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            $result = mysqli_stmt_get_result($stmt);
+
+            if(mysqli_num_rows($result) == 1){
+                /* Fetch result row as an associative array. Since the result set
+                contains only one row, we don't need to use while loop */
+                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                
+                // Retrieve individual field value
+                 $cusername = $row["username"];
+                 $cemail = $row["email"];
+                 $cname=$row["name"];
+                 $ccomnum=$row["comnum"];
+                 $cprofileurl=$row["profileurl"];
+                 $caddress=$row["address"];
+                 $cmnumber=$row["mobile"];
+                 $cid=$row["id"];
+                 $cdescrip=$row["description"];
+                 $clocation=$row["location"];
+                 $cfacebook=$row["facebook"];
+                 $clinkedin=$row["linkedin"];
+                 $ctwitter=$row["twitter"];
+                 $cfields=$row["fields"];
+                 $cmission=$row["mission"];
+                 $cvision=$row["vision"];
+
+
+
+            } else{
+                // URL doesn't contain valid id parameter. Redirect to error page
+                
+                exit();
+            }
+            
+        } else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+    
+
+    // Close statement
+    mysqli_stmt_close($stmt);
+    
+    // Close connection
+    mysqli_close($link);
+} else{
+    // URL doesn't contain id parameter. Redirect to error page
+    header("location: error.php");
+    exit();
+}
 
 ?>
 
@@ -209,62 +268,137 @@ if($stmt = mysqli_prepare($link,$sql)){
 
       <!-- page content -->
       <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="col-md-12 col-sm-12" style="display: inline-block;" >
-         
-<div class="page-header clearfix">
-                        <h2 class="pull-left">Companies</h2>
-                    </div>
-                    <?php
-                    // Include config file
-                    require_once "../php/config.php";
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM company";
-                    if($result = mysqli_query($link, $sql)){
-                        if(mysqli_num_rows($result) > 0){
-                            echo "<table id='datatable' class='table table-bordered table-striped'>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>#</th>";
-                            echo "<th>Userame</th>";
-                            echo "<th>Name</th>";
-                            echo "<th>Email Address</th>";
-                            echo "<th>Mobile Number</th>";
-                            echo "<th>Action</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-                            while($row = mysqli_fetch_array($result)){
-                                echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['username'] . "</td>";
-                                echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['email'] . "</td>";
-                                echo "<td>" . $row['mobile'] . "</td>";
-                                echo "<td>";
-                                echo "<a href='viewcompany.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
-                                // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
-                                //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                            echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                    }
+        <!-- top tiles -->
+        <div class="row" style="display: inline-block;" >
+          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
+            <div class="container  ">
+              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $cname ?></h2>
 
-                    // Close connection
-                    mysqli_close($link);
-                    ?>
+              <div class="row">
+
+                <div class="col-md-4 col-md-push-8">
+                  <div class="biography">
+                    <div class="">
+                      <img src=<?php echo $cprofileurl ?> >
+                    </div>
+                    <ul>
+                      <li><strong>Name: </strong> <?php echo $cname?></li>
+
+                      <li ><strong>Address: </strong><?php echo $caddress?></span></li>
+
+                      <li><strong>Contact Us:</strong> <?php echo $cmnumber?></li>
+                      <li><strong>Email:</strong> <?php echo $cemail?></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $clocation?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $cfacebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $clinkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $ctwitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
+
+
+                    </ul>
+                  </div>
+                </div> <!-- col-md-4 -->
+
+                <div class="col-md-8 col-md-pull-4">
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Our vision </h3>
+                    <p>
+                      <?php echo $cvision ?>
+                    </p>
+                  </div>
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Our mission </h3>
+                    <p>
+                      <?php echo $cmission ?>
+                    </p>
+                  </div>
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Who are we ?</h3>
+                    <p>
+                      <?php echo $cdescrip?>
+                    </p>
+                  </div>
+                  
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+
+                    <h3>what are we looking for..</h3>
+                    <p>
+                      <?php $text=(explode(",", $cfields));?>
+                      <?php
+                      $sizea = sizeof($text);
+                      for ($x = 0; $x < $sizea; $x+=1) {
+                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
+                      }
+
+                      ?>
+
+                    </p>
+                  </div>
+
+
+
+            <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div> -->
+
+
+
+            <!-- <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href= ><i class="fa fa-download"></i>view my cv</a>
+            </div> -->
           </div>
+
+
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>          
+  </div>
+</div>
+
+            <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div> -->
+
+            <!-- <div class="my-signature">
+              <img src="../assets/images/sign.png" alt="">
+            </div>
+
+            <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>
+            </div> -->
+          </div>
+
+
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>          
+  </div>
+</div>
+<!-- /top tiles -->
+
+
+
+
+</div>
         </div>
       
   </div>

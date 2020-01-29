@@ -40,6 +40,7 @@ if($stmt = mysqli_prepare($link,$sql)){
      $twitter=$row["twitter"];
      $fields=$row["fields"];
      $mission=$row["mission"];
+     $vision=$row["vision"];
 
 
 
@@ -115,7 +116,7 @@ if($stmt = mysqli_prepare($link,$sql)){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:80px; height: 80px ">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -227,9 +228,9 @@ if($stmt = mysqli_prepare($link,$sql)){
 
                 <div class="col-md-8 col-md-pull-4">
                   <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Who are we ?</h3>
+                    <h3>Our vision </h3>
                     <p>
-                      <?php echo $descrip?>
+                      <?php echo $vision ?>
                     </p>
                   </div>
                   <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
@@ -239,8 +240,15 @@ if($stmt = mysqli_prepare($link,$sql)){
                     </p>
                   </div>
                   <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Who are we ?</h3>
+                    <p>
+                      <?php echo $descrip?>
+                    </p>
+                  </div>
+                  
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
 
-                    <h3>what we are looking for..</h3>
+                    <h3>what are we looking for..</h3>
                     <p>
                       <?php $text=(explode(",", $fields));?>
                       <?php

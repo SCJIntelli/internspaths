@@ -47,6 +47,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $twitter=$row["twitter"];
                 $fields=$row["fields"];
                 $mission=$row["mission"];
+                $vision=$row["vision"];
 
 
 
@@ -152,17 +153,18 @@ if($stmt = mysqli_prepare($link, $sql)){
     $twitter = trim($_POST["twitter"]);
     $fields = trim($_POST["fields"]);
     $mission = trim($_POST["mission"]);
+    $vision = trim($_POST["vision"]);
 
 
 
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?,mission=?, WHERE id=?";
+                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?,mission=?,vision=?, WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "sssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission, $param_id);
+                    mysqli_stmt_bind_param($stmt, "sssssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission,$param_vision, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -177,6 +179,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_twitter=$twitter;
                     $param_fields=$fields;
                     $param_mission=$mission;
+                    $param_vision=$vision;
 
 
 
@@ -253,7 +256,7 @@ mysqli_close($link);
             <!-- menu profile quick info -->
             <div class="profile clearfix">
                 <div class="profile_pic">
-                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:80px; height: 80px ">
               </div>
               <div class="profile_info">
                   <span>Welcome,</span>
@@ -271,7 +274,7 @@ mysqli_close($link);
               <ul class="nav side-menu">
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                     <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
-                    <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
+                    <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                     <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
@@ -434,6 +437,13 @@ mysqli_close($link);
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
                                   <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >vision <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="vision" placeholder="enter your vision statement" value="<?php echo $vision ?>"  spellcheck="false"><?php echo $vision ?></textarea>
                               </div>
                           </div>
                           <div class="item form-group">

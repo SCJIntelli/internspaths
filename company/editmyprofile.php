@@ -279,28 +279,9 @@ mysqli_close($link);
                     <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                     <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                     <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
-                  <!-- <ul class="nav child_menu">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                    <li><a href="addadmin.php">Search Companies</a></li>
-                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
 
-                    <!-- </ul> --> 
                 </li>
-                    <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu">
-                        <li><a href="form.html">Search For a Student</a></li>
-                        <li><a href="form_advanced.html">Manage Students</a></li>
-                        <li><a href="addstudent.php">Add a New Student</a></li>
-                      </ul>
-                  </li> -->
-                    <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu">
-                        <li><a href="general_elements.html">Search For a Company</a></li>
-                        <li><a href="managecompany.php">Manage Companies</a></li>
-                        <li><a href="addcompany.php">Add a New Company</a></li>
-                      </ul>
-                  </li> -->
+
 
               </ul>
           </div>

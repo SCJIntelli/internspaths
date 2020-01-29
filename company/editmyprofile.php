@@ -11,8 +11,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 // Include config file
 require_once "../php/config.php" ;
-
-
 $name = $email = $mnumber =$error= "";
 $name_err = $email_err = $mnumber_err = "";
 

@@ -47,6 +47,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $facebook=$row["facebook"];
                 $linkedin=$row["linkedin"];
                 $twitter=$row["twitter"];
+                $fields=$row["fields"];
 
 
 
@@ -145,15 +146,23 @@ if($stmt = mysqli_prepare($link, $sql)){
 
                     
                 }
+    $description = trim($_POST["descrip"]);
+    $location = trim($_POST["location"]);
+    $facebook = trim($_POST["facebook"]);
+    $linkedin = trim($_POST["linkedin"]);
+    $twitter = trim($_POST["twitter"]);
+    $fields = trim($_POST["fields"]);
+
+
 
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=? WHERE id=?";
+                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?, WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "sssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -166,13 +175,14 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_facebook=$facebook;
                     $param_linkedin=$linkedin;
                     $param_twitter=$twitter;
+                    $param_fields=$fields;
 
 
 
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
                 // Records updated successfully. Redirect to landing page
-                        header("location: managecompany.php");
+                        header("location: index.php");
                         exit();
                     } else{
                       $error.= "Something went wrong. Please try again later.";
@@ -425,6 +435,14 @@ mysqli_close($link);
                                   <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
                               </div>
                           </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >skill requirnments <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="fields" name="fields"  class="form-control " placeholder="eg: machine learning,javascript,.." value="<?php echo $fields ?>" >
+                              </div>
+                          </div>
+
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-map-marker"></i></a></strong></li> <span class="required"></span>
                                 </label>

@@ -160,11 +160,12 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?,mission=?,vision=?, WHERE id=?";
+                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?,mission=?,vision=? WHERE id = ?";
+
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "sssssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission,$param_vision, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission,$param_vision, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -186,14 +187,16 @@ if($stmt = mysqli_prepare($link, $sql)){
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
                 // Records updated successfully. Redirect to landing page
-                        header("location: index.php");
+                        // header("location: index.php");
                         exit();
                     } else{
                       $error.= "Something went wrong. Please try again later.";
+                      header("location: error.php?id=$id & return=editcompany.php & error=$error ");
                     }
                 }
                 else{
-                    $error.="Connection Error";
+                    $error.=mysqli_error($link);
+                    header("location: error.php?id=$id & return=editcompany.php & error=$error ");
                 }
             }
             else{

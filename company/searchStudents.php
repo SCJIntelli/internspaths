@@ -201,7 +201,7 @@ if($stmt = mysqli_prepare($link, $sql)){
          
 <div class="page-header clearfix">
                         <h2 class="pull-left">Students</h2>
-                        <a href="addstudent.php" class="btn btn-success pull-right">Add New Students</a>
+                        
                     </div>
                     <?php
                     // Include config file

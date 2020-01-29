@@ -133,7 +133,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                 <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-                <li><a href="searchcompany.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                <li><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
                 <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>

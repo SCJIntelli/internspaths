@@ -51,6 +51,7 @@ if ($uploadOk == 0) {
             $param_profileurl=$target_file;
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
+                //header("location: editmyprofile.php");
             } else{
                 $img_err.="Error: " . $sql . "<br>" . mysqli_error($link);
                 header("location: error.php?id=$id & return=editmyprofile.php & error=$img_err ");

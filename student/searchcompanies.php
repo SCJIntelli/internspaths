@@ -170,7 +170,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <div class="col-md-3 left_col" style="height:1000px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.php" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -197,7 +197,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                 <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-                <li><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                <li class="active"><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
                 <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>

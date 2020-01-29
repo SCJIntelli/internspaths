@@ -205,7 +205,7 @@ $sql = "SELECT * FROM company WHERE id = ?";
                 <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
                 <li class="active"><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
-                <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                <li><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
                 <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>

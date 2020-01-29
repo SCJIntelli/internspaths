@@ -116,7 +116,7 @@ if($stmt = mysqli_prepare($link,$sql)){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:80px; height: 80px ">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px ">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -207,7 +207,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <div class="col-md-4 col-md-push-8">
                   <div class="biography">
                     <div class="">
-                      <img src=<?php echo $profileurl ?> >
+                      <img src="<?php echo $profileurl ?>" style="border-radius: 200px"  >
                     </div>
                     <ul>
                       <li><strong>Name: </strong> <?php echo $name?></li>

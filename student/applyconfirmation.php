@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT requests FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$cid);
+  mysqli_stmt_bind_param($stmt,"i",$id);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
@@ -79,6 +79,44 @@ $sql = "UPDATE company SET requests=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"si",$requests,$cid);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt);     
+
+                
+
+
+
+        
+    }
+
+  }
+$sql2 = "SELECT applied FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql2)){
+  mysqli_stmt_bind_param($stmt,"i",$cid);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $applied = $row["applied"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
+}
+$applied.=$cid.",";
+$sql = "UPDATE student SET applied=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$applied,$id);
 
    if(mysqli_stmt_execute($stmt)){
         

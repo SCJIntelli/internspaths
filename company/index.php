@@ -19,32 +19,35 @@ if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"i",$param_id);
   $param_id = $id;
 
-   if(mysqli_stmt_execute($stmt)){
-        $result = mysqli_stmt_get_result($stmt);
+  if(mysqli_stmt_execute($stmt)){
+    $result = mysqli_stmt_get_result($stmt);
 
-        if(mysqli_num_rows($result) == 1){
-           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    if(mysqli_num_rows($result) == 1){
+     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-                $username = $row["username"];
-                $email = $row["email"];
-                $name=$row["name"];
-                $comnum=$row["comnum"];
-                $profileurl=$row["profileurl"];
-                $address=$row["address"];
-                $mnumber=$row["mobile"];
-                $id=$row["id"];
-                $descrip=$row["description"];
-                $location=$row["location"];
-                $facebook=$row["facebook"];
-                $linkedin=$row["linkedin"];
-                $twitter=$row["twitter"];
+     $username = $row["username"];
+     $email = $row["email"];
+     $name=$row["name"];
+     $comnum=$row["comnum"];
+     $profileurl=$row["profileurl"];
+     $address=$row["address"];
+     $mnumber=$row["mobile"];
+     $id=$row["id"];
+     $descrip=$row["description"];
+     $location=$row["location"];
+     $facebook=$row["facebook"];
+     $linkedin=$row["linkedin"];
+     $twitter=$row["twitter"];
+     $fields=$row["fields"];
+     $mission=$row["mission"];
+     $vision=$row["vision"];
 
-                
 
 
 
-        }
-    }
+
+   }
+ }
 }
 ?>
 
@@ -59,7 +62,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
   <title>InternsPaths | <?php echo $name." ".$lname ?></title>
- <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
   <!-- Font Awesome CSS -->
@@ -105,7 +108,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <div class="col-md-3 left_col" style="height:1000px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -113,7 +116,7 @@ if($stmt = mysqli_prepare($link,$sql)){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:80px; height: 80px ">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -130,9 +133,9 @@ if($stmt = mysqli_prepare($link,$sql)){
               <h3>General</h3>
               <ul class="nav side-menu">
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
-                <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
-                <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
-                <li><a href="searchcompany.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                  <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
+                  <li><a href="searchcompany.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
@@ -195,47 +198,69 @@ if($stmt = mysqli_prepare($link,$sql)){
       <div class="right_col" role="main">
         <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
-<section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
-      <div class="container  ">
-        <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
+          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
+            <div class="container  ">
+              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
 
-        <div class="row">
+              <div class="row">
 
-          <div class="col-md-4 col-md-push-8">
-            <div class="biography">
-              <div class="">
-                <img src=<?php echo $profileurl ?> >
-              </div>
-              <ul>
-                <li><strong>Name:</strong> <?php echo $name?></li>
+                <div class="col-md-4 col-md-push-8">
+                  <div class="biography">
+                    <div class="">
+                      <img src=<?php echo $profileurl ?> >
+                    </div>
+                    <ul>
+                      <li><strong>Name: </strong> <?php echo $name?></li>
 
-                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
+                      <li ><strong>Address: </strong><?php echo $address?></span></li>
 
-                <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
-                <li><strong>Email:</strong> <?php echo $email?></li>
-                <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
-                <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
-                <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
-                <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
-      
+                      <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
+                      <li><strong>Email:</strong> <?php echo $email?></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
 
-              </ul>
-            </div>
-          </div> <!-- col-md-4 -->
 
-          <div class="col-md-8 col-md-pull-4">
-            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>Description</h3>
-              <p>
-                <?php echo $descrip?>
-              </p>
-            </div>
-            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>what we looking for..</h3>
-              <p>
-                <?php echo $descrip?>
-              </p>
-            </div>
+                    </ul>
+                  </div>
+                </div> <!-- col-md-4 -->
+
+                <div class="col-md-8 col-md-pull-4">
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Our vision </h3>
+                    <p>
+                      <?php echo $vision ?>
+                    </p>
+                  </div>
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Our mission </h3>
+                    <p>
+                      <?php echo $mission ?>
+                    </p>
+                  </div>
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Who are we ?</h3>
+                    <p>
+                      <?php echo $descrip?>
+                    </p>
+                  </div>
+                  
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+
+                    <h3>what are we looking for..</h3>
+                    <p>
+                      <?php $text=(explode(",", $fields));?>
+                      <?php
+                      $sizea = sizeof($text);
+                      for ($x = 0; $x < $sizea; $x+=1) {
+                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
+                      }
+
+                      ?>
+
+                    </p>
+                  </div>
 
 
 
@@ -253,7 +278,7 @@ if($stmt = mysqli_prepare($link,$sql)){
               </ul>
             </div> -->
 
-           
+
 
             <!-- <div class="download-button">
               <a class="btn btn-primary btn-lg" target = "_blank"  href= ><i class="fa fa-download"></i>view my cv</a>
@@ -264,8 +289,8 @@ if($stmt = mysqli_prepare($link,$sql)){
         </div> <!-- /.row -->
       </div> <!-- /.container -->
     </section>          
-        </div>
-      </div>
+  </div>
+</div>
 
             <!-- <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
@@ -294,56 +319,56 @@ if($stmt = mysqli_prepare($link,$sql)){
         </div> <!-- /.row -->
       </div> <!-- /.container -->
     </section>          
-        </div>
-      </div>
-      <!-- /top tiles -->
-
-
-
-
-    </div>
   </div>
+</div>
+<!-- /top tiles -->
 
-  <!-- jQuery -->
-  <script src="../vendors/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- FastClick -->
-  <script src="../vendors/fastclick/lib/fastclick.js"></script>
-  <!-- NProgress -->
-  <script src="../vendors/nprogress/nprogress.js"></script>
-  <!-- Chart.js -->
-  <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-  <!-- gauge.js -->
-  <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-  <!-- bootstrap-progressbar -->
-  <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-  <!-- iCheck -->
-  <script src="../vendors/iCheck/icheck.min.js"></script>
-  <!-- Skycons -->
-  <script src="../vendors/skycons/skycons.js"></script>
-  <!-- Flot -->
-  <script src="../vendors/Flot/jquery.flot.js"></script>
-  <script src="../vendors/Flot/jquery.flot.pie.js"></script>
-  <script src="../vendors/Flot/jquery.flot.time.js"></script>
-  <script src="../vendors/Flot/jquery.flot.stack.js"></script>
-  <script src="../vendors/Flot/jquery.flot.resize.js"></script>
-  <!-- Flot plugins -->
-  <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-  <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-  <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-  <!-- DateJS -->
-  <script src="../vendors/DateJS/build/date.js"></script>
-  <!-- JQVMap -->
-  <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-  <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-  <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-  <!-- bootstrap-daterangepicker -->
-  <script src="../vendors/moment/min/moment.min.js"></script>
-  <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-  <!-- Custom Theme Scripts -->
-  <script src="../build/js/custom.min.js"></script>
-  
+
+
+</div>
+</div>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="../vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="../vendors/Flot/jquery.flot.js"></script>
+<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+<script src="../vendors/Flot/jquery.flot.time.js"></script>
+<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="../vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/moment/min/moment.min.js"></script>
+<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+
 </body>
 </html>

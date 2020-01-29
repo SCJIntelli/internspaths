@@ -13,7 +13,7 @@ $img_err="";
 
 // Check if image file is a actual image or fake image
 if(!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] == UPLOAD_ERR_NO_FILE) {
-    header("location: error.php?id=$id & return=editcompany.php & error=No File Selected ");
+    header("location: error.php?id=$id & return=editmyprofile.php & error=No File Selected ");
 }
 else{
     if(isset($_POST["submit"])) {
@@ -63,7 +63,7 @@ if ($uploadOk == 0) {
 
     // Close connection
         mysqli_close($link);
-        header("location: editcompany.php?id=$id");
+        header("location: editmyprofile.php?id=$id");
 
         // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
     } else {

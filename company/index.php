@@ -39,6 +39,7 @@ if($stmt = mysqli_prepare($link,$sql)){
      $linkedin=$row["linkedin"];
      $twitter=$row["twitter"];
      $fields=$row["fields"];
+     $mission=$row["mission"];
 
 
 
@@ -208,9 +209,9 @@ if($stmt = mysqli_prepare($link,$sql)){
                       <img src=<?php echo $profileurl ?> >
                     </div>
                     <ul>
-                      <li><strong>Name:</strong> <?php echo $name?></li>
+                      <li><strong>Name: </strong> <?php echo $name?></li>
 
-                      <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
+                      <li ><strong>Address: </strong><?php echo $address?></span></li>
 
                       <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
                       <li><strong>Email:</strong> <?php echo $email?></li>
@@ -226,9 +227,15 @@ if($stmt = mysqli_prepare($link,$sql)){
 
                 <div class="col-md-8 col-md-pull-4">
                   <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Description</h3>
+                    <h3>Who are we ?</h3>
                     <p>
                       <?php echo $descrip?>
+                    </p>
+                  </div>
+                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Our mission </h3>
+                    <p>
+                      <?php echo $mission ?>
                     </p>
                   </div>
                   <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
@@ -239,7 +246,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-certificate" font-size=30px>'.$text[$x]."</p><br>";
+                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
                       }
 
                       ?>

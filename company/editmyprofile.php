@@ -48,6 +48,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $linkedin=$row["linkedin"];
                 $twitter=$row["twitter"];
                 $fields=$row["fields"];
+                $mission=$row["mission"];
 
 
 
@@ -152,17 +153,18 @@ if($stmt = mysqli_prepare($link, $sql)){
     $linkedin = trim($_POST["linkedin"]);
     $twitter = trim($_POST["twitter"]);
     $fields = trim($_POST["fields"]);
+    $mission = trim($_POST["mission"]);
 
 
 
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
         // Prepare an update statement
-                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?, WHERE id=?";
+                $sql = "UPDATE company SET name=?, email=?, mobile=?,address=?,description=?,location=?,facebook=?,linkedin=?,twitter=?,fields=?,mission=?, WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields, $param_id);
+                    mysqli_stmt_bind_param($stmt, "sssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -176,6 +178,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_linkedin=$linkedin;
                     $param_twitter=$twitter;
                     $param_fields=$fields;
+                    $param_mission=$mission;
 
 
 
@@ -271,7 +274,7 @@ mysqli_close($link);
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                     <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                     <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-                    <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                    <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
@@ -436,6 +439,13 @@ mysqli_close($link);
                               </div>
                           </div>
                           <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >mission <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="mission" placeholder="enter your mission statement" value="<?php echo $mission ?>"  spellcheck="false"><?php echo $mission ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >skill requirnments <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
@@ -447,28 +457,28 @@ mysqli_close($link);
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-map-marker"></i></a></strong></li> <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
-                                  <input type="text" id="location" name="location" required="required" placeholder="enetr company location" class="form-control " value="<?php echo $location ?>" >
+                                  <input type="text" id="location" name="location" required="required" placeholder="www.example.com" class="form-control " value="<?php echo $location ?>" >
                               </div>
                           </div>
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-facebook-square"></i></a></strong></li> <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
-                                  <input type="text" id="facebook" name="facebook"  class="form-control " value="<?php echo $facebook ?>" >
+                                  <input type="text" id="facebook" name="facebook" placeholder="www.example.com" class="form-control " value="<?php echo $facebook ?>" >
                               </div>
                           </div>
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-linkedin-square"></i></a></strong></li> <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
-                                  <input type="text" id="linkedin" name="linkedin" class="form-control " value="<?php echo $linkedin ?>" >
+                                  <input type="text" id="linkedin" name="linkedin" placeholder="www.example.com"class="form-control " value="<?php echo $linkedin ?>" >
                               </div>
                           </div>
                           <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-twitter-square"></i></a></strong></li> <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
-                                  <input type="text" id="twitter" name="twitter"  class="form-control " value="<?php echo $twitter ?>" >
+                                  <input type="text" id="twitter" name="twitter" placeholder="www.example.com" class="form-control " value="<?php echo $twitter ?>" >
                               </div>
                           </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>

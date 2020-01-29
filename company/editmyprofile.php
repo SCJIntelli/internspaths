@@ -259,7 +259,7 @@ mysqli_close($link);
             <!-- menu profile quick info -->
             <div class="profile clearfix">
                 <div class="profile_pic">
-                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:80px; height: 80px ">
+                  <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px ">
               </div>
               <div class="profile_info">
                   <span>Welcome,</span>
@@ -278,7 +278,7 @@ mysqli_close($link);
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                     <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                     <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
-                    <li><a href="addadmin.php"><i class="fa fa-search"></i>Search Students</a></li>
+                    <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>

@@ -120,7 +120,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <div class="col-md-3 left_col" style="height:1000px;">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="../index.php" class="site_title"><i class="fa fa-paw"></i> <span>InternsPaths</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -128,7 +128,7 @@ if($stmt = mysqli_prepare($link,$sql)){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>

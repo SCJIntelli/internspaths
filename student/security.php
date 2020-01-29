@@ -178,7 +178,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>

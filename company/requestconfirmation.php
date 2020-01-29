@@ -2,7 +2,7 @@
 
 // Initialize the session
 session_start();
-
+$sid= trim($_GET["id"]);
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -48,6 +48,89 @@ if($stmt = mysqli_prepare($link,$sql)){
 
    }
  }
+}
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $sid=trim($_POST["sid"]);
+  
+
+  $sql = "SELECT requests FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $requests = $row["requests"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
+}
+$requests.=$id.",";
+$sql = "UPDATE student SET requests=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$requests,$sid);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt);     
+
+                
+
+
+
+        
+    }
+
+  }
+$sql2 = "SELECT applied FROM company WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql2)){
+  mysqli_stmt_bind_param($stmt,"i",$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $applied = $row["applied"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
+}
+$applied.=$scid.",";
+$sql = "UPDATE company SET applied=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$applied,$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt); 
+                header("location: viewstudent.php?id=$sid");
+                        exit();       
+
+                
+
+
+
+        
+    }
+
+  }
 }
 ?>
 
@@ -137,7 +220,6 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                  
 
               </ul>
             </div>
@@ -177,98 +259,37 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <!-- top tiles -->
-        <div class="row" style="display: inline-block;" >
-          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
-            <div class="container  ">
-              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
-
-              <div class="row">
-
-                <div class="col-md-4 col-md-push-8">
-                  <div class="biography">
-                    <div class="">
-                      <img src="<?php echo $profileurl ?>" style="border-radius: 200px"  >
+        <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>You can request ...</h1>
                     </div>
-                    <ul>
-                      <li><strong>Name: </strong> <?php echo $name?></li>
-
-                      <li ><strong>Address: </strong><?php echo $address?></span></li>
-
-                      <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
-                      <li><strong>Email:</strong> <?php echo $email?></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
-
-
-                    </ul>
-                  </div>
-                </div> <!-- col-md-4 -->
-
-                <div class="col-md-8 col-md-pull-4">
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our vision </h3>
-                    <p>
-                      <?php echo $vision ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our mission </h3>
-                    <p>
-                      <?php echo $mission ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Who are we ?</h3>
-                    <p>
-                      <?php echo $descrip?>
-                    </p>
-                  </div>
-                  
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-
-                    <h3>what are we looking for..</h3>
-                    <p>
-                      <?php $text=(explode(",", $fields));?>
-                      <?php
-                      $sizea = sizeof($text);
-                      for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
-                      }
-
-                      ?>
-
-                    </p>
-                  </div>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
+                        <div class="alert" style="background-color : rgba(255,0,0,0.3)">
+                            <input type="hidden" name="id" value=""/>
+                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>
+                                
+                                <a href="viewcompany.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
+                                <input type="hidden" name="sid" value="<?php echo $sid; ?>"/>
+                                <input type="submit" class="btn btn-danger" value="Apply">
+                                
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>        
+        </div>
+    </div>
+      <!-- /top tiles -->
 
 
 
-          </div>
 
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
+    </div>
   </div>
-</div>
-
-           
-          </div>
-
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-  </div>
-</div>
-<!-- /top tiles -->
-
-
-
-
-</div>
-</div>
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

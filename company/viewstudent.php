@@ -159,7 +159,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
-                  
+                  <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
 
               </ul>
             </div>
@@ -198,6 +198,11 @@ if($stmt = mysqli_prepare($link,$sql)){
 
       <!-- page content -->
       <div class="right_col" role="main">
+        <div class="col-md-12" >
+            <a href="searchStudents.php" class="btn btn-success pull-right">Back</a>
+            <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Request</a>
+            
+        </div>
         <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section ">

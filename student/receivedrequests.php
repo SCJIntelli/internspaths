@@ -47,11 +47,11 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
-$sql = "SELECT applied FROM student WHERE id=$id";
+$sql = "SELECT requests FROM student WHERE id=$id";
 if($result = mysqli_query($link, $sql)){
   if(mysqli_num_rows($result) > 0){
     $row = mysqli_fetch_array($result);
-    $applied=$row["applied"];
+    $applied=$row["requests"];
     $appliedx=(explode(",", $applied));
     $appliedset=array_unique($appliedx);
     mysqli_free_result($result);
@@ -166,8 +166,8 @@ if($result = mysqli_query($link, $sql)){
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
                   <li ><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
-                  <li class= "active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                  <li><a href="receivedrequests.php"><i class="fa fa-send"></i>Received Requests</a></li>
+                  <li><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                  <li class= "active"><a href="receivedrequests.php"><i class="fa fa-send"></i>Received Requests</a></li>
                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
 
 

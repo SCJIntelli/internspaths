@@ -204,9 +204,9 @@ $sql = "SELECT * FROM company WHERE id = ?";
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                 <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-                <li class="active"><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
+                <li><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
                 <li><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                <li><a href="receivedrequests.php"><i class="fa fa-bell"></i>Received Requests</a></li>
+                <li class="active"><a href="receivedrequests.php"><i class="fa fa-bell"></i>Received Requests</a></li>
                 <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
@@ -269,8 +269,8 @@ $sql = "SELECT * FROM company WHERE id = ?";
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="col-md-12" >
-            <a href="searchcompanies.php" class="btn btn-success pull-right">Back</a>
-            <a href="applyconfirmation.php?id=<?php echo $cid ?>" class="btn btn-success pull-right">Apply</a>
+            <a href="receivedrequests.php" class="btn btn-success pull-right">Back</a>
+            <a href="applyconfirmationrr.php?id=<?php echo $cid ?>" class="btn btn-success pull-right">Apply</a>
             
         </div>
         <!-- top tiles -->

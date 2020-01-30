@@ -152,9 +152,9 @@ if($stmt = mysqli_prepare($link, $sql)){
               <ul class="nav side-menu">
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                     <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
-                    <li class="active"><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
+                    <li ><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                     <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
-                    <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                    <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
                  
 
               </ul>
@@ -229,7 +229,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                                 echo "<td>" . $row['name'] . "</td>";
                                 echo "<td>" . $row['mobile'] . "</td>";
                                 echo "<td>";
-                                echo "<a href='viewstudent.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                echo "<a href='searchview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editstudent.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
                                 // echo "<a href='deletestu.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
                                 //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managestudent.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";

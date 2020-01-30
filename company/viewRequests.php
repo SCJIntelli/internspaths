@@ -49,11 +49,11 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
-$sql = "SELECT requests FROM company WHERE id=$id";
+$sql = "SELECT applied FROM company WHERE id=$id";
 if($result = mysqli_query($link, $sql)){
   if(mysqli_num_rows($result) > 0){
     $row = mysqli_fetch_array($result);
-    $applied=$row["requests"];
+    $applied=$row["applied"];
     $appliedx=(explode(",", $applied));
     $appliedset=array_unique($appliedx);
     mysqli_free_result($result);

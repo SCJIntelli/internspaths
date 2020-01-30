@@ -49,11 +49,11 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
-$sql = "SELECT applied FROM company WHERE id=$id";
+$sql = "SELECT requests FROM company WHERE id=$id";
 if($result = mysqli_query($link, $sql)){
   if(mysqli_num_rows($result) > 0){
     $row = mysqli_fetch_array($result);
-    $applied=$row["applied"];
+    $applied=$row["requests"];
     $appliedx=(explode(",", $applied));
     $appliedset=array_unique($appliedx);
     mysqli_free_result($result);
@@ -150,8 +150,8 @@ if($result = mysqli_query($link, $sql)){
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
-                  <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                   <li><a href="receivedRequests.php"><i class="fa fa-send"></i>Applied students</a></li>
+                  <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                   <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
                   
 
               </ul>
@@ -228,7 +228,7 @@ if($result = mysqli_query($link, $sql)){
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['mobile'] . "</td>";
                     echo "<td>";
-                    echo "<a href='newview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                    echo "<a href='searchview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
                                 // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
                                 //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
@@ -257,13 +257,6 @@ if($result = mysqli_query($link, $sql)){
 
       </div>
     </div>
-<!-- /top tiles -->
-
-
-
-
-</div>
-</div>
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

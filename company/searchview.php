@@ -84,7 +84,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
+  <title>InternsPaths | <?php echo $name?></title>
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -160,6 +160,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li class="active"><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                   <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
 
               </ul>
             </div>

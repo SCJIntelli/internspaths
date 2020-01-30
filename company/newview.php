@@ -25,22 +25,12 @@ if($stmt = mysqli_prepare($link,$sql)){
     if(mysqli_num_rows($result) == 1){
      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-     $username = $row["username"];
-     $email = $row["email"];
+     
      $name=$row["name"];
-     $comnum=$row["comnum"];
+
      $profileurl=$row["profileurl"];
-     $address=$row["address"];
-     $mnumber=$row["mobile"];
+
      $id=$row["id"];
-     $descrip=$row["description"];
-     $location=$row["location"];
-     $facebook=$row["facebook"];
-     $linkedin=$row["linkedin"];
-     $twitter=$row["twitter"];
-     $fields=$row["fields"];
-     $mission=$row["mission"];
-     $vision=$row["vision"];
 
 
 
@@ -49,19 +39,38 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
-$sql = "SELECT applied FROM company WHERE id=$id";
-if($result = mysqli_query($link, $sql)){
-  if(mysqli_num_rows($result) > 0){
-    $row = mysqli_fetch_array($result);
-    $applied=$row["applied"];
-    $appliedx=(explode(",", $applied));
-    $appliedset=array_unique($appliedx);
-    mysqli_free_result($result);
-  } else{
-    echo "<p class='lead'><em>No records were found.</em></p>";
-  }
-} else{
-  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+$sql = "SELECT * FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$param_id);
+  $param_id = trim($_GET["id"]);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $susername = $row["username"];
+                $semail = $row["email"];
+                $sname=$row["name"];
+                $slname=$row["lastname"];
+                $smnumber=$row["mobile"];
+                $sprofileurl=$row["profileurl"];
+                $saddress=$row["address"];
+                $sgender=$row["gender"];
+                $slinkin = $row["linkedin"];
+                $sperweb = $row["personalweb"];
+                $sdescrip = $row["descrip"];
+                $sfield =$row["field"];
+                $sgpa = $row["gpa"];
+                $scvurl = $row["cvurl"];
+
+                
+
+
+
+        }
+    }
 }
 ?>
 
@@ -149,10 +158,9 @@ if($result = mysqli_query($link, $sql)){
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
-                  <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <li ><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                   <li><a href="receivedRequests.php"><i class="fa fa-send"></i>Applied students</a></li>
-                  
+                   <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
 
               </ul>
             </div>
@@ -191,72 +199,84 @@ if($result = mysqli_query($link, $sql)){
 
       <!-- page content -->
       <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="col-md-12 col-sm-12" style="display: inline-block;" >
+        <div class="col-md-12" >
+            <a href="searchStudents.php" class="btn btn-success pull-right">Back</a>
+            <!-- <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Request</a> -->
+            
+        </div>
+        <!-- top tiles -->
+        <div class="row" style="display: inline-block;" >
+<section id="about" class="about-section ">
+      <div class="container">
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
 
-            <div class="page-header clearfix">
-              <h2 class="pull-left">Students</h2>
+        <div class="row">
+
+          <div class="col-md-4 col-md-push-8">
+            <div class="biography">
+              <div class="">
+                <img src=<?php echo $sprofileurl ?> >
+              </div>
+              <ul>
+                <li><strong>Name:</strong> <?php echo $sname." ".$slname ?></li>
+                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $saddress?></span></li>
+                <li><strong>Gender:</strong> <?php echo $sgender?></li>
+                <li><strong>Phone:</strong> <?php echo $smnumber?></li>
+                <li><strong>Email:</strong> <?php echo $semail?></li>
+                <li><strong>Field:</strong> <?php echo $sfield?></li>
+                <li><strong>Personal Website:</strong><a href="<?php echo $sperweb?>">   <?php echo $sperweb?></a></li>
+                <li><strong>LinkedIn Address:</strong> <a href="<?php echo $slinkin?>"><?php echo $slinkin?></a></li>
+                <li><strong>GPA:</strong> <?php echo $sgpa?></li>
+
+              </ul>
+            </div>
+          </div> <!-- col-md-4 -->
+
+          <div class="col-md-8 col-md-pull-4">
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>Description</h3>
+              <p>
+                <?php echo $sdescrip?>
+              </p>
             </div>
 
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
 
-            <?php 
-            echo "<table id='datatable' class='table table-bordered table-striped'>";
-                  echo "<thead>";
-                  echo "<tr>";
-                  echo "<th>#</th>";
-                  echo "<th>Userame</th>";
-                  echo "<th>Name</th>";
-                  echo "<th>Email Address</th>";
-                  echo "<th>Mobile Number</th>";
-                  echo "<th>Action</th>";
-                  echo "</tr>";
-                  echo "</thead>";
-                  echo "<tbody>";
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div>
 
-            foreach ($appliedset as $key) {
-              
-              $sql = "SELECT * FROM student WHERE id=$key";
-              if($stmt = mysqli_prepare($link, $sql)){
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                if(mysqli_num_rows($result) > 0){
-                  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                    echo "<tr>";
-                    echo "<td>" . $row['id'] . "</td>";
-                    echo "<td>" . $row['username'] . "</td>";
-                    echo "<td>" . $row['name'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['mobile'] . "</td>";
-                    echo "<td>";
-                    echo "<a href='newview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
-                                // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
-                                //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
-                    echo "</td>";
-                    echo "</tr>";
-                    mysqli_free_result($result);
-                    mysqli_stmt_close($stmt);
-                  }
-                  
-                            // Free result set
-                  
-                } else{
-                  
-                }
-              
+            <div class="my-signature">
+              <img src="../assets/images/sign.png" alt="">
+            </div>
 
-
-            }
-            echo "</tbody>";                            
-                  echo "</table>";
-          mysqli_close($link);
-
-            ?>
+            <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $scvurl ?> ><i class="fa fa-download"></i>view my cv</a>
+            </div>
           </div>
-        </div>
 
+
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>          
+        </div>
       </div>
+      <!-- /top tiles -->
+
+
+
+
     </div>
+  </div>
 <!-- /top tiles -->
 
 

@@ -117,6 +117,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
                 mysqli_stmt_close($stmt);
+                
+
 
                $sql = "SELECT id FROM users WHERE username='$username'";
                $result = mysqli_query($link, $sql);
@@ -125,17 +127,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                if($userType == "Company"){
                $sql = "INSERT INTO company (id,username,email) VALUES ('$id','$username','$Email')";
                if($stmt = mysqli_prepare($link, $sql)){
+
                 mysqli_stmt_execute($stmt);
             }
             }
                 else if($userType == "Student"){
+
                 $sql = "INSERT INTO student (id,username,email) VALUES ('$id','$username','$Email')";
                if($stmt = mysqli_prepare($link, $sql)){
+
                 mysqli_stmt_execute($stmt);
+                // $error=mysqli_error($link);
+                // header("location: error.php?return=editstudent.php & error=$error");
             }
             }
+            mysqli_close($link);
                 header("location: login.php");
-                mysqli_close($link);
+                
             } else{
                 echo "Something went wrong. Please try again later.";
             }

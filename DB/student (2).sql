@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 29, 2020 at 08:40 PM
--- Server version: 10.4.10-MariaDB
--- PHP Version: 7.3.12
+-- Generation Time: Jan 30, 2020 at 07:44 AM
+-- Server version: 5.7.26
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS `student` (
   `address` varchar(500) NOT NULL DEFAULT 'Unknown',
   `gender` varchar(6) NOT NULL DEFAULT 'Male',
   `linkedin` varchar(500) NOT NULL DEFAULT '#',
-  `gpa` float NOT NULL DEFAULT 4.2,
+  `gpa` float NOT NULL DEFAULT '4.2',
   `personalweb` varchar(500) NOT NULL DEFAULT '#',
   `cvurl` varchar(500) NOT NULL DEFAULT '#',
   `descrip` varchar(2000) NOT NULL DEFAULT 'No Description',
   `field` varchar(100) NOT NULL DEFAULT 'Electronic & Telecommunication Engineering',
-  `dateofbirth` varchar(10) NOT NULL,
-  `requests` varchar(1000) NOT NULL,
-  `applied` varchar(1000) NOT NULL,
+  `dateofbirth` varchar(10) NOT NULL DEFAULT '',
+  `requests` varchar(1000) NOT NULL DEFAULT '',
+  `applied` varchar(1000) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `student` (
 --
 
 INSERT INTO `student` (`id`, `username`, `email`, `mobile`, `name`, `lastname`, `profileurl`, `address`, `gender`, `linkedin`, `gpa`, `personalweb`, `cvurl`, `descrip`, `field`, `dateofbirth`, `requests`, `applied`) VALUES
-(4, 'Student', 'shamalchamara@gmail.com', '0712369217', 'Tharaka', 'Jayaweera', '../uploads/4.jpg', 'Kegalle, sri lanka', 'Male', 'https://www.linkedin.com/in/shamal-jayathilake', 3.7561, 'test.com', '../cvuploads/4.pdf', 'I am a person who is positive about every aspect of life. There are many things I like to do, to see, and to experience. I like to read, I like to write; I like to think, I like to dream; I like to talk, I like to listen. I like to see the sunrise in the morning, I like to see the moonlight at night; I like to feel the music flowing on my face, I like to smell the wind coming from the ocean. I like to look at the clouds in the sky with a blank mind, I like to do thought experiment when I cannot sleep in the middle of the night. I like flowers in spring, rain in summer, leaves in autumn, and snow in winter. I like to sleep early, I like to get up late; I like to be alone, I like to be surrounded by people. I like countryï¿½s peace, I like metropolisï¿½ noise; I like the beautiful west lake in Hangzhou, I like the flat cornfield in Champaign. I like delicious food and comfortable shoes; I like good books and romantic movies. I like the land and the nature, I like people. And, I like to laugh.', 'Electronic & Telecommunication Engineering', '2020-01-07', '', '5,5,12,17,12,12,5,5,5,');
+(4, 'Student', 'shamalchamara@gmail.com', '0712369217', 'Tharaka', 'Jayaweera', '../uploads/4.jpg', 'Kegalle, sri lanka', 'Male', 'https://www.linkedin.com/in/shamal-jayathilake', 3.7561, 'test.com', '../cvuploads/4.pdf', 'I am a person who is positive about every aspect of life. There are many things I like to do, to see, and to experience. I like to read, I like to write; I like to think, I like to dream; I like to talk, I like to listen. I like to see the sunrise in the morning, I like to see the moonlight at night; I like to feel the music flowing on my face, I like to smell the wind coming from the ocean. I like to look at the clouds in the sky with a blank mind, I like to do thought experiment when I cannot sleep in the middle of the night. I like flowers in spring, rain in summer, leaves in autumn, and snow in winter. I like to sleep early, I like to get up late; I like to be alone, I like to be surrounded by people. I like countryï¿½s peace, I like metropolisï¿½ noise; I like the beautiful west lake in Hangzhou, I like the flat cornfield in Champaign. I like delicious food and comfortable shoes; I like good books and romantic movies. I like the land and the nature, I like people. And, I like to laugh.', 'Electronic & Telecommunication Engineering', '2020-01-07', '5,', '5,5,12,17,12,12,5,5,5,');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

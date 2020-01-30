@@ -156,6 +156,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                     <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
                      <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                     <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                  
 
               </ul>

@@ -360,7 +360,7 @@ mysqli_close($link);
         <div class="col-md-8">
 
             <div class="col-md-12" >
-                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                <a href="index.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
             </div>
             <br><br><br>
             <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >

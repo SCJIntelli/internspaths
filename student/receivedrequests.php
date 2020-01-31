@@ -47,13 +47,16 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
-$sql = "SELECT requests FROM student WHERE id=$id";
+$sql = "SELECT requests,accepted FROM student WHERE id=$id";
 if($result = mysqli_query($link, $sql)){
   if(mysqli_num_rows($result) > 0){
     $row = mysqli_fetch_array($result);
+    $accepted=$row["accepted"];
     $applied=$row["requests"];
     $appliedx=(explode(",", $applied));
+    $acceptedx=(explode(",", $accepted));
     $appliedset=array_unique($appliedx);
+    $acceptedset=array_unique($acceptedx);
     mysqli_free_result($result);
   } else{
     echo "<p class='lead'><em>No records were found.</em></p>";
@@ -291,7 +294,7 @@ if($result = mysqli_query($link, $sql)){
                   echo "</thead>";
                   echo "<tbody>";
 
-            foreach ($appliedset as $key) {
+            foreach ($acceptedset as $key) {
               
               $sql = "SELECT * FROM company WHERE id=$key";
               if($stmt = mysqli_prepare($link, $sql)){

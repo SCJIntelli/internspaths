@@ -118,14 +118,14 @@ if($stmt = mysqli_prepare($link,$sql2)){
         }
     }
 }
-$rawapplied.=$cid.",";
+
 $exapplied=(explode(",", $rawapplied));
 $setapplied=array_unique($exapplied);
 $applied=implode(',', $setapplied);
 
 $exapplied=(explode(",", $rawapplied));
 $setapplied=array_unique($exapplied);
-$key = array_search($id, $setapplied);
+$key = array_search($cid, $setapplied);
 unset($setapplied[$key]);
 $applied=implode(',', $setapplied);
 $sql = "UPDATE student SET applied=? WHERE id=?";

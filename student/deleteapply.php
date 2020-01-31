@@ -136,7 +136,7 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewcompanyrr.php?id=$cid");
+                header("location: viewrequests.php?id=$cid");
                         exit();       
 
                 
@@ -311,17 +311,16 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>You can apply ...</h1>
+                        <h1>Sure you want to delete the sent request  ??? ...</h1>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
                             <p>
                                 
                                 <a href="viewcompanyrr.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
-                                <input type="submit" class="btn btn-danger" value="Apply">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                                 
                             </p>
                         </div>

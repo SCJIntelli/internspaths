@@ -246,6 +246,67 @@ if($result = mysqli_query($link, $sql)){
                     echo "<td>" . $row['mobile'] . "</td>";
                     echo "<td>";
                     echo "<a href='viewcompanyrr.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                echo "<a href='accept.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
+                                // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
+                                //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
+                    echo "</td>";
+                    echo "</tr>";
+                    mysqli_free_result($result);
+                    mysqli_stmt_close($stmt);
+                  }
+                  
+                            // Free result set
+                  
+                } else{
+                  
+                }
+              
+
+
+            }
+            echo "</tbody>";                            
+                  echo "</table>";
+          // mysqli_close($link);
+
+            ?>
+          </div>
+          <div class="col-md-12 col-sm-12" style="display: inline-block;" >
+
+            <div class="page-header clearfix">
+              <h2 class="pull-left">Companies</h2>
+            </div>
+
+
+            <?php 
+            echo "<table id='datatable' class='table table-bordered table-striped'>";
+                  echo "<thead>";
+                  echo "<tr>";
+                  echo "<th>#</th>";
+                  echo "<th>Userame</th>";
+                  echo "<th>Name</th>";
+                  echo "<th>Email Address</th>";
+                  echo "<th>Mobile Number</th>";
+                  echo "<th>Action</th>";
+                  echo "</tr>";
+                  echo "</thead>";
+                  echo "<tbody>";
+
+            foreach ($appliedset as $key) {
+              
+              $sql = "SELECT * FROM company WHERE id=$key";
+              if($stmt = mysqli_prepare($link, $sql)){
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                if(mysqli_num_rows($result) > 0){
+                  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    echo "<tr>";
+                    echo "<td>" . $row['id'] . "</td>";
+                    echo "<td>" . $row['username'] . "</td>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>" . $row['mobile'] . "</td>";
+                    echo "<td>";
+                    echo "<a href='viewcompanyrr.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
                                 // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
                                 //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";

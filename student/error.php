@@ -31,7 +31,7 @@ $return= trim($_GET["return"]);
                             <p>An Error Occured <br> Error : <?php echo ($error);?></p><br>
                             <p>
                                 
-                                <a href="<?php echo ($return);?> ?id=<?php echo ($id);?>" class="btn btn-danger">Back</a>
+                                <a href="<?php echo ($return);?>?id=<?php echo ($id);?>" class="btn btn-danger">Back</a>
                             </p>
                         </div>
                     </form>

@@ -51,6 +51,7 @@
                     $gpa = $row["gpa"];
                     $cvurl = $row["cvurl"];
                     $bday = $row["dateofbirth"];
+                    $curemail=$email;
 
 
                 } else{
@@ -134,6 +135,11 @@
                     $email_err = "Please enter a email.";
                 } else{
             // Prepare a select statement
+                  if($curemail == trim($_POST["email"])){
+                    $email = trim($_POST["email"]);
+
+                  }
+                  else{
                     $sql = "SELECT id FROM users WHERE email = ?";
 
                     if($stmt = mysqli_prepare($link, $sql)){
@@ -155,7 +161,7 @@
                                 mysqli_stmt_close($stmt);
 
 
-                                $sql = "INSERT INTO users (email) VALUES ('$email')";
+                                $sql = "UPDATE users SET email='$email' WHERE id=$id ";
                                 if($stmt = mysqli_prepare($link, $sql)){
                                     mysqli_stmt_execute($stmt);
                                 }
@@ -167,6 +173,7 @@
                         }
                     }
                 }
+              }
 
         // Validate mobile
                 $input_mnumber = trim($_POST["mnumber"]);

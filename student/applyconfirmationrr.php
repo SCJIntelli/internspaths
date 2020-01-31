@@ -312,7 +312,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                                 
                                 <a href="viewcompanyrr.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
-                                <input type="submit" class="btn btn-danger" value="Apply">
+                                <input type="submit" class="btn btn-danger" value="Confirm">
                                 
                             </p>
                         </div>

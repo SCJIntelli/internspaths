@@ -247,7 +247,7 @@ if($result = mysqli_query($link, $sql)){
                     echo "<td>";
                     echo "<a href='viewcompanyvr.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
-                                // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
+                                echo "<a href='deleteapply.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
                                 //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
                     echo "</td>";
                     echo "</tr>";

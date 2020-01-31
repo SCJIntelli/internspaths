@@ -281,6 +281,7 @@ mysqli_close($link);
                     <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                     <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
                      <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                     <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
 
                 </li>
 
@@ -360,7 +361,7 @@ mysqli_close($link);
         <div class="col-md-8">
 
             <div class="col-md-12" >
-                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                <a href="index.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
             </div>
             <br><br><br>
             <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >

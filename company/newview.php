@@ -161,6 +161,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li ><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
                    <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
 
               </ul>
             </div>
@@ -200,7 +201,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="col-md-12" >
-            <a href="searchStudents.php" class="btn btn-success pull-right">Back</a>
+            <a href="viewrequests.php" class="btn btn-success pull-right">Back</a>
             <!-- <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Request</a> -->
             
         </div>

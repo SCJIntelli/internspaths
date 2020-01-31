@@ -3,8 +3,6 @@
 // Initialize the session
 session_start();
 
-$cid= trim($_GET["id"]);
-
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -12,51 +10,52 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 
-
+$sid= trim($_GET["id"]);
 // Include config file
 require_once "../php/config.php";
 $id = $_SESSION["id"];
-$sql = "SELECT * FROM student WHERE id = ?";
+$sql = "SELECT * FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"i",$param_id);
   $param_id = $id;
 
-   if(mysqli_stmt_execute($stmt)){
-        $result = mysqli_stmt_get_result($stmt);
+  if(mysqli_stmt_execute($stmt)){
+    $result = mysqli_stmt_get_result($stmt);
 
-        if(mysqli_num_rows($result) == 1){
-           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    if(mysqli_num_rows($result) == 1){
+     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-                $username = $row["username"];
-                $email = $row["email"];
-                $name=$row["name"];
-                $lname=$row["lastname"];
-                $mnumber=$row["mobile"];
-                $profileurl=$row["profileurl"];
-                $address=$row["address"];
-                $gender=$row["gender"];
-                $linkin = $row["linkedin"];
-                $perweb = $row["personalweb"];
-                $descrip = $row["descrip"];
-                $field =$row["field"];
-                $gpa = $row["gpa"];
-                $cvurl = $row["cvurl"];
+     $username = $row["username"];
+     $email = $row["email"];
+     $name=$row["name"];
+     $comnum=$row["comnum"];
+     $profileurl=$row["profileurl"];
+     $address=$row["address"];
+     $mnumber=$row["mobile"];
+     $id=$row["id"];
+     $descrip=$row["description"];
+     $location=$row["location"];
+     $facebook=$row["facebook"];
+     $linkedin=$row["linkedin"];
+     $twitter=$row["twitter"];
+     $fields=$row["fields"];
+     $mission=$row["mission"];
+     $vision=$row["vision"];
 
-                
 
 
 
-        }
-    }
-    mysqli_stmt_close($stmt);
+
+   }
+ }
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-  $cid=trim($_POST["cid"]);
+  $sid=trim($_POST["sid"]);
   
 
-  $sql = "SELECT requests FROM company WHERE id = ?";
+  $sql = "SELECT requests FROM student WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$id);
+  mysqli_stmt_bind_param($stmt,"i",$sid);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
@@ -78,13 +77,13 @@ if($stmt = mysqli_prepare($link,$sql)){
 // $rawrequests.=$id.",";
 $exrequests=(explode(",", $rawrequests));
 $setrequests=array_unique($exrequests);
-$key = array_search($id, $setrequests);
+$key = array_search($sid, $setrequests);
 unset($setrequests[$key]);
 $requests=implode(',', $setrequests);
-$sql = "UPDATE company SET requests=? WHERE id=?";
+$sql = "UPDATE student SET requests=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"si",$requests,$cid);
+  mysqli_stmt_bind_param($stmt,"si",$requests,$sid);
 
    if(mysqli_stmt_execute($stmt)){
         
@@ -98,7 +97,7 @@ if($stmt = mysqli_prepare($link,$sql)){
     }
 
   }
-$sql2 = "SELECT applied FROM student WHERE id = ?";
+$sql2 = "SELECT applied FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql2)){
   mysqli_stmt_bind_param($stmt,"i",$id);
 
@@ -125,10 +124,10 @@ $applied=implode(',', $setapplied);
 
 $exapplied=(explode(",", $rawapplied));
 $setapplied=array_unique($exapplied);
-$key = array_search($cid, $setapplied);
+$key = array_search($sid, $setapplied);
 unset($setapplied[$key]);
 $applied=implode(',', $setapplied);
-$sql = "UPDATE student SET applied=? WHERE id=?";
+$sql = "UPDATE company SET applied=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
   mysqli_stmt_bind_param($stmt,"si",$applied,$id);
@@ -136,8 +135,7 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewrequests.php?id=$cid");
-                        exit();       
+                header("location: viewrequests.php");
 
                 
 
@@ -160,8 +158,8 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
- <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+  <title>InternsPaths | <?php echo $name ?></title>
+  <<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
   <!-- Font Awesome CSS -->
@@ -206,6 +204,8 @@ if($stmt = mysqli_prepare($link,$sql)){
         }
     </style>
 
+
+
 </head>
 
 <body class="nav-md">
@@ -222,11 +222,11 @@ if($stmt = mysqli_prepare($link,$sql)){
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px">
+              <img src="<?php echo $profileurl ?>" alt="..." class="img-circle profile_img" style="width:50px; height: 50px ">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
-              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2 style = "font-size: 14px; color: #ECF0F1; margin: 0;font-weight: 300; font-family: Arial; text-transform: unset;"><?php echo $name." ".$lname?></h2></a>
+              <a href="../index.php?id=<?php echo $_SESSION["id"]?>"><h2 style = "font-size: 14px; color: #ECF0F1; margin: 0;font-weight: 300; font-family: Arial; text-transform: unset;"><?php echo $name?></h2></a>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -239,34 +239,13 @@ if($stmt = mysqli_prepare($link,$sql)){
               <h3>General</h3>
               <ul class="nav side-menu">
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
-                <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
-                <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
-                <li><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
-                <li><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                <li class="active"><a href="receivedrequests.php"><i class="fa fa-bell"></i>Received Requests</a></li>
-                <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
-                  <!-- <ul class="nav child_menu">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>">Edit My Profile</a></li>
-                    <li><a href="searchcompany.php">Search Companies</a></li>
-                    <li><a href="manageadmin.php">Manage Administrators</a></li> -->
-
-                  </ul>
-                </li>
-                <!-- <li><a><i class="fa fa-edit"></i> Students <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="form.html">Search For a Student</a></li>
-                    <li><a href="form_advanced.html">Manage Students</a></li>
-                    <li><a href="addstudent.php">Add a New Student</a></li>
-                  </ul>
-                </li> -->
-                <!-- <li><a><i class="fa fa-desktop"></i> Companies <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="general_elements.html">Search For a Company</a></li>
-                    <li><a href="managecompany.php">Manage Companies</a></li>
-                    <li><a href="addcompany.php">Add a New Company</a></li>
-                  </ul>
-                </li> -->
+                  <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+                  <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
+                  <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                  <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                  <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
+                  
 
               </ul>
             </div>
@@ -289,7 +268,7 @@ if($stmt = mysqli_prepare($link,$sql)){
             <ul class=" navbar-right">
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                  <img src="<?php echo $profileurl ?>" alt=""><?php echo $name." ".$lname?>
+                  <img src="<?php echo $profileurl ?>" alt=""><?php echo $name?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item"  href="../php/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -318,8 +297,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                             <input type="hidden" name="id" value=""/>
                             <p>
                                 
-                                <a href="viewcompanyrr.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
-                                <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
+                                <a href="viewrequests.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
+                                <input type="hidden" name="sid" value="<?php echo $sid; ?>"/>
                                 <input type="submit" class="btn btn-danger" value="Delete">
                                 
                             </p>
@@ -336,8 +315,9 @@ if($stmt = mysqli_prepare($link,$sql)){
 
     </div>
   </div>
+</div>
 
-  <!-- jQuery -->
+<!-- jQuery -->
   <script src="../vendors/jquery/dist/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -377,6 +357,5 @@ if($stmt = mysqli_prepare($link,$sql)){
 
   <!-- Custom Theme Scripts -->
   <script src="../build/js/custom.min.js"></script>
-  
 </body>
 </html>

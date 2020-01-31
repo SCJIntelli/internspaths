@@ -270,7 +270,7 @@ $sql = "SELECT * FROM company WHERE id = ?";
       <div class="right_col" role="main">
         <div class="col-md-12" >
             <a href="receivedrequests.php" class="btn btn-success pull-right">Back</a>
-            <a href="applyconfirmationrr.php?id=<?php echo $cid ?>" class="btn btn-success pull-right">Confirm</a>
+            <a href="accept.php?id=<?php echo $cid ?>" class="btn btn-success pull-right">Confirm</a>
             
         </div>
         <!-- top tiles -->

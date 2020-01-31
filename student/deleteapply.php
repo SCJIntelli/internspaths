@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT requests FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$id);
+  mysqli_stmt_bind_param($stmt,"i",$cid);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);

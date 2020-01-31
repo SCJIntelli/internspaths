@@ -277,10 +277,10 @@ if($stmt = mysqli_prepare($link,$sql)){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>Do You Really Wants to Request Internships from this Company</p><br>
                             <p>
                                 
-                                <a href="viewcompany.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
+                                <a href="searchview.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="sid" value="<?php echo $sid; ?>"/>
                                 <input type="submit" class="btn btn-danger" value="Apply">
                                 

@@ -176,7 +176,6 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewcompany.php?id=$cid");
                         exit();       
 
                 

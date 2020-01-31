@@ -49,6 +49,20 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
+$sql = "SELECT requests FROM company WHERE id=$id";
+if($result = mysqli_query($link, $sql)){
+  if(mysqli_num_rows($result) > 0){
+    $row = mysqli_fetch_array($result);
+    $applied=$row["requests"];
+    $appliedx=(explode(",", $applied));
+    $appliedset=array_unique($appliedx);
+    mysqli_free_result($result);
+  } else{
+    echo "<p class='lead'><em>No records were found.</em></p>";
+  }
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+}
 ?>
 
 <!DOCTYPE html>
@@ -137,9 +151,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                  <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                   <li class="active"><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
-                  
 
               </ul>
             </div>
@@ -178,99 +191,72 @@ if($stmt = mysqli_prepare($link,$sql)){
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <!-- top tiles -->
-        <div class="row" style="display: inline-block;" >
-          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
-            <div class="container  ">
-              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
+          <!-- top tiles -->
+          <div class="col-md-12 col-sm-12" style="display: inline-block;" >
 
-              <div class="row">
-
-                <div class="col-md-4 col-md-push-8">
-                  <div class="biography">
-                    <div class="">
-                      <img src="<?php echo $profileurl ?>" style="border-radius: 200px"  >
-                    </div>
-                    <ul>
-                      <li><strong>Name: </strong> <?php echo $name?></li>
-
-                      <li ><strong>Address: </strong><?php echo $address?></span></li>
-
-                      <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
-                      <li><strong>Email:</strong> <?php echo $email?></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
+            <div class="page-header clearfix">
+              <h2 class="pull-left">Students</h2>
+            </div>
 
 
-                    </ul>
-                  </div>
-                </div> <!-- col-md-4 -->
+            <?php 
+            echo "<table id='datatable' class='table table-bordered table-striped'>";
+                  echo "<thead>";
+                  echo "<tr>";
+                  echo "<th>#</th>";
+                  echo "<th>Userame</th>";
+                  echo "<th>Name</th>";
+                  echo "<th>Email Address</th>";
+                  echo "<th>Mobile Number</th>";
+                  echo "<th>Action</th>";
+                  echo "</tr>";
+                  echo "</thead>";
+                  echo "<tbody>";
 
-                <div class="col-md-8 col-md-pull-4">
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our vision </h3>
-                    <p>
-                      <?php echo $vision ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our mission </h3>
-                    <p>
-                      <?php echo $mission ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Who are we ?</h3>
-                    <p>
-                      <?php echo $descrip?>
-                    </p>
-                  </div>
+            foreach ($appliedset as $key) {
+              
+              $sql = "SELECT * FROM student WHERE id=$key";
+              if($stmt = mysqli_prepare($link, $sql)){
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                if(mysqli_num_rows($result) > 0){
+                  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    echo "<tr>";
+                    echo "<td>" . $row['id'] . "</td>";
+                    echo "<td>" . $row['username'] . "</td>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>" . $row['mobile'] . "</td>";
+                    echo "<td>";
+                    echo "<a href='appliedview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                                // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
+                                // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
+                                //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";
+                    echo "</td>";
+                    echo "</tr>";
+                    mysqli_free_result($result);
+                    mysqli_stmt_close($stmt);
+                  }
                   
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-
-                    <h3>what are we looking for..</h3>
-                    <p>
-                      <?php $text=(explode(",", $fields));?>
-                      <?php
-                      $sizea = sizeof($text);
-                      for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
-                      }
-
-                      ?>
-
-                    </p>
-                  </div>
+                            // Free result set
+                  
+                } else{
+                  
+                }
+              
 
 
+            }
+            echo "</tbody>";                            
+                  echo "</table>";
+          mysqli_close($link);
 
+            ?>
           </div>
+        </div>
 
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-  </div>
-</div>
-
-           
-          </div>
-
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-  </div>
-</div>
-<!-- /top tiles -->
-
-
-
-
-</div>
-</div>
+      </div>
+    </div>
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

@@ -25,22 +25,12 @@ if($stmt = mysqli_prepare($link,$sql)){
     if(mysqli_num_rows($result) == 1){
      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-     $username = $row["username"];
-     $email = $row["email"];
+     
      $name=$row["name"];
-     $comnum=$row["comnum"];
+
      $profileurl=$row["profileurl"];
-     $address=$row["address"];
-     $mnumber=$row["mobile"];
+
      $id=$row["id"];
-     $descrip=$row["description"];
-     $location=$row["location"];
-     $facebook=$row["facebook"];
-     $linkedin=$row["linkedin"];
-     $twitter=$row["twitter"];
-     $fields=$row["fields"];
-     $mission=$row["mission"];
-     $vision=$row["vision"];
 
 
 
@@ -48,6 +38,39 @@ if($stmt = mysqli_prepare($link,$sql)){
 
    }
  }
+}
+$sql = "SELECT * FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$param_id);
+  $param_id = trim($_GET["id"]);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $susername = $row["username"];
+                $semail = $row["email"];
+                $sname=$row["name"];
+                $slname=$row["lastname"];
+                $smnumber=$row["mobile"];
+                $sprofileurl=$row["profileurl"];
+                $saddress=$row["address"];
+                $sgender=$row["gender"];
+                $slinkin = $row["linkedin"];
+                $sperweb = $row["personalweb"];
+                $sdescrip = $row["descrip"];
+                $sfield =$row["field"];
+                $sgpa = $row["gpa"];
+                $scvurl = $row["cvurl"];
+
+                
+
+
+
+        }
+    }
 }
 ?>
 
@@ -61,7 +84,7 @@ if($stmt = mysqli_prepare($link,$sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name ?></title>
+  <title>InternsPaths | <?php echo $name?></title>
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -135,11 +158,10 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
-                  <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <li ><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                  <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
-                  <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
-                  
+                   <li class="active"><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
 
               </ul>
             </div>
@@ -178,92 +200,84 @@ if($stmt = mysqli_prepare($link,$sql)){
 
       <!-- page content -->
       <div class="right_col" role="main">
+        <div class="col-md-12" >
+            <a href="receivedRequests.php" class="btn btn-success pull-right">Back</a>
+            <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Confirm</a>
+            
+        </div>
         <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
-          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
-            <div class="container  ">
-              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
+<section id="about" class="about-section ">
+      <div class="container">
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
 
-              <div class="row">
+        <div class="row">
 
-                <div class="col-md-4 col-md-push-8">
-                  <div class="biography">
-                    <div class="">
-                      <img src="<?php echo $profileurl ?>" style="border-radius: 200px"  >
-                    </div>
-                    <ul>
-                      <li><strong>Name: </strong> <?php echo $name?></li>
+          <div class="col-md-4 col-md-push-8">
+            <div class="biography">
+              <div class="">
+                <img src=<?php echo $sprofileurl ?> >
+              </div>
+              <ul>
+                <li><strong>Name:</strong> <?php echo $sname." ".$slname ?></li>
+                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $saddress?></span></li>
+                <li><strong>Gender:</strong> <?php echo $sgender?></li>
+                <li><strong>Phone:</strong> <?php echo $smnumber?></li>
+                <li><strong>Email:</strong> <?php echo $semail?></li>
+                <li><strong>Field:</strong> <?php echo $sfield?></li>
+                <li><strong>Personal Website:</strong><a href="<?php echo $sperweb?>">   <?php echo $sperweb?></a></li>
+                <li><strong>LinkedIn Address:</strong> <a href="<?php echo $slinkin?>"><?php echo $slinkin?></a></li>
+                <li><strong>GPA:</strong> <?php echo $sgpa?></li>
 
-                      <li ><strong>Address: </strong><?php echo $address?></span></li>
+              </ul>
+            </div>
+          </div> <!-- col-md-4 -->
 
-                      <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
-                      <li><strong>Email:</strong> <?php echo $email?></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
+          <div class="col-md-8 col-md-pull-4">
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>Description</h3>
+              <p>
+                <?php echo $sdescrip?>
+              </p>
+            </div>
 
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
 
-                    </ul>
-                  </div>
-                </div> <!-- col-md-4 -->
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div>
 
-                <div class="col-md-8 col-md-pull-4">
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our vision </h3>
-                    <p>
-                      <?php echo $vision ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our mission </h3>
-                    <p>
-                      <?php echo $mission ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Who are we ?</h3>
-                    <p>
-                      <?php echo $descrip?>
-                    </p>
-                  </div>
-                  
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+            <div class="my-signature">
+              <img src="../assets/images/sign.png" alt="">
+            </div>
 
-                    <h3>what are we looking for..</h3>
-                    <p>
-                      <?php $text=(explode(",", $fields));?>
-                      <?php
-                      $sizea = sizeof($text);
-                      for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
-                      }
-
-                      ?>
-
-                    </p>
-                  </div>
-
-
-
+            <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $scvurl ?> ><i class="fa fa-download"></i>view my cv</a>
+            </div>
           </div>
 
 
         </div> <!-- /.row -->
       </div> <!-- /.container -->
     </section>          
+        </div>
+      </div>
+      <!-- /top tiles -->
+
+
+
+
+    </div>
   </div>
-</div>
-
-           
-          </div>
-
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-  </div>
-</div>
 <!-- /top tiles -->
 
 

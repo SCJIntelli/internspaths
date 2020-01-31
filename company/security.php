@@ -49,6 +49,60 @@ if($stmt = mysqli_prepare($link,$sql)){
    }
  }
 }
+$new_password = $confirm_password = "";
+$new_password_err = $confirm_password_err = "";
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Validate new password
+    if(empty(trim($_POST["new_password"]))){
+        $new_password_err = "Please enter the new password.";     
+    } elseif(strlen(trim($_POST["new_password"])) < 6){
+        $new_password_err = "Password must have atleast 6 characters.";
+    } else{
+        $new_password = trim($_POST["new_password"]);
+    }
+    
+    // Validate confirm password
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm the password.";
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
+        if(empty($new_password_err) && ($new_password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
+        }
+    }
+    // Check input errors before updating the database
+    if(empty($new_password_err) && empty($confirm_password_err)){
+        // Prepare an update statement
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
+            
+            // Set parameters
+            $param_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $param_id = $id;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Password updated successfully. Destroy the session, and redirect to login page
+                $return = trim($_POST["return"]);
+                header("location: index.php");
+                exit();
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+        
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
+    
+    // Close connection
+    mysqli_close($link);
+}
 ?>
 
 <!DOCTYPE html>
@@ -179,97 +233,49 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <!-- top tiles -->
-        <div class="row" style="display: inline-block;" >
-          <section id="about" class="about-section col-md-12" style="margin-left: auto;margin-right: auto;">
-            <div class="container  ">
-              <h2 class="section-title wow fadeInUp animated col-md-12" style="visibility: visible; animation-name:fadeInUp; "><?php echo $name ?></h2>
+        <div class="row" style="display: inline-block; " >
+      <div class="col-md-12 pull-right" style="margin-left: auto; margin-right: auto;">
+      <!-- <div class="container-login100" style="background-image: url('../images/bg-01.jpg')" > -->
+       <!-- <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"> -->
+        <div class="wrapper" style="background-color: white;border-radius: 25px;">
+            <span class="login100-form-title ">
+              Reset Password
+          </span>
 
-              <div class="row">
-
-                <div class="col-md-4 col-md-push-8">
-                  <div class="biography">
-                    <div class="">
-                      <img src="<?php echo $profileurl ?>" style="border-radius: 200px"  >
-                    </div>
-                    <ul>
-                      <li><strong>Name: </strong> <?php echo $name?></li>
-
-                      <li ><strong>Address: </strong><?php echo $address?></span></li>
-
-                      <li><strong>Contact Us:</strong> <?php echo $mnumber?></li>
-                      <li><strong>Email:</strong> <?php echo $email?></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $location?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $facebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $linkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $twitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>
-
-
-                    </ul>
-                  </div>
-                </div> <!-- col-md-4 -->
-
-                <div class="col-md-8 col-md-pull-4">
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our vision </h3>
-                    <p>
-                      <?php echo $vision ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Our mission </h3>
-                    <p>
-                      <?php echo $mission ?>
-                    </p>
-                  </div>
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Who are we ?</h3>
-                    <p>
-                      <?php echo $descrip?>
-                    </p>
-                  </div>
-                  
-                  <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-
-                    <h3>what are we looking for..</h3>
-                    <p>
-                      <?php $text=(explode(",", $fields));?>
-                      <?php
-                      $sizea = sizeof($text);
-                      for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-angle-double-right" style="font-size:200%">  '.$text[$x]."</p><br>";
-                      }
-
-                      ?>
-
-                    </p>
-                  </div>
+          <p>Enter New Password.</p>
+          
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+            <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
+                <label>New Password </label>
+                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>" style="border-radius: 25px">
+                <span class="help-block"><?php echo $new_password_err; ?></span>
+            </div>
+            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control" style="border-radius: 25px">
+                <span class="help-block"><?php echo $confirm_password_err; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="id" value="<?php echo $id; ?>" >
+<!--                 <input type="hidden" name="return" value="<?php echo $return; ?>" > -->
+                <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
+                <p style="text-align: center;"><span class="txt1">
+                Don’t want to continue?
+            </span> <a href="index.php" class="txt2"><br>Back</a>.</p>
+            </div>
+        </form>
+        <!--     </div> -->    
+    </div>
+<!-- </div> -->
+</div>
+      </div>
+      <!-- /top tiles -->
 
 
 
-          </div>
 
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
+    </div>
   </div>
-</div>
-
-           
-          </div>
-
-
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </section>          
-  </div>
-</div>
-<!-- /top tiles -->
-
-
-
-
-</div>
 </div>
 
 <!-- jQuery -->

@@ -75,7 +75,7 @@ if($result = mysqli_query($link, $sql)){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-  <title>InternsPaths | <?php echo $name." ".$lname ?></title>
+  <title>InternsPaths | <?php echo $name ?></title>
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
 
@@ -151,6 +151,8 @@ if($result = mysqli_query($link, $sql)){
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
                   <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li class="active"><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
+                   <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   
 
               </ul>
@@ -227,7 +229,7 @@ if($result = mysqli_query($link, $sql)){
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['mobile'] . "</td>";
                     echo "<td>";
-                    echo "<a href='viewstudent.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
+                    echo "<a href='newview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";
                                 // echo "<a href='deletecom.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>";
                                 //  echo "<a href='reset-password.php?id=". $row['id'] ."&return=managecompany.php' title='Reset Password' data-toggle='tooltip'><span class='glyphicon glyphicon-link'></span> &nbsp;&nbsp; </a>";

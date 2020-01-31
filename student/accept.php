@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT applied FROM company WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$id);
+  mysqli_stmt_bind_param($stmt,"i",$cid);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
@@ -165,8 +165,9 @@ if($stmt = mysqli_prepare($link,$sql2)){
 }
 $rawaccepted.=$cid.",";
 $exaccepted=(explode(",", $rawaccepted));
-$setaccepted=array_unique($accepted);
+$setaccepted=array_unique($exaccepted);
 $accepted=implode(',', $setaccepted);
+// $accepted=1;
 
 $sql = "UPDATE student SET accepted=? WHERE id=?";
 
@@ -176,8 +177,7 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewcompany.php?id=$cid");
-                        exit();       
+     
 
                 
 
@@ -225,8 +225,8 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: viewcompanyrr.php?id=$cid");
-                        exit();       
+                header("location: receivedrequests.php");
+                        // exit();       
 
                 
 
@@ -400,17 +400,17 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>You can apply ...</h1>
+                        <h1>Accept Internship Invitation</h1>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>Do You Really Want to Accept ?</p><br>
                             <p>
                                 
-                                <a href="viewcompanyrr.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
+                                <a href="receivedrequests.php" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
-                                <input type="submit" class="btn btn-danger" value="Apply">
+                                <input type="submit" class="btn btn-danger" value="Yes, Accept">
                                 
                             </p>
                         </div>

@@ -228,22 +228,22 @@ if($stmt = mysqli_prepare($link,$sql)){
                             echo "<table id='datatable' class='table table-bordered table-striped'>";
                             echo "<thead>";
                             echo "<tr>";
-                            echo "<th>#</th>";
-                            echo "<th>Userame</th>";
                             echo "<th>Name</th>";
-                            echo "<th>Email Address</th>";
-                            echo "<th>Mobile Number</th>";
+                            echo "<th>Email</th>";
+                            echo "<th>Contact Number</th>";
+                            echo "<th>Location</th>";
+                            echo "<th>Looking For</th>";
                             echo "<th>Action</th>";
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['username'] . "</td>";
                                 echo "<td>" . $row['name'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
                                 echo "<td>" . $row['mobile'] . "</td>";
+                                echo "<td>" . $row['location'] . "</td>";
+                                echo "<td>" . $row['fields'] . "</td>";
                                 echo "<td>";
                                 echo "<a href='viewcompanysc.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editcompany.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";

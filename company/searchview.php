@@ -211,8 +211,8 @@ if($stmt = mysqli_prepare($link,$sql)){
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section ">
       <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
-
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"><?php echo $sname?> <?php echo $slname?></h2>
+<?php echo $sname?> <?php echo $slname?>
         <div class="row">
 
           <div class="col-md-4 col-md-push-8">

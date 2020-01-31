@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT requests FROM student WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$id);
+  mysqli_stmt_bind_param($stmt,"i",$sid);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
@@ -114,7 +114,7 @@ if($stmt = mysqli_prepare($link,$sql2)){
         }
     }
 }
-$rawapplied.=$cid.",";
+$rawapplied.=$sid.",";
 $exapplied=(explode(",", $rawapplied));
 $setapplied=array_unique($exapplied);
 $applied=implode(',', $setapplied);

@@ -64,7 +64,7 @@ if($stmt = mysqli_prepare($link,$sql)){
         if(mysqli_num_rows($result) == 1){
            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-                $requests = $row["requests"];
+                $rawrequests = $row["requests"];
                 mysqli_stmt_close($stmt);        
 
                 
@@ -74,7 +74,10 @@ if($stmt = mysqli_prepare($link,$sql)){
         }
     }
 }
-$requests.=$id.",";
+$rawrequests.=$id.",";
+$exrequests=(explode(",", $rawrequests));
+$setrequests=array_unique($exrequests);
+$requests=implode(',', $setrequests);
 $sql = "UPDATE company SET requests=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){
@@ -102,7 +105,7 @@ if($stmt = mysqli_prepare($link,$sql2)){
         if(mysqli_num_rows($result) == 1){
            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-                $applied = $row["applied"];
+                $rawapplied = $row["applied"];
                 mysqli_stmt_close($stmt);        
 
                 
@@ -112,7 +115,10 @@ if($stmt = mysqli_prepare($link,$sql2)){
         }
     }
 }
-$applied.=$cid.",";
+$rawapplied.=$cid.",";
+$exapplied=(explode(",", $rawapplied));
+$setapplied=array_unique($exapplied);
+$applied=implode(',', $setapplied);
 $sql = "UPDATE student SET applied=? WHERE id=?";
 
 if($stmt = mysqli_prepare($link,$sql)){

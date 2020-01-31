@@ -59,7 +59,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             }
             
         } else{
-            header("location: error.php?id=$id & return=editcompany.php & error=Please Try Again ");
+            header("location: error.php?id=$id & return=editmyprofile.php & error=Please Try Again ");
         }
 
 
@@ -70,7 +70,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 
     } else{
     // URL doesn't contain id parameter. Redirect to error page
-        header("location: error.php?id=$id & return=editcompany.php & error=Please Try Again ");
+        header("location: error.php?id=$id & return=editmyprofile.php & error=Please Try Again ");
         exit();
     }
 
@@ -193,21 +193,21 @@ if($stmt = mysqli_prepare($link, $sql)){
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
                 // Records updated successfully. Redirect to landing page
-                        // header("location: index.php");
+                        header("location: index.php");
                         exit();
                     } else{
                       $error.= "Something went wrong. Please try again later.";
-                      header("location: error.php?id=$id & return=editcompany.php & error=$error ");
+                      header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
                     }
                 }
                 else{
                     $error.=mysqli_error($link);
-                    header("location: error.php?id=$id & return=editcompany.php & error=$error ");
+                    header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
                 }
             }
             else{
                 $error.=$name_err.=$mnumber_err.=$email_err;
-                header("location: error.php?id=$id & return=editcompany.php & error=$error ");
+                header("location: error.php?id=$id & return=editmyprofile.php & error=$error ");
             }
         }
 

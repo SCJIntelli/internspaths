@@ -400,17 +400,17 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>You can apply ...</h1>
+                        <h1>Accept Internship Invitation</h1>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>Do You Really Want to Accept ?</p><br>
                             <p>
                                 
-                                <a href="viewcompanyrr.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>
+                                <a href="receivedrequests.php" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
-                                <input type="submit" class="btn btn-danger" value="Apply">
+                                <input type="submit" class="btn btn-danger" value="Yes, Accept">
                                 
                             </p>
                         </div>

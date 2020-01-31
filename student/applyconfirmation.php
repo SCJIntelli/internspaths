@@ -308,7 +308,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>Really Want to Apply for Internships in this Company ?</p><br>
                             <p>
                                 
                                 <a href="viewcompany.php?id=<?php echo ($cid);?>" class="btn btn-danger">Back</a>

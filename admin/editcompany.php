@@ -276,9 +276,9 @@ mysqli_close($link);
 </head>
 
 <body class="nav-md" >
-    <div class="container body" style="height: 780px">
+    <div class="container body" >
       <div class="main_container">
-        <div class="col-md-3 left_col" style="height: 790px" >
+        <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
               <a href="../index.html" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths Administrator Console</span></a>
@@ -404,7 +404,7 @@ mysqli_close($link);
         <div class="col-md-8">
 
             <div class="col-md-12" >
-                <a href="index.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
             </div>
             <br><br><br>
             <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >

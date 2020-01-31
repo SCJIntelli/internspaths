@@ -276,7 +276,7 @@ if($result = mysqli_query($link, $sql)){
           <div class="col-md-12 col-sm-12" style="display: inline-block;" >
 
             <div class="page-header clearfix">
-              <h2 class="pull-left">Companies</h2>
+              <h2 class="pull-left">Accepted</h2>
             </div>
 
 

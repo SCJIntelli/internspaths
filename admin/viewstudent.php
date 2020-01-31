@@ -37,17 +37,17 @@ require_once "../php/config.php";
                 $username = $row["username"];
                 $email = $row["email"];
                 $name=$row["name"];
+                $lname=$row["lastname"];
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
                 $address=$row["address"];
-                $gender = $row["gender"];
+                $gender=$row["gender"];
                 $linkin = $row["linkedin"];
                 $perweb = $row["personalweb"];
+                $descrip = $row["descrip"];
+                $field =$row["field"];
                 $gpa = $row["gpa"];
                 $cvurl = $row["cvurl"];
-                $descrip = $row["descrip"];
-                $department =$row["field"];
-                $lname = $row["lastname"];
 
 
             } else{
@@ -104,10 +104,45 @@ require_once "../php/config.php";
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <!-- newly added -->
+<link href="../assets/css/font-awesome.min.css" rel="stylesheet" media="screen">
+  <!-- Animate css -->
+  <link href="../assets/css/animate.css" rel="stylesheet">
+  <!-- Magnific css -->
+  <link href="../assets/css/magnific-popup.css" rel="stylesheet">
+  <!-- Custom styles CSS -->
+  <link href="../assets/css/style.css" rel="stylesheet" media="screen">
+  <!-- Responsive CSS -->
+  <link href="../assets/css/responsive.css" rel="stylesheet">
+
+  <link rel="shortcut icon" href="assets/images/ico/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/images/ico/apple-touch-icon-57-precomposed.png">
+  <!-- Bootstrap -->
+  <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  
+  <!-- bootstrap-progressbar -->
+  <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+  <!-- bootstrap-daterangepicker -->
+  <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <link href="css/viewprof.css" rel="stylesheet">
+ <!-- /newly added -->
   </head>
 
   <body class="nav-md">
@@ -197,185 +232,89 @@ require_once "../php/config.php";
             </nav>
           </div>
         </div>
+        
         <!-- /top navigation -->
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="col-md-8 col-sm-8" style="display: inline-block;" >
-            <div class="container emp-profile">
-            <form method="post">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="<?php echo $profileurl; ?>" alt=""/>
-                         
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5>
-                                        <?php echo $name; ?>
-                                    </h5>
-                                    <h6>
-                                        Student
-                                    </h6>
-                                    
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
+        <!-- top tiles -->
+        <div class="col-md-12">
                         <a href="managestudent.php">
                           <button class="btn btn-primary pull-right" type="button">Back</button>
                           </a> 
                         <a href="editstudent.php?id=<?php echo $id?>" class="btn btn-success pull-right">Edit Profile</a>
 
                     </div>
+        <div class="row" style="display: inline-block;" >
+<section id="about" class="about-section ">
+      <div class="container">
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $id; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>First Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $name; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Last Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $lname; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $email; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $mnumber; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Address</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $address; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Gender</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $gender; ?></p>
-                                            </div>
-                                        </div>
-                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <label>LinkedIn Url</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><a href="<?php echo $linkin; ?>"><?php echo $linkin; ?></a></p>
-                                            </div>
-                                        </div>
-                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Personal Website</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><a href="<?php echo $perweb; ?>"><?php echo $perweb; ?></a></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>GPA</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $gpa; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>View CV</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><a href="<?php echo $cvurl; ?>"><?php echo $cvurl; ?></a></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Description</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $descrip; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Field Of Study</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><?php echo $department; ?></p>
-                                            </div>
-                                        </div>
-                            </div>
-                           
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
 
-            </form>   
+          <div class="col-md-4 col-md-push-8">
+            <div class="biography">
+              <div class="">
+                <img src=<?php echo $profileurl ?> >
+              </div>
+              <ul>
+                <li><strong>Name:</strong> <?php echo $name." ".$lname ?></li>
+                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
+                <li><strong>Gender:</strong> <?php echo $gender?></li>
+                <li><strong>Phone:</strong> <?php echo $mnumber?></li>
+                <li><strong>Email:</strong> <?php echo $email?></li>
+                <li><strong>Field:</strong> <?php echo $field?></li>
+                <li><strong>Personal Website:</strong><a href="<?php echo $perweb?>">   <?php echo $perweb?></a></li>
+                <li><strong>LinkedIn Address:</strong> <a href="<?php echo $linkin?>"><?php echo $linkin?></a></li>
+                <li><strong>GPA:</strong> <?php echo $gpa?></li>
 
+              </ul>
+            </div>
+          </div> <!-- col-md-4 -->
+
+          <div class="col-md-8 col-md-pull-4">
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>Description</h3>
+              <p>
+                <?php echo $descrip?>
+              </p>
+            </div>
+
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+
+              <ul class="list-check">
+                <li>User Experience Design</li>
+                <li>Interface Design</li>
+                <li>Product Design</li>
+                <li>Branding Design</li>
+                <li>Digital Painting</li>
+                <li>Video Editing</li>
+              </ul>
+            </div>
+
+            <div class="my-signature">
+              <img src="../assets/images/sign.png" alt="">
+            </div>
+
+            <div class="download-button">
+              <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>
+            </div>
+          </div>
+
+
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>          
         </div>
-
-                          </div>
-                        </div>
-         
-
-          <!-- /top tiles -->
-
-          <!-- /////////////contend///////// -->
-
-          <!-- /////////////contend///////// -->
-
-
-
       </div>
-    </div>
+      <!-- /top tiles -->
+
+
+
+
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
@@ -417,6 +356,10 @@ require_once "../php/config.php";
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <!-- newly added
+
+
+    /newly addded -->
   
   </body>
 </html>

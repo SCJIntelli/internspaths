@@ -35,21 +35,22 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $id=$row["id"];
-                $username = $row["username"];
-                $email = $row["email"];
-                $name=$row["name"];
-                $lname=$row["lastname"];
-                $mnumber=$row["mobile"];
-                $profileurl=$row["profileurl"];
-                $address=$row["address"];
-                $gender=$row["gender"];
-                $linkin = $row["linkedin"];
-                $perweb = $row["personalweb"];
-                $descrip = $row["descrip"];
-                $field =$row["field"];
-                $gpa = $row["gpa"];
-                $cvurl = $row["cvurl"];
+                    $id=$row["id"];
+                    $username = $row["username"];
+                    $email = $row["email"];
+                    $name=$row["name"];
+                    $lname=$row["lastname"];
+                    $mnumber=$row["mobile"];
+                    $profileurl=$row["profileurl"];
+                    $address=$row["address"];
+                    $gender=$row["gender"];
+                    $linkin = $row["linkedin"];
+                    $perweb = $row["personalweb"];
+                    $descrip = $row["descrip"];
+                    $field =$row["field"];
+                    $gpa = $row["gpa"];
+                    $cvurl = $row["cvurl"];
+                    $bday = $row["dateofbirth"];
 
 
             } else{
@@ -85,15 +86,15 @@ if($stmt = mysqli_prepare($link, $sql)){
 // Processing form data when form is submitted
         if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
-            $id = $_POST["id"];
-            $gender=trim($_POST["gender"]);
-            $address=trim($_POST["address"]);
-            $linkin = trim($_POST["linkin"]);
-            $perweb = trim($_POST["perweb"]);
-            $descrip =trim($_POST["descrip"]);
-            $field = trim($_POST["field"]);
-            $gpa = trim($_POST["gpa"]);
-
+           $id = $_POST["id"];
+                $gender=trim($_POST["gender"]);
+                $address=trim($_POST["address"]);
+                $linkin = trim($_POST["linkin"]);
+                $perweb = trim($_POST["perweb"]);
+                $descrip =trim($_POST["descrip"]);
+                $field = trim($_POST["field"]);
+                $gpa = trim($_POST["gpa"]);
+                $bday = trim($_POST["bday"]);
     // Validate name
             $input_name = trim($_POST["name"]);
             if(empty($input_name)){
@@ -246,7 +247,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_field = $field;
                     $param_gpa=$gpa;
                     $param_lname=$lname;
-
+                    $param_bday=$bday;
 
             // Attempt to execute the prepared statement
                     if(mysqli_stmt_execute($stmt)){
@@ -390,10 +391,14 @@ if($stmt = mysqli_prepare($link, $sql)){
 </nav>
 </div>
 </div>
+
+<div class="col-md-12" >
+        <a href="viewstudent.php?id=<?php echo $id?>" class="btn btn-primary pull-right">Back</a>
+</div>
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" style="height: 1600px">
+<div class="right_col" role="main" style="height: 1200px">
   <!-- top tiles -->
   <div class="col-md-12 col-sm-12" style="display: inline-block;" >
 
@@ -416,7 +421,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <br><br><br>
             <div class="col-md-12 ">
                 <form  action="imagestu.php" method="post" enctype="multipart/form-data"  >
-                   <div class="" >
+                 <div class="" >
                     <div class="profile-img">
                         <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
                             Select Image
@@ -433,9 +438,9 @@ if($stmt = mysqli_prepare($link, $sql)){
     </div>
     <div class="col-md-8">
 
-        <div class="col-md-12" >
-            <a href="viewstudent.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
-        </div>
+        <!-- <div class="col-md-12" >
+            <a href="viewstudent.php" class="btn btn-success pull-right">Back</a>
+        </div> -->
         <br><br><br>
         <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype='multipart/form-data' >
 
@@ -470,6 +475,14 @@ if($stmt = mysqli_prepare($link, $sql)){
             </label>
             <div class="col-md-8 col-sm-8 ">
               <input type="text" id="lname" name="lname"  required="required" class="form-control " value="<?php echo $lname ?>" >
+          </div>
+        </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" >Date Of Birth <span class="required">*</span>
+            </label>
+            <div class="col-md-8 col-sm-8">
+                <input type="date" name="bday" required="required" class="form-control" value="<?php echo $bday ?>" max = "2020-01-31">
+            </div>
           </div>
       </div>
       <div class="item form-group">
@@ -553,8 +566,8 @@ if($stmt = mysqli_prepare($link, $sql)){
     <label class="col-form-label col-md-3 col-sm-3 label-align" >Upload CV <span class="required">*</span>
     </label>
     <div class="col-md-8 col-sm-8 ">
-       <input type="file" name="cvToUpload" id="cvToUpload" >
-   </div>
+     <input type="file" name="cvToUpload" id="cvToUpload" >
+ </div>
 </div>
 <div>
 

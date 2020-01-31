@@ -42,7 +42,15 @@ if($stmt = mysqli_prepare($link, $sql)){
                 $mnumber=$row["mobile"];
                 $profileurl=$row["profileurl"];
                 $address=$row["address"];
-
+                $descrip=$row["description"];
+                $location=$row["location"];
+                $facebook=$row["facebook"];
+                $linkedin=$row["linkedin"];
+                $twitter=$row["twitter"];
+                $fields=$row["fields"];
+                $mission=$row["mission"];
+                $vision=$row["vision"];
+                $curemail=$email;
 
 
             } else{
@@ -139,6 +147,14 @@ if($stmt = mysqli_prepare($link, $sql)){
 
                     
                 }
+    $description = trim($_POST["descrip"]);
+    $location = trim($_POST["location"]);
+    $facebook = trim($_POST["facebook"]);
+    $linkedin = trim($_POST["linkedin"]);
+    $twitter = trim($_POST["twitter"]);
+    $fields = trim($_POST["fields"]);
+    $mission = trim($_POST["mission"]);
+    $vision = trim($_POST["vision"]);
 
     // Check input errors before inserting in database
             if(empty($name_err) && empty($email_err) && empty($mnumber_err)){
@@ -147,7 +163,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssi", $param_name, $param_email, $param_mnumber,$param_address , $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssssi", $param_name, $param_email, $param_mnumber,$param_address ,$param_description,$param_location,$param_facebook,$param_linkedin,$param_twitter,$param_fields,$param_mission,$param_vision, $param_id);
 
             // Set parameters
                     $param_name = $name;
@@ -155,6 +171,15 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $param_mnumber = $mnumber;
                     $param_id = $id;
                     $param_address=$address;
+                    $param_description=$description;
+                    $param_location=$location;
+                    $param_facebook=$facebook;
+                    $param_linkedin=$linkedin;
+                    $param_twitter=$twitter;
+                    $param_fields=$fields;
+                    $param_mission=$mission;
+                    $param_vision=$vision;
+
 
 
             // Attempt to execute the prepared statement
@@ -164,10 +189,12 @@ if($stmt = mysqli_prepare($link, $sql)){
                         exit();
                     } else{
                       $error.= "Something went wrong. Please try again later.";
+                      header("location: error.php?id=$id & return=editcompany.php & error=$error ");
                     }
                 }
                 else{
                     $error.="Connection Error";
+                    header("location: error.php?id=$id & return=editcompany.php & error=$error ");
                 }
             }
             else{
@@ -213,20 +240,39 @@ mysqli_close($link);
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <link href="css/viewprof.css" rel="stylesheet">
-    <style type="text/css">
-        .circular--portrait {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
-}
+        <!-- <style type="text/css">
+            .circular--portrait {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
 
-.circular--portrait img {
-  width: 100%;
-  height: auto;
-}
-    </style>
+    .circular--portrait img {
+      width: 100%;
+      height: auto;
+    }
+    </style> -->
+
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <!-- NProgress -->
+      <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+      <!-- iCheck -->
+      <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+      <!-- bootstrap-progressbar -->
+      <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+      <!-- JQVMap -->
+      <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+      <!-- bootstrap-daterangepicker -->
+      <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+      <!-- Custom Theme Style -->
+      <link href="../build/css/custom.min.css" rel="stylesheet">
+      <link href="css/viewprof.css" rel="stylesheet">
 </head>
 
 <body class="nav-md" >
@@ -329,13 +375,13 @@ mysqli_close($link);
                     <h5>
                         <?php echo $name; ?> 
                     </h5>
-                    <h6>
+                    <!-- <h6>
                         Company
                     </h6>
-
+ -->
                 </div>
                 <div class="circular--portrait ">
-                    <img src="<?php echo $profileurl; ?>" alt=""/>
+                    <img src="<?php echo $profileurl; ?>" class="col-md-12" alt="" style="border-radius: 50%; max-width: 500px;max-height: 500px;width: 350px;height: 350px;"/>
                 </div>  
                 <br><br><br>
                 <div class="col-md-12 ">
@@ -343,7 +389,7 @@ mysqli_close($link);
                        <div class="" >
                         <div class="profile-img">
                             <div class="file btn-primary  " style="margin-left: auto;margin-right: auto;" >
-                                Select Image
+                                Add Logo
                                 <input  type="file"  name="fileToUpload" id="fileToUpload" >                          
                             </div>
                         </div>
@@ -351,14 +397,14 @@ mysqli_close($link);
 
 
                     <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                    <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Image" name="submit" >
+                    <input type="submit" class="btn-primary btn  col-md-12 col-sm-12 pull-right"  value="Click to Change Logo" name="submit" >
                 </form>
             </div>
         </div>
         <div class="col-md-8">
 
             <div class="col-md-12" >
-                <a href="viewcompany.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
+                <a href="index.php?id=<?php echo $id?>" class="btn btn-success pull-right">Back</a>
             </div>
             <br><br><br>
             <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" >
@@ -369,55 +415,108 @@ mysqli_close($link);
                 
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-
-                    </div>
-                </div>
+                
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                            <div class="item form-group">
+                            <!-- <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >User ID <span class="required">*</span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="id" required="required" class="form-control " value="<?php echo $id ?>" readonly>
                               </div>
                           </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >User Name <span class="required">*</span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="username" name="username"  required="required" class="form-control " value="<?php echo $username ?>" readonly>
                               </div>
-                          </div>
+                          </div> -->
                           <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Name <span class="required"></span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="name" name="name"  required="required" class="form-control " value="<?php echo $name ?>" >
                               </div>
                           </div>
                           <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Email <span class="required"></span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="email" id="email" name="email" required="required" class="form-control " value="<?php echo $email ?>" >
                               </div>
                           </div>
                         <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Mobile Number <span class="required"></span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="mnumber" name="mnumber" required="required" class="form-control " value="<?php echo $mnumber ?>" >
                               </div>
                           </div>
                         <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >Address <span class="required"></span>
                                 </label>
-                                <div class="col-md-8 col-sm-8 ">
+                                <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="address" name="address" required="required" class="form-control " value="<?php echo $address ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >description <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >vision <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="vision" placeholder="enter your vision statement" value="<?php echo $vision ?>"  spellcheck="false"><?php echo $vision ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >mission <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <textarea class="resizable_textarea form-control" name="mission" placeholder="enter your mission statement" value="<?php echo $mission ?>"  spellcheck="false"><?php echo $mission ?></textarea>
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" >skill requirnments <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="fields" name="fields"  class="form-control " placeholder="eg: machine learning,javascript,.." value="<?php echo $fields ?>" >
+                              </div>
+                          </div>
+
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-map-marker"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="location" name="location" required="required" placeholder="www.example.com" class="form-control " value="<?php echo $location ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-facebook-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="facebook" name="facebook" placeholder="www.example.com" class="form-control " value="<?php echo $facebook ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-linkedin-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="linkedin" name="linkedin" placeholder="www.example.com"class="form-control " value="<?php echo $linkedin ?>" >
+                              </div>
+                          </div>
+                          <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-twitter-square"></i></a></strong></li> <span class="required"></span>
+                                </label>
+                                <div class="col-md-12 col-sm-8 ">
+                                  <input type="text" id="twitter" name="twitter" placeholder="www.example.com" class="form-control " value="<?php echo $twitter ?>" >
                               </div>
                           </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>

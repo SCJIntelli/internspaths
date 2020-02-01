@@ -3,7 +3,13 @@
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Include config file
     require_once "../php/config.php";
-    
+    $param_id=trim($_POST["id"]);
+if($param_id==1){
+                    $error="Super Admin Account Can not be Deleted for Security Reasons!!";
+                header("location: error.php?return=manageadmin.php & error=$error");
+
+}
+else{
     // Prepare a delete statement
     $sql = "DELETE FROM users WHERE id = ?";
     
@@ -22,7 +28,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             if($stmt = mysqli_prepare($link, $sql2)){
                 mysqli_stmt_bind_param($stmt, "i", $param_id);
                 if(mysqli_stmt_execute($stmt)){
-                                header("location: ../index.html");
+                                header("location: ../index.php");
             exit();
                 }
                 else{
@@ -49,6 +55,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         header("location: manageadmin.php");
         exit();
     }
+}
 }
 ?>
 <!DOCTYPE html>

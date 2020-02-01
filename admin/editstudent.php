@@ -239,11 +239,11 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Check input errors before inserting in database
                if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
         // Prepare an update statement
-                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,whatdo=?,interest=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=? WHERE id=?";
+                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,whatdo=?,interest=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=?, dateofbirth=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssssssssssdsi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_whatdo,$param_interest,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssssdssi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_whatdo,$param_interest,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname,$param_bday, $param_id);
 
             // Set parameters
                     $param_name = $name;

@@ -204,7 +204,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="col-md-12" >
-            <a href="searchStudents.php" class="btn btn-success pull-right">Back</a>
+            <a href="searchstudents.php" class="btn btn-success pull-right">Back</a>
             <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Request</a>
             
         </div>

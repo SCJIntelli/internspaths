@@ -203,7 +203,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="col-md-12" >
-            <a href="searchStudents.php" class="btn btn-success pull-right">Back</a>
+            <a href="searchstudents.php" class="btn btn-success pull-right">Back</a>
             <a href="requestconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Request</a>
             
         </div>
@@ -273,9 +273,7 @@ if($stmt = mysqli_prepare($link,$sql)){
               </ul> -->
             </div>
 
-            <div class="my-signature">
-              <img src="../assets/images/sign.png" alt="">
-            </div>
+            
 
             <div class="download-button">
               <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $scvurl ?> ><i class="fa fa-download"></i>view my cv</a>

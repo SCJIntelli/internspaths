@@ -383,9 +383,7 @@ $sql = "SELECT * FROM company WHERE id = ?";
               </ul>
             </div> -->
 
-            <!-- <div class="my-signature">
-              <img src="../assets/images/sign.png" alt="">
-            </div>
+            <!-- 
 
             <div class="download-button">
               <a class="btn btn-primary btn-lg" target = "_blank"  href=<?php echo $cvurl ?> ><i class="fa fa-download"></i>view my cv</a>

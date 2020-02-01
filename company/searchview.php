@@ -66,6 +66,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $sfield =$row["field"];
                 $sgpa = $row["gpa"];
                 $scvurl = $row["cvurl"];
+                $sbday = $row["dateofbirth"];
 
                 
 
@@ -222,7 +223,7 @@ if($stmt = mysqli_prepare($link,$sql)){
               </div>
               <ul>
                 <li><strong>Name:</strong> <?php echo $sname." ".$slname ?></li>
-                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li><strong>Date of birth:</strong> <?php echo $sbday?> </li>
                 <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $saddress?></span></li>
                 <li><strong>Gender:</strong> <?php echo $sgender?></li>
                 <li><strong>Phone:</strong> <?php echo $smnumber?></li>

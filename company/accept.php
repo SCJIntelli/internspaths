@@ -224,7 +224,7 @@ if($stmt = mysqli_prepare($link,$sql)){
    if(mysqli_stmt_execute($stmt)){
         
                 mysqli_stmt_close($stmt); 
-                header("location: receivedRequests.php");
+                header("location: receivedrequests.php");
                         // exit();       
 
                 
@@ -331,9 +331,9 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <!-- <li class="active"><a><i class="fa fa-beer"></i> Console <span class="fa fa-chevron-down"></span></a> -->
                   <li><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
                   <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit Company Profile</a></li>
-                  <li><a href="searchStudents.php"><i class="fa fa-search"></i>Search Students</a></li>
+                  <li><a href="searchstudents.php"><i class="fa fa-search"></i>Search Students</a></li>
                   <li ><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                  <li><a href="receivedRequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
+                  <li><a href="receivedrequests.php"><i class="fa fa-bell"></i>Applied students</a></li>
                   <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   
 

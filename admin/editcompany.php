@@ -497,7 +497,7 @@ mysqli_close($link);
                           </div>
 
                           <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-map-marker"></i></a></strong></li> <span class="required"></span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" ><li style="display: inline;"><strong><i style="font-size: 30px" class="fa fa-globe"></i></a></strong></li> <span class="required"></span>
                                 </label>
                                 <div class="col-md-12 col-sm-8 ">
                                   <input type="text" id="location" name="location" required="required" placeholder="www.example.com" class="form-control " value="<?php echo $location ?>" >

@@ -293,7 +293,7 @@ $sql = "SELECT * FROM company WHERE id = ?";
 
                       <li><strong>Contact Us:</strong> <?php echo $cmnumber?></li>
                       <li><strong>Email:</strong> <?php echo $cemail?></li>
-                      <li style="display: inline;"><strong><a href=<?php echo $clocation?>><i style="font-size: 50px" class="fa fa-map-marker"></i></a></strong></li>
+                      <li style="display: inline;"><strong><a href=<?php echo $clocation?>><i style="font-size: 50px" class="fa fa-globe"></i></a></strong></li>
                       <li style="display: inline;"><strong><a href=<?php echo $cfacebook?>><i style="font-size: 50px" class="fa fa-facebook-square"></i></a></strong></li>
                       <li style="display: inline;"><strong><a href=<?php echo $clinkedin?>><i style="font-size: 50px" class="fa fa-linkedin-square"></i></a></strong></li>
                       <li style="display: inline;"><strong><a href=<?php echo $ctwitter?>><i style="font-size: 50px" class="fa fa-twitter-square"></i></a></strong></li>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 28, 2020 at 05:42 AM
+-- Generation Time: Feb 01, 2020 at 05:05 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `admindata` (
 --
 
 INSERT INTO `admindata` (`adminnum`, `id`, `username`, `email`, `name`, `mobile`, `profileurl`, `occupation`) VALUES
-(1, 1, 'Shamal', 'shamalchamara@gmail.com', 'Shamal Jayathilake', '0766573601', '../uploads/1.jpeg', 'Network  Engineer'),
+(1, 1, 'Shamal', 'shamalchamara@gmail.com', 'Shamal Jayathilake', '0766573601', '../uploads/1.jpg', 'Network  Engineer'),
 (2, 11, 'Shamal2', 'test2@TEST.SDFS', 'Please Update Your Profile', '0000000000000', '../images/avatar-01.jpg', 'Unknown');
 COMMIT;
 

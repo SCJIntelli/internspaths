@@ -6,7 +6,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $param_id=trim($_POST["id"]);
 if($param_id==1){
                     $error="Super Admin Account Can not be Deleted for Security Reasons!!";
-                header("location: error.php?return=manageadmin.php & error=$error");
+                header("location: error.php?return=manageadmin.php & error=$error &id=$param_id");
 
 }
 else{
@@ -47,14 +47,15 @@ else{
     }
     
     // Close connection
-    mysqli_close($link);
-} else{
+
+ else{
     // Check existence of id parameter
     if(empty(trim($_GET["id"]))){
         // URL doesn't contain id parameter. Redirect to error page
         header("location: manageadmin.php");
         exit();
     }
+}
 }
 }
 ?>

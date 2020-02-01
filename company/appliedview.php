@@ -61,6 +61,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $slinkin = $row["linkedin"];
                 $sperweb = $row["personalweb"];
                 $sdescrip = $row["descrip"];
+                $swhatdo = $row["whatdo"];
+                $sinterest = $row["interest"];
                 $sfield =$row["field"];
                 $sgpa = $row["gpa"];
                 $scvurl = $row["cvurl"];
@@ -209,7 +211,7 @@ if($stmt = mysqli_prepare($link,$sql)){
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section ">
       <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"><?php echo $sname." ".$slname ?></h2>
 
         <div class="row">
 
@@ -244,16 +246,31 @@ if($stmt = mysqli_prepare($link,$sql)){
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
-              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+              <p>
+                <?php echo $swhatdo?>
+              </p>
 
-              <ul class="list-check">
+            </div>
+
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+            <h3>I'm Interested In</h3>
+            <?php $text=(explode(",", $sinterest));?>
+                      <?php
+                      $sizea = sizeof($text);
+                      for ($x = 0; $x < $sizea; $x+=1) {
+                        echo '<p><span class="fa fa-check" style="font-size:150%; color:#68c3a3 "></span>  <span style="font-size:150% ; font-family:Arial"> '.$text[$x].'</span></p>';
+                      }
+
+            ?>
+              <!-- <ul class="list-check">
+
                 <li>User Experience Design</li>
                 <li>Interface Design</li>
                 <li>Product Design</li>
                 <li>Branding Design</li>
                 <li>Digital Painting</li>
                 <li>Video Editing</li>
-              </ul>
+              </ul> -->
             </div>
 
             <div class="my-signature">

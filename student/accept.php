@@ -3,6 +3,8 @@
 // Initialize the session
 session_start();
 
+$cid= trim($_GET["id"]);
+
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -46,76 +48,200 @@ if($stmt = mysqli_prepare($link,$sql)){
 
         }
     }
+    mysqli_stmt_close($stmt);
+}
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $cid=trim($_POST["cid"]);
+  
+
+  $sql = "SELECT applied FROM company WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$cid);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $rawapplied = $row["applied"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
 }
 
+// $rawrequests.=$id.",";
+$exapplied=(explode(",", $rawapplied));
+$setapplied=array_unique($exapplied);
+$key = array_search($id, $setapplied);
+unset($setapplied[$key]);
+$applied=implode(',', $setapplied);
+$sql = "UPDATE company SET applied=? WHERE id=?";
 
-$new_password = $confirm_password = "";
-$new_password_err = $confirm_password_err = "";
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    // Validate new password
-    if(empty(trim($_POST["new_password"]))){
-        $new_password_err = "Please enter the new password.";     
-    } elseif(strlen(trim($_POST["new_password"])) < 6){
-        $new_password_err = "Password must have atleast 6 characters.";
-    } else{
-        $new_password = trim($_POST["new_password"]);
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$applied,$cid);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt);     
+
+                
+
+
+
+        
     }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm the password.";
-    } else{
-        $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($new_password_err) && ($new_password != $confirm_password)){
-            $confirm_password_err = "Password did not match.";
+
+  }
+
+
+$sql = "SELECT accepted FROM company WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"i",$cid);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $rawaccepted = $row["accepted"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
         }
     }
-    // Check input errors before updating the database
-    if(empty($new_password_err) && empty($confirm_password_err)){
-        // Prepare an update statement
-        $sql = "UPDATE users SET password = ? WHERE id = ?";
+}
+$rawaccepted.=$id.",";
+$exaccepted=(explode(",", $rawaccepted));
+$setaccepted=array_unique($exaccepted);
+$accepted=implode(',', $setaccepted);
+$sql = "UPDATE company SET accepted=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$accepted,$cid);
+
+   if(mysqli_stmt_execute($stmt)){
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
-            
-            // Set parameters
-            $param_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $param_id = $id;
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Password updated successfully. Destroy the session, and redirect to login page
-                $return = trim($_POST["return"]);
-                header("location: index.php");
-                exit();
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-        }
+                mysqli_stmt_close($stmt);     
+
+                
+
+
+
         
-        // Close statement
-        mysqli_stmt_close($stmt);
     }
-    
-    // Close connection
-    mysqli_close($link);
+
+  }
+
+
+  $sql2 = "SELECT accepted FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql2)){
+  mysqli_stmt_bind_param($stmt,"i",$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $rawaccepted = $row["accepted"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
+}
+$rawaccepted.=$cid.",";
+$exaccepted=(explode(",", $rawaccepted));
+$setaccepted=array_unique($exaccepted);
+$accepted=implode(',', $setaccepted);
+// $accepted=1;
+
+$sql = "UPDATE student SET accepted=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$accepted,$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt); 
+     
+
+                
+
+
+
+        
+    }
+
+  }
+
+$sql2 = "SELECT requests FROM student WHERE id = ?";
+if($stmt = mysqli_prepare($link,$sql2)){
+  mysqli_stmt_bind_param($stmt,"i",$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        $result = mysqli_stmt_get_result($stmt);
+
+        if(mysqli_num_rows($result) == 1){
+           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                $rawrequests = $row["requests"];
+                mysqli_stmt_close($stmt);        
+
+                
+
+
+
+        }
+    }
+}
+
+$exrequests=(explode(",", $rawrequests));
+$setrequests=array_unique($exrequests);
+$requests=implode(',', $setrequests);
+$exrequests=(explode(",", $rawrequests));
+$setrequests=array_unique($exrequests);
+$key = array_search($cid, $setrequests);
+unset($setrequests[$key]);
+$requests=implode(',', $setrequests);
+$sql = "UPDATE student SET requests=? WHERE id=?";
+
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"si",$requests,$id);
+
+   if(mysqli_stmt_execute($stmt)){
+        
+                mysqli_stmt_close($stmt); 
+                header("location: receivedrequests.php");
+                        // exit();       
+
+                
+
+
+
+        
+    }
+
+  }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-        <title>InternsPaths</title>
-
-        <style type="text/css">
-            body{ font: 14px sans-serif; }
-            .wrapper{ width: 350px; padding: 20px; }
-        </style>
-        
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
@@ -161,6 +287,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   <!-- Custom Theme Style -->
   <link href="../build/css/custom.min.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"> -->
+    <style type="text/css">
+        .wrapper{
+            width: 900px;
+            margin: 0 auto;
+        }
+    </style>
 
 </head>
 
@@ -199,7 +332,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <li><a href="editmyprofile.php?id=<?php echo $_SESSION["id"]?>"><i class="fa fa-cogs"></i>Edit My Profile</a></li>
                 <li><a href="searchcompanies.php"><i class="fa fa-search"></i>Search Companies</a></li>
                 <li><a href="viewrequests.php"><i class="fa fa-send"></i>Sent Requests</a></li>
-                <li><a href="receivedrequests.php"><i class="fa fa-bell"></i>Received Requests</a></li>
+                <li class="active"><a href="receivedrequests.php"><i class="fa fa-bell"></i>Received Requests</a></li>
                 <li><a href="security.php"><i class="fa fa-lock"></i>Security</a></li>
                   <!-- <ul class="nav child_menu">
                     <li><a href="index.php">Home</a></li>
@@ -262,40 +395,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <!-- page content -->
       <div class="right_col" role="main">
         <!-- top tiles -->
-        <div class="row" style="display: inline-block; " >
-      <div class="col-md-12 pull-right" style="margin-left: auto; margin-right: auto;">
-      <!-- <div class="container-login100" style="background-image: url('../images/bg-01.jpg')" > -->
-       <!-- <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"> -->
-        <div class="wrapper" style="background-color: white;border-radius: 25px;">
-            <span class="login100-form-title ">
-              Reset Password
-          </span>
-
-          <p>Enter New Password.</p>
-          
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
-            <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
-                <label>New Password </label>
-                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>" style="border-radius: 25px">
-                <span class="help-block"><?php echo $new_password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" style="border-radius: 25px">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="hidden" name="id" value="<?php echo $id; ?>" >
-<!--                 <input type="hidden" name="return" value="<?php echo $return; ?>" > -->
-                <input type="submit" class="btn btn-primary login100-form-btn pull-right"  value="Reset">
-
-            </div>
-        </form>
-        <!--     </div> -->    
+        <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>Accept Internship Invitation</h1>
+                    </div>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
+                        <div class="alert" style="background-color : rgba(255,0,0,0.3)">
+                            <input type="hidden" name="id" value=""/>
+                            <p>Do You Really Want to Accept ?</p><br>
+                            <p>
+                                
+                                <a href="receivedrequests.php" class="btn btn-danger">Back</a>
+                                <input type="hidden" name="cid" value="<?php echo $cid; ?>"/>
+                                <input type="submit" class="btn btn-danger" value="Yes, Accept">
+                                
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>        
+        </div>
     </div>
-<!-- </div> -->
-</div>
-      </div>
       <!-- /top tiles -->
 
 
@@ -303,7 +426,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     </div>
   </div>
-</div>
 
   <!-- jQuery -->
   <script src="../vendors/jquery/dist/jquery.min.js"></script>

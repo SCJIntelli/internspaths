@@ -47,6 +47,8 @@
                     $linkin = $row["linkedin"];
                     $perweb = $row["personalweb"];
                     $descrip = $row["descrip"];
+                    $whatdo = $row["whatdo"];
+                    $interest = $row["interest"];
                     $field =$row["field"];
                     $gpa = $row["gpa"];
                     $cvurl = $row["cvurl"];
@@ -93,6 +95,8 @@
                 $linkin = trim($_POST["linkin"]);
                 $perweb = trim($_POST["perweb"]);
                 $descrip =trim($_POST["descrip"]);
+                $whatdo =trim($_POST["whatdo"]);
+                $interest =trim($_POST["interest"]);
                 $field = trim($_POST["field"]);
                 $gpa = trim($_POST["gpa"]);
                 $bday = trim($_POST["bday"]);
@@ -236,11 +240,11 @@
         // Check input errors before inserting in database
              if(empty($name_err) && empty($email_err) && empty($mnumber_err) && $uploadOk==1){
             // Prepare an update statement
-                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=?, dateofbirth=? WHERE id=?";
+                $sql = "UPDATE student SET name=?, email=?, mobile=?,address=?,gender=? , descrip=?,whatdo=?,interest=?,linkedin=?,personalweb=?,field=?,cvurl=?,gpa=?, lastname=?, dateofbirth=? WHERE id=?";
 
                 if($stmt = mysqli_prepare($link, $sql)){
                 // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "ssssssssssdssi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname,$param_bday, $param_id);
+                    mysqli_stmt_bind_param($stmt, "ssssssssssssdssi", $param_name, $param_email, $param_mnumber,$param_address, $param_gender,$param_descrip,$param_whatdo,$param_interest,$param_linkin,$param_perweb,$param_field,$param_cvurl,$param_gpa,$param_lname,$param_bday, $param_id);
 
                 // Set parameters
                     $param_name = $name;
@@ -250,6 +254,8 @@
                     $param_address=$address;
                     $param_gender=$gender;
                     $param_descrip=$descrip;
+                    $param_whatdo=$whatdo;
+                    $param_interest=$interest;
                     $param_linkin=$linkin;
                     $param_perweb=$perweb;
                     $param_field = $field;
@@ -569,6 +575,20 @@
     </label>
     <div   class="col-md-8 col-sm-8 ">
       <textarea class="resizable_textarea form-control" name="descrip" value="<?php echo $descrip ?>"  spellcheck="false"><?php echo $descrip ?></textarea>
+  </div>
+</div>
+<div class="item form-group">
+    <label class="col-form-label col-md-3 col-sm-3 label-align" >What do you do ?? <span class="required">*</span>
+    </label>
+    <div   class="col-md-8 col-sm-8 ">
+      <textarea class="resizable_textarea form-control" name="whatdo" value="<?php echo $whatdo ?>"  spellcheck="false"><?php echo $whatdo ?></textarea>
+  </div>
+</div>
+<div class="item form-group">
+    <label class="col-form-label col-md-3 col-sm-3 label-align" >your interests <span class="required">*</span>
+    </label>
+    <div   class="col-md-8 col-sm-8 ">
+      <textarea class="resizable_textarea form-control" placeholder="eg: machine learning,javascript,.." name="interest" value="<?php echo $interest ?>"  spellcheck="false"><?php echo $interest ?></textarea>
   </div>
 </div>
 <div class="item form-group">

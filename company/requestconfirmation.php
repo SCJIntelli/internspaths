@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT requests FROM student WHERE id = ?";
 if($stmt = mysqli_prepare($link,$sql)){
-  mysqli_stmt_bind_param($stmt,"i",$id);
+  mysqli_stmt_bind_param($stmt,"i",$sid);
 
    if(mysqli_stmt_execute($stmt)){
         $result = mysqli_stmt_get_result($stmt);
@@ -114,7 +114,7 @@ if($stmt = mysqli_prepare($link,$sql2)){
         }
     }
 }
-$rawapplied.=$cid.",";
+$rawapplied.=$sid.",";
 $exapplied=(explode(",", $rawapplied));
 $setapplied=array_unique($exapplied);
 $applied=implode(',', $setapplied);
@@ -277,10 +277,10 @@ if($stmt = mysqli_prepare($link,$sql)){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype='multipart/form-data'>
                         <div class="alert" style="background-color : rgba(255,0,0,0.3)">
                             <input type="hidden" name="id" value=""/>
-                            <p>Warning!!! You can not undone this action later.....</p><br>
+                            <p>Do You Really Wants to Request Internships from this Company</p><br>
                             <p>
                                 
-                                <a href="viewcompany.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
+                                <a href="searchview.php?id=<?php echo ($sid);?>" class="btn btn-danger">Back</a>
                                 <input type="hidden" name="sid" value="<?php echo $sid; ?>"/>
                                 <input type="submit" class="btn btn-danger" value="Apply">
                                 

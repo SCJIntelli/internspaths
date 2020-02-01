@@ -209,7 +209,7 @@ if($stmt = mysqli_prepare($link,$sql)){
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section ">
       <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"><?php echo $sname?> <?php echo $slname?></h2>
 
         <div class="row">
 
@@ -244,7 +244,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
-              <p>I have been working as a web interface designer since. I have a love of clean, elegant styling, and I have lots of experience in the production of CSS3 and HTML5 for modern websites. I loving creating awesome as per my clients’ need. I think user experience when I try to craft something for my clients. Making a design awesome.</p>
+              <p>aaa</p>
 
               <ul class="list-check">
                 <li>User Experience Design</li>

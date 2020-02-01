@@ -153,6 +153,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   <!-- Custom Theme Style -->
   <link href="../build/css/custom.min.css" rel="stylesheet">
+  <style type="text/css">
+            body{ font: 14px sans-serif; }
+            .wrapper{ width: 350px; padding: 20px; }
+        </style>
+
 
 </head>
 
@@ -258,10 +263,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <input type="hidden" name="id" value="<?php echo $id; ?>" >
 <!--                 <input type="hidden" name="return" value="<?php echo $return; ?>" > -->
-                <input type="submit" class="btn btn-primary login100-form-btn" value="Reset">
-                <p style="text-align: center;"><span class="txt1">
-                Don’t want to continue?
-            </span> <a href="index.php" class="txt2"><br>Back</a>.</p>
+                <input type="submit" class="btn btn-primary login100-form-btn pull-right" value="Reset">
+
             </div>
         </form>
         <!--     </div> -->    

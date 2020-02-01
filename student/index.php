@@ -250,7 +250,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-check" style="font-size:150% ; font-family:Arial">  '.$text[$x]."</p><br>";
+                        echo '<p><span class="fa fa-check" style="font-size:150%; color:#68c3a3 "></span>  <span style="font-size:150% ; font-family:Arial"> '.$text[$x].'</span></p>';
                       }
 
             ?>

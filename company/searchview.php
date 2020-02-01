@@ -212,7 +212,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 <section id="about" class="about-section ">
       <div class="container">
         <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"><?php echo $sname?> <?php echo $slname?></h2>
-<?php echo $sname?> <?php echo $slname?>
+
         <div class="row">
 
           <div class="col-md-4 col-md-push-8">
@@ -258,7 +258,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-check" style="font-size:150% ; font-family:Arial">  '.$text[$x]."</p><br>";
+                        echo '<p><span class="fa fa-check" style="font-size:150%; color:#68c3a3 "></span>  <span style="font-size:150% ; font-family:Arial"> '.$text[$x].'</span></p>';
                       }
 
             ?>

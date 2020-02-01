@@ -64,6 +64,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $sfield =$row["field"];
                 $sgpa = $row["gpa"];
                 $scvurl = $row["cvurl"];
+                $interest = $row["interest"];
 
                 
 
@@ -243,17 +244,15 @@ if($stmt = mysqli_prepare($link,$sql)){
             </div>
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-              <h3>What I Do ?</h3>
-              <p>aaa</p>
+              <h3>I'm Interested In</h3>
+            <?php $text=(explode(",", $interest));?>
+                      <?php
+                      $sizea = sizeof($text);
+                      for ($x = 0; $x < $sizea; $x+=1) {
+                        echo '<p><span class="fa fa-check" style="font-size:150%; color:#68c3a3 "></span>  <span style="font-size:150% ; font-family:Arial"> '.$text[$x].'</span></p>';
+                      }
 
-              <ul class="list-check">
-                <li>User Experience Design</li>
-                <li>Interface Design</li>
-                <li>Product Design</li>
-                <li>Branding Design</li>
-                <li>Digital Painting</li>
-                <li>Video Editing</li>
-              </ul>
+            ?>
             </div>
 
             <div class="my-signature">

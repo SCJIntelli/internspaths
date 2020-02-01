@@ -53,6 +53,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                     $gpa = $row["gpa"];
                     $cvurl = $row["cvurl"];
                     $bday = $row["dateofbirth"];
+                    $curemail=$email;
 
 
             } else{
@@ -132,44 +133,50 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 
 
-    // Validate address address
-            if(empty(trim($_POST["email"]))){
-                $email_err = "Please enter a email.";
-            } else{
-        // Prepare a select statement
-                $sql = "SELECT id FROM users WHERE email = ?";
+     // Validate address address
+                if(empty(trim($_POST["email"]))){
+                    $email_err = "Please enter a email.";
+                } else{
+            // Prepare a select statement
+                  if($curemail == trim($_POST["email"])){
+                    $email = trim($_POST["email"]);
 
-                if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "s", $param_email);
+                  }
+                  else{
+                    $sql = "SELECT id FROM users WHERE email = ?";
 
-            // Set parameters
-                    $param_email = trim($_POST["email"]);
+                    if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                        mysqli_stmt_bind_param($stmt, "s", $param_email);
 
-            // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                        /* store result */
-                        mysqli_stmt_store_result($stmt);
+                // Set parameters
+                        $param_email = trim($_POST["email"]);
 
-                        if(mysqli_stmt_num_rows($stmt) == 1){
-                            $email_err = "This Email is already taken.";
-                        } else{
-                            $email = trim($_POST["email"]);
-                            mysqli_stmt_close($stmt);
+                // Attempt to execute the prepared statement
+                        if(mysqli_stmt_execute($stmt)){
+                            /* store result */
+                            mysqli_stmt_store_result($stmt);
+
+                            if(mysqli_stmt_num_rows($stmt) == 1){
+                                $email_err = "This Email is already taken.";
+                            } else{
+                                $email = trim($_POST["email"]);
+                                mysqli_stmt_close($stmt);
 
 
-                            $sql = "INSERT INTO users (email) VALUES ('$email')";
-                            if($stmt = mysqli_prepare($link, $sql)){
-                                mysqli_stmt_execute($stmt);
+                                $sql = "UPDATE users SET email='$email' WHERE id=$id ";
+                                if($stmt = mysqli_prepare($link, $sql)){
+                                    mysqli_stmt_execute($stmt);
+                                }
+                                else{
+                                    $email_err= "Oops! Something went wrong. Please try again later.";
+                                }
                             }
-                         else{
-                            $email_err= "Oops! Something went wrong. Please try again later.";
+                            mysqli_stmt_close($stmt);
                         }
                     }
-                    mysqli_stmt_close($stmt);
                 }
-            }
-        }
+              }
 
     // Validate mobile
                 $input_mnumber = trim($_POST["mnumber"]);

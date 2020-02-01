@@ -50,6 +50,7 @@ require_once "../php/config.php";
                 $field =$row["field"];
                 $gpa = $row["gpa"];
                 $cvurl = $row["cvurl"];
+                $bday = $row["dateofbirth"];
 
 
             } else{
@@ -261,7 +262,7 @@ require_once "../php/config.php";
               </div>
               <ul>
                 <li><strong>Name:</strong> <?php echo $name." ".$lname ?></li>
-                <li><strong>Date of birth:</strong> 2000.1.1 </li>
+                <li><strong>Date of birth:</strong> <?php echo $bday?></li>
                 <li ><strong>Address:</strong> <span class="col-md-12" style="text-overflow: ellipsis;"><?php echo $address?></span></li>
                 <li><strong>Gender:</strong> <?php echo $gender?></li>
                 <li><strong>Phone:</strong> <?php echo $mnumber?></li>
@@ -296,7 +297,7 @@ require_once "../php/config.php";
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {
-                        echo '<p class="fa fa-check" style="font-size:150% ; font-family:Arial">  '.$text[$x]."</p><br>";
+                        echo '<p><span class="fa fa-check" style="font-size:150%; color:#68c3a3 "></span>  <span style="font-size:150% ; font-family:Arial"> '.$text[$x].'</span></p>';
                       }
 
             ?>

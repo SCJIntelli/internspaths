@@ -229,7 +229,7 @@ if($stmt = mysqli_prepare($link, $sql)){
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td>" . $row['gpa'] . "</td>";
                 echo "<td>" . $row['field'] . "</td>";
-                echo "<td>" . $row['address'] . "</td>";
+                echo "<td>" . $row['interest'] . "</td>";
                 echo "<td>";
                 echo "<a href='searchview.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span> &nbsp;&nbsp; </a>";
                                 // echo "<a href='editstudent.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span> &nbsp;&nbsp;  </a>";

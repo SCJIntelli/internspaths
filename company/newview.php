@@ -246,8 +246,16 @@ if($stmt = mysqli_prepare($link,$sql)){
             </div>
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+              <h3>What I Do ?</h3>
+              <p>
+                <?php echo $swhatdo?>
+              </p>
+
+            </div>
+
+            <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>I'm Interested In</h3>
-            <?php $text=(explode(",", $interest));?>
+            <?php $text=(explode(",", $sinterest));?>
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {

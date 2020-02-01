@@ -61,8 +61,8 @@ if($stmt = mysqli_prepare($link,$sql)){
                 $slinkin = $row["linkedin"];
                 $sperweb = $row["personalweb"];
                 $sdescrip = $row["descrip"];
-                $whatdo = $row["whatdo"];
-                $interest = $row["interest"];
+                $swhatdo = $row["whatdo"];
+                $sinterest = $row["interest"];
                 $sfield =$row["field"];
                 $sgpa = $row["gpa"];
                 $scvurl = $row["cvurl"];
@@ -211,7 +211,7 @@ if($stmt = mysqli_prepare($link,$sql)){
         <div class="row" style="display: inline-block;" >
 <section id="about" class="about-section ">
       <div class="container">
-        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">About Me</h2>
+        <h2 class="section-title wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"><?php echo $sname." ".$slname ?></h2>
 
         <div class="row">
 
@@ -247,14 +247,14 @@ if($stmt = mysqli_prepare($link,$sql)){
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
               <h3>What I Do ?</h3>
               <p>
-                <?php echo $whatdo?>
+                <?php echo $swhatdo?>
               </p>
 
             </div>
 
             <div class="short-info wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
             <h3>I'm Interested In</h3>
-            <?php $text=(explode(",", $interest));?>
+            <?php $text=(explode(",", $sinterest));?>
                       <?php
                       $sizea = sizeof($text);
                       for ($x = 0; $x < $sizea; $x+=1) {

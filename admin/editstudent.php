@@ -323,7 +323,7 @@ if($stmt = mysqli_prepare($link, $sql)){
             <div class="col-md-3 left_col" style="height: 1600px">
               <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                  <a href="../index.html" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths Administrator Console</span></a>
+                  <a href="../index.php" class="site_title"><i class="fa fa-mortar-board"></i> <span>InternsPaths Administrator Console</span></a>
               </div>
 
               <div class="clearfix"></div>

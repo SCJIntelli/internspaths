@@ -203,7 +203,7 @@ if($stmt = mysqli_prepare($link,$sql)){
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="col-md-12" >
-            <a href="receivedRequests.php" class="btn btn-success pull-right">Back</a>
+            <a href="receivedrequests.php" class="btn btn-success pull-right">Back</a>
             <a href="applyconfirmation.php?id=<?php echo $param_id ?>" class="btn btn-success pull-right">Confirm</a>
             
         </div>

@@ -51,7 +51,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
-                $return=$_SESSION["return"];
                 header("location: $return");
                 exit();
             } else{
@@ -63,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         mysqli_stmt_close($stmt);
     }
     else{
-        header("location: managecompany.php");
+        header("location: reset-password.php?id=$id &return=$return");
     }
     
     // Close connection
